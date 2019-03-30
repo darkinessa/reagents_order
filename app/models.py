@@ -23,7 +23,7 @@ class Reagent(db.Model):
         id = db.Column(db.Integer, primary_key=True)
         title = db.Column(db.String, nullable=False) #обязательное поле
         vendor_name = db.Column(db.String, nullable=True)
-        reagent_catalog = db.Column(db.String, nullable=True, )
+        reagent_catalog = db.Column(db.String, index=True, nullable=True, )
         url_reagent = db.Column(db.String, nullable=True)
         reagents_in_item = db.relationship('ItemInOrder', lazy='dynamic')
         
@@ -33,7 +33,7 @@ class Reagent(db.Model):
 
 class Order(db.Model):
         id = db.Column(db.Integer, primary_key=True)
-        order_published = db.Column(db.DateTime, default=datetime.utcnow)
+        order_published = db.Column(db.DateTime, index=True, default=datetime.utcnow)
         user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
         order_status = db.Column(db.String, nullable=False) 
         #тут будет статус "Новый заказ", "Черновик заказа", "Отправленные заказы", "Архив"
