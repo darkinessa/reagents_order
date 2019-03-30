@@ -4,3 +4,9 @@ junk/
 __pycache__/
 idea/
 temp/
+
+
+app/__pycache__/
+app/__pycache__/routes.cpython-36.pyc
+webapp.db
+config.py
