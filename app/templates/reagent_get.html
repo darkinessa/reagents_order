@@ -9,7 +9,7 @@
     <form action="" method="post" novalidate>
         <div class="form-group">
             {{ form.reagent_name.label }}<br>
-            {{ form.reagent_name(size=40) }}
+            {{ form.reagent_name(size=40) }}<br><br>
         </div>
 
         <div class="form-group">
@@ -48,8 +48,10 @@
         </div>
 
         <div class="form-group">
+            
                 {{ form.reagent_comment.label }}<br>
-                {{ form.reagent_comment(size=120) }}<br><br>
+                {{ form.reagent_comment(rows='5',cols='60') }}
+            
         </div>
     </form>
 </body>

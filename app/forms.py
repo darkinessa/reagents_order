@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, PasswordField,  StringField, SubmitField
+from wtforms import BooleanField, PasswordField,  StringField, SubmitField, TextAreaField
 from wtforms import Form, IntegerField, SelectField, TextField, FieldList, FormField
 from collections import namedtuple
 from wtforms.validators import DataRequired
@@ -17,7 +17,6 @@ class ReagentForm(FlaskForm):
     reagent_count = IntegerField('*Количество',
                           [validators.Required(), validators.NumberRange(min=1)])
     vendor_name = SelectField('Производитель',
-                            [validators.Required()],
                             choices=[
                                 (1, 'Sigma'),
                                 (2, 'ThermoFisher'),
@@ -30,20 +29,17 @@ class ReagentForm(FlaskForm):
                             ])
                             #тут нужно модифицировать код, чтобы была возможность
                                                    #вводить свой вариант
-    reagent_catalog = StringField('Каталожный номер', validators=[DataRequired()])
-    url_reagent = StringField('Введите ссылку', validators=[DataRequired()]) 
+    reagent_catalog = StringField('Каталожный номер')
+    url_reagent = StringField('Введите ссылку') 
     #не могу понять, как сделать, чтобы ссылка была ссылкой
-    package = StringField('Фасовка, например, 500 грамм или 15 шт/уп', validators=[DataRequired()])
-    reagent_comment = TextField('Введите комментарий к заказу реактива, если необходимо', validators=[DataRequired()])
-    #В reagent_comment нужно сделать поле для нескольких строчек
+    package = StringField('*Фасовка, например, 500 грамм или 15 шт/уп')
+    reagent_comment = TextAreaField('Введите комментарий к заказу реактива, если необходимо')
     urgency = SelectField('Срочность заказа (стратегический означает, что можно заказать в течение полугода-года',
-                            [validators.Required()],
                             choices=[
                                 (1, 'Срочный'),
                                 (2, 'Стратегический'),
                             ])
     reagent_aim = SelectField('Выберите или введите цель заказа реактива для служебной записки',
-                            [validators.Required()],
                             choices=[
                                 (1, 'для электрофизиологических работ'),
                                 (2, 'для молекулярно-биологических работ'),
