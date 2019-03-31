@@ -36,7 +36,6 @@ class ReagentForm(FlaskForm):
                             choices=[
                                 (1, 'Срочный'),
                                 (2, 'Стратегический'),
-                                (3, 'Евроген'),
                             ])
     reagent_aim = SelectField('Выберите или введите цель заказа реактива для служебной записки',
                             [validators.Required()],
