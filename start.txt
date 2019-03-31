@@ -1,0 +1,2 @@
+set FLASK_APP=reagents_order.py & set SQLALCHEMY_TRACK_MODIFICATION = False
+flask run

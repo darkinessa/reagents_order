@@ -1,5 +1,5 @@
 from app import app
-from app.forms import LoginForm
+from app.forms import LoginForm, ReagentForm
 from flask import flash, redirect, render_template, url_for
 from flask_wtf import FlaskForm
 
@@ -18,9 +18,9 @@ def login():
     return render_template('login.html', title='Вход в личный кабинет', form=form)
 
 
-@app.route('/submit', methods=('GET', 'POST'))
+@app.route('/reagent_get', methods=['GET', 'POST'])
 def submit():
-    form = MyForm()
-    if form.validate_on_submit():
-        return redirect('/success')
-    return render_template('submit.html', form=form)
+    form = ReagentForm()
+    # if form.validate_on_submit():
+    #     return redirect('/index')
+    return render_template('reagent_get.html', form=form)

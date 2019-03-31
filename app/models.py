@@ -21,7 +21,7 @@ class User(db.Model):
 
 class Reagent(db.Model):
         id = db.Column(db.Integer, primary_key=True)
-        title = db.Column(db.String, nullable=False) #обязательное поле
+        reagent_name = db.Column(db.String, nullable=False) #обязательное поле
         vendor_name = db.Column(db.String, nullable=True)
         reagent_catalog = db.Column(db.String, index=True, nullable=True, )
         url_reagent = db.Column(db.String, nullable=True)
