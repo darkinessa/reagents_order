@@ -16,15 +16,20 @@ class ReagentForm(FlaskForm):
     reagent_name = StringField('*Название реактива', validators=[DataRequired()])
     reagent_count = IntegerField('*Количество',
                           [validators.Required(), validators.NumberRange(min=1)])
-    vendor_name = SelectField('Поставщик',
+    vendor_name = SelectField('Производитель',
                             [validators.Required()],
                             choices=[
                                 (1, 'Sigma'),
-                                (2, 'Thermoscientific'),
+                                (2, 'ThermoFisher'),
                                 (3, 'Евроген'),
-                                (4, 'Свой вариант') #тут нужно модифицировать код, чтобы была возможность
-                                                    #вводить свой вариант
+                                (4, 'Панэко'),
+                                (5, 'Millipore'),
+                                (6, 'Abcam'),
+                                (7, 'Tocris'),
+                                (8, 'Свой вариант') 
                             ])
+                            #тут нужно модифицировать код, чтобы была возможность
+                                                   #вводить свой вариант
     reagent_catalog = StringField('Каталожный номер', validators=[DataRequired()])
     url_reagent = StringField('Введите ссылку', validators=[DataRequired()]) 
     #не могу понять, как сделать, чтобы ссылка была ссылкой
