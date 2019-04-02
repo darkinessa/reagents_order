@@ -11,7 +11,13 @@
 <body>
     <div>Заказ реагентов:
         <a href="{{ url_for('index') }}">Главная</a>
-        <a href="{{ url_for('login') }}">>Вход в личный кабинет</a>
+        {% if current_user.is_anonymous %}
+        <a href="{{ url_for('registration') }}">Регистрация</a>
+        <a href="{{ url_for('login') }}">Вход в личный кабинет</a>
+        {% else %}
+        <b>{{ current_user.name }}</b>
+        <a href="{{ url_for('logout') }}">Выход</a>
+        {% endif %}
     </div>
     <hr>
      {% with messages = get_flashed_messages() %}
@@ -26,4 +32,5 @@
         {% block content %}{% endblock %}
 </body>
 </html>
+
 

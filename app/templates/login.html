@@ -2,6 +2,7 @@
 
 {% block content %}
     <h1>Войти</h1>
+
     <form action="" method="post">
         {{ form.hidden_tag() }}
         <div class="form-group">
@@ -21,6 +22,8 @@
         <div class="form-group">{{ form.remember_me() }} {{ form.remember_me.label }}</div>
         <p>{{ form.submit() }}</p>
     </form>
+
+
 {% endblock %}
 
 
