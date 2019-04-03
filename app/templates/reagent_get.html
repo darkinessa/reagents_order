@@ -18,6 +18,11 @@
         </div>
 
         <div class="form-group">
+            {{ form.reagent_unit.label }}<br>
+            {{ form.reagent_unit() }}<br><br>
+        </div>
+
+        <div class="form-group">
             {{ form.reagent_count.label }}<br>
             {{ form.reagent_count(size=10) }}<br><br>
         </div>
@@ -34,7 +39,7 @@
 
         <div class="form-group">
                 {{ form.url_reagent.label }}<br>
-                {{ form.url_reagent() }}<br><br>
+                {{ form.url_reagent(size=60) }}<br><br>
         </div>
 
         <div class="form-group">
@@ -53,6 +58,7 @@
                 {{ form.reagent_comment(rows='5',cols='60') }}
             
         </div>
+        <p>{{ form.submit() }}</p>
     </form>
 </body>
 </html>
