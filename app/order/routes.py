@@ -1,6 +1,5 @@
 from app import app, db
-from flask import flash, redirect, render_template, url_for
-from werkzeug.urls import url_parse
+from flask import redirect, render_template, url_for
 from app.order.models import Reagent
 from app.order.forms import ReagentForm
 
