@@ -1,13 +1,15 @@
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, PasswordField,  StringField, SubmitField
+from wtforms import BooleanField, PasswordField, StringField, SubmitField
 from wtforms.validators import Email, EqualTo, DataRequired, ValidationError
-from app.models import User
+from app.auth.models import User
+
 
 class LoginForm(FlaskForm):
     username = StringField('Логин', validators=[DataRequired()], render_kw={"class": "form_control"})
     password = PasswordField('Пароль', validators=[DataRequired()], render_kw={"class": "form_control"})
     remember_me = BooleanField('Запомнить', render_kw={"class": "form-check-label"})
     submit = SubmitField('Войти', render_kw={"class": "form-check-label"})
+
 
 class RegistrationForm(FlaskForm):
     username = StringField('Введите Ваш логин', validators=[DataRequired()])
@@ -31,4 +33,3 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
             raise ValidationError('Данный email уже используется, введите другой')
-

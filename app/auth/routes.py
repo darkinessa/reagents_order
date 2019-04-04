@@ -1,10 +1,10 @@
 from app import app, db
-from app.forms import LoginForm, RegistrationForm
+from app.auth.forms import LoginForm, RegistrationForm
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 
-from app.models import User
+from app.auth.models import User
 
 
 @app.route('/')
@@ -12,7 +12,6 @@ from app.models import User
 #@login_required
 def index():
     return render_template('index.html', title='Home')
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -53,4 +52,3 @@ def registration():
         flash('Вы успешно зарегистрировались')
         return redirect(url_for('login'))
     return render_template('registration.html', title='Регистрация', form=form)
-
