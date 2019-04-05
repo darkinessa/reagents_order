@@ -1,2 +1,8 @@
 set FLASK_APP=reagents_order.py & set SQLALCHEMY_TRACK_MODIFICATION = False
 flask run
+
+
+База данных:
+создание - flask db init
+первая миграция flask db migrate -m "start table"
+далее - flask db upgrade

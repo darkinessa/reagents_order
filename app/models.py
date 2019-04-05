@@ -1,7 +1,6 @@
-from app import db, reagent
+from app import db
 from datetime import datetime
 
-#User - из репозитория Иры
 class User(db.Model):
         id = db.Column(db.Integer, primary_key=True)
         username = db.Column(db.String(64), index=True, unique=True)
@@ -19,24 +18,18 @@ class User(db.Model):
             return '<User {}>'.format(self.username)
 
 
+
 class Reagent(db.Model):
         id = db.Column(db.Integer, primary_key=True)
         reagent_name = db.Column(db.String, nullable=False) #обязательное поле
         vendor_name = db.Column(db.String, nullable=True)
-        reagent_catalog = db.Column(db.String, index=True, nullable=True, )
+        catalogue_number = db.Column(db.String, index=True, nullable=True) 
         url_reagent = db.Column(db.String, nullable=True)
         reagents_in_item = db.relationship('ItemInOrder', lazy='dynamic')
         
         def __repr__(self):
             return '<Reagent {}>'.format(self.reagent_name)
-#разобраться!!!
-# @reagent.reagent_loader
-# def load_reagent(id):
-#     return Reagent.query.get(int(id))
 
-# @login.user_loader
-# def load_user(id):
-#     return User.query.get(int(id))
 
 class Order(db.Model):
         id = db.Column(db.Integer, primary_key=True)
@@ -59,8 +52,8 @@ class ItemInOrder(db.Model):
         reagent_comment = db.Column(db.String, nullable=True)
         urgency = db.Column(db.String, nullable=True)
         reagent_aim = db.Column(db.String, nullable=True)
-        order_id = db.Column(db.Integer, db.ForeignKey('order.id'))
-        item_status = db.Column(db.String, nullable=False) 
+        # order_id = db.Column(db.Integer, db.ForeignKey('order.id'))
+        # item_status = db.Column(db.String, nullable=True) 
         #Отправлено поставщику
         # Ожидается поставка
         # Пришла поставка

@@ -10,20 +10,9 @@
 </head>
 <body>
     <div>Заказ реагентов:
-        <a href="{{ url_for('index') }}">Главная</a>
-        <a href="{{ url_for('login') }}">>Вход в личный кабинет</a>
-        <a href="{{ url_for('submit') }}">>Добавить реактив</a>
+        
+        <a href="{{ url_for('reagent_get') }}">>Добавить реактив</a>
     </div>
-    <hr>
-     {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul>
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
-        {% block content %}{% endblock %}
+    
 </body>
 </html>
