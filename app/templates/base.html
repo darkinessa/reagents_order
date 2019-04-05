@@ -16,7 +16,7 @@
         <a href="{{ url_for('login') }}"> Вход в личный кабинет </a>
         {% else %}
         <b>{{ current_user.name }}</b>
-        <a href="{{ url_for('reagent_get') }}"> Заказ реактивов </a>
+        <a href="{{ url_for('reagent_add') }}"> Добавление реактива в Базу </a>
         <a href="{{ url_for('logout') }}"> Выход </a>
         {% endif %}
     </div>
