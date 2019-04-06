@@ -52,8 +52,8 @@ class ItemInOrder(db.Model):
         reagent_comment = db.Column(db.String, nullable=True)
         urgency = db.Column(db.String, nullable=True)
         reagent_aim = db.Column(db.String, nullable=True)
-        # order_id = db.Column(db.Integer, db.ForeignKey('order.id'))
-        # item_status = db.Column(db.String, nullable=True) 
+        order_id = db.Column(db.Integer, db.ForeignKey('order.id'))
+        item_status = db.Column(db.String, nullable=True) 
         #Отправлено поставщику
         # Ожидается поставка
         # Пришла поставка
