@@ -16,12 +16,14 @@ class Reagent(db.Model):
         return '<Reagent {}>'.format(self.reagent_name)
 
 
-class Seller(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    seller = db.Column(db.String, index=True)
-    seller_email = db.Column(db.String, index=True)
-    seller_contacts = db.Column(db.String, index=True)
-    seller_comments = db.Column(db.String)
-
-    def __repr__(self):
-        return '<Seller {}>'.format(self.seller_name)
+# class Vendor(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     vendor_id =
+#     vendor = db.Column(db.String, index=True)
+#     vendor_email = db.Column(db.String, index=True)
+#     vendor_contacts = db.Column(db.String, index=True)
+#     vendor_site = db.Column(db.String, index=True)
+#     vendor_comments = db.Column(db.String)
+#
+#     def __repr__(self):
+#         return '<Vendor {}>'.format(self.vendor_name)

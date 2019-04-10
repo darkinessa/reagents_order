@@ -17,7 +17,7 @@ app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
 from app.reagent import blueprint as reagent_blueprint
 app.register_blueprint(reagent_blueprint, url_prefix='/reagent_add')
-#
-# from app.order import blueprint as order_blueprint
-# app.register_blueprint(order_blueprint, url_prefix='/order')
+
+from app.order import blueprint as order_blueprint
+app.register_blueprint(order_blueprint, url_prefix='/order')
 

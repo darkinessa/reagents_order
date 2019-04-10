@@ -23,11 +23,3 @@ class ReagentForm(FlaskForm):
 
     submit = SubmitField('Добавить реактив в Базу', render_kw={"class": "form-check-label"})
 
-
-    # def validate_reagent(self, reagent_name, id):
-    #
-    #     reagent = Reagent.query.filter_by(reagent_name=reagent_name.data).first()
-    #     if reagent is not None:
-    #        pass
-
-    #надо реализовать проверку, если такой реаген в базе заполнить поля автоматически
