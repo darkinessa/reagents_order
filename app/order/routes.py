@@ -5,9 +5,9 @@ from app.order.forms import ReagentOrderForm
 from flask_login import current_user, login_required
 
 
-@app.route('/reagent_get', methods=['GET', 'POST'])
+@app.route('/item', methods=['GET', 'POST'])
 @login_required
-def reagent_get():
+def item_add():
     form = ReagentOrderForm()
     if form.validate_on_submit():
         reagent = ItemInOrder(author=current_user,
@@ -19,6 +19,6 @@ def reagent_get():
         db.session.add(reagent)
         db.session.commit()
         flash('Реактив добавлен в Заказ')
-        return redirect(url_for('reagent_get'))
+        return redirect(url_for('item_add'))
 
-    return render_template('reagent_get.html', title='Добавление нового реактива', form=form)
+    return render_template('item.html', title='Добавление нового реактива', form=form)

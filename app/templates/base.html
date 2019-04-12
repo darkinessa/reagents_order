@@ -17,7 +17,7 @@
         {% else %}
         <b>{{ current_user.name }}</b>
         <a href="{{ url_for('reagent_add') }}"> Добавление реактива в Базу </a>
-        <a href="{{ url_for('reagent_get') }}"> Добавление реактива в Заказ </a>
+        <a href="{{ url_for('item_add') }}"> Добавление реактива в Заказ </a>
         <a href="{{ url_for('logout') }}"> Выход </a>
         {% endif %}
     </div>
