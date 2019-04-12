@@ -4,6 +4,7 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
+from flask_moment import Moment
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
@@ -12,6 +13,7 @@ db = SQLAlchemy(app)
 login = LoginManager(app)
 login.login_view = 'auth.login'
 migrate = Migrate(app, db)
+moment = Moment(app)
 
 
 from app.auth import blueprint as auth_blueprint

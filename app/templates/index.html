@@ -23,7 +23,7 @@
                 <td><p>{{ item.package_unit }} </p> </td>
                 <td><p>{{ item.vendor_name }} </p></td>
                 <td><p>{{ item.author }}  </p></td>
-                <td><p>{{ item.order_published }} </p> </td>
+                <td><p>{{ moment(item.order_published).format('LL') }} </p> </td>
             </tr>
             {% endfor %}
     </tbody>
