@@ -1,60 +1,13 @@
 {% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
 
-{% block content %}
+{% block app_content %}
     <h1>Регистрация нового пользователя</h1>
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=64) }}<br>
-            {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.email.label }}<br>
-            {{ form.email(size=128) }}<br>
-            {% for error in form.email.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=64) }}
-            {% for error in form.password.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password2.label }}<br>
-            {{ form.password2(size=64) }}<br>
-            {% for error in form.password2.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.name.label }}<br>
-            {{ form.name(size=192) }}<br>
-            {% for error in form.name.error %}
-             <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.phone_number.label }}<br>
-            {{ form.phone_number(size=64) }}
-        </p>
-        <p>
-            {{ form.supervisor.label }}<br>
-            {{ form.supervisor(size=192) }}
-        </p>
-        <p>
-            {{ form.position.label }}<br>
-            {{ form.position(size=192) }}
-        </p>
-        <p>
-            {{ form.laboratory.label }}<br>
-            {{ form.laboratory(size=192) }}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
+    <p>Поля отмеченные * звездочкой обязательны</p>
+
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.quick_form(form) }}
+        </div>
+    </div>
 {% endblock %}

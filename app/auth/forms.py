@@ -12,17 +12,17 @@ class LoginForm(FlaskForm):
 
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Введите Ваш логин', validators=[DataRequired()])
-    email = StringField('Введите Ваш email', validators=[DataRequired(), Email()])
-    password = PasswordField('Введите пароль', validators=[DataRequired()])
+    username = StringField('* Введите Ваш логин', validators=[DataRequired()])
+    email = StringField('* Введите Ваш email', validators=[DataRequired(), Email()])
+    password = PasswordField('* Введите пароль', validators=[DataRequired()])
     password2 = PasswordField(
-        'Повторите введеный пароль', validators=[DataRequired(), EqualTo('password')])
-    name = StringField('Ведите имя и фамилию', validators=[DataRequired()])
-    phone_number = StringField('Введите свой контакнтый телефон', validators=[DataRequired()])
+        '* Повторите введеный пароль', validators=[DataRequired(), EqualTo('password')])
+    name = StringField('* Ведите имя и фамилию', validators=[DataRequired()])
+    phone_number = StringField('* Введите свой контакнтый телефон', validators=[DataRequired()])
     position = StringField('Должность')
     laboratory = StringField('Лаборатория')
     supervisor = StringField('Научный руководитель')
-    submit = SubmitField('Зарегистрироваться', render_kw={"class": "form-check-label"})
+    submit = SubmitField('Зарегистрироваться')
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()

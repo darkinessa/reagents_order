@@ -1,44 +1,13 @@
-{% extends "base.html"%}
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
 
-{% block content %}
-    <h1>Добавление нового реактива в Каталог реактивов</h1>
+{% block app_content %}
+    <h1>Добавление реактива в Каталог реактивов</h1>
+    <p>Поля отмеченные * звездочкой обязательны</p>
 
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <div class="form-group">
-            {{ form.reagent_name.label }}<br>
-            {{ form.reagent_name() }}<br><br>
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.quick_form(form) }}
         </div>
-        <div class="form-group">
-                {{ form.package.label }}<br>
-                {{ form.package() }}<br><br>
-        </div>
-        <div class="form-group">
-            {{ form.package_unit.label }}<br>
-            {{ form.package_unit() }}<br><br>
-        </div>
-        <div class="form-group">
-            {{ form.vendor_name.label }}<br>
-            {{ form.vendor_name() }}<br><br>
-        </div>
-        <div class="form-group">
-                {{ form.catalogue_number.label }}<br>
-                {{ form.catalogue_number() }}<br><br>
-        </div>
-        <div class="form-group">
-                {{ form.url_reagent.label }}<br>
-                {{ form.url_reagent() }}<br><br>
-        </div>
-        <div class="form-group">
-
-                {{ form.reagent_comments.label }}<br>
-                {{ form.reagent_comments(rows='5',cols='60') }}
-            
-        </div>
-        <div>{{ form.submit() }}</div>
-    </form>
-    <div>
-        <a href="{{ url_for('index') }}"> Вернуться на главную</a>
     </div>
-
 {% endblock %}

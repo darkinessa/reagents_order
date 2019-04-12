@@ -1,5 +1,6 @@
 from app import app, db
 from app.auth.forms import LoginForm, RegistrationForm
+from app.order.models import ItemInOrder
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -11,7 +12,8 @@ from app.auth.models import User
 @app.route('/index')
 #@login_required
 def index():
-    return render_template('index.html', title='Home')
+    return render_template('index.html', title='Home', items=ItemInOrder.query.all())
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
