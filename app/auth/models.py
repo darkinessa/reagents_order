@@ -19,7 +19,7 @@ class User(UserMixin, db.Model):
     item_in_orders = db.relationship('ItemInOrder', backref='author', lazy='dynamic')
 
     def __repr__(self):
-        return '<User {}>'.format(self.username)
+        return '{}'.format(self.name)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
