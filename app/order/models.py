@@ -9,6 +9,7 @@ class ItemInOrder(db.Model):
     reagent_name = db.Column(db.String, index=True, nullable=False)
     package = db.Column(db.String, index=True)
     package_unit = db.Column(db.String, index=True)
+    reagent_count = db.Column(db.String)
     vendor_name = db.Column(db.String, index=True, nullable=False)
     catalogue_number = db.Column(db.String, index=True)
     url_reagent = db.Column(db.String, nullable=True)
