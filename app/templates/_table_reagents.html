@@ -1,0 +1,41 @@
+
+<table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Название реактива</th>
+                <th scope="col">Фасовка</th>
+                <th scope="col">Единица измерения</th>
+                <th scope="col">Количество</th>
+                <th scope="col">Производитель</th>
+                <th scope="col">Артикул</th>
+                <th scope="col">Ссылка</th>
+                <th scope="col">Срочность</th>
+                <th scope="col">Цель заказа</th>
+                <th scope="col">Комментарий</th>
+                <th scope="col">Время заказа</th>
+                <th scope="col">Выбрать</th>
+            </tr>
+        </thead>
+
+        <tbody>
+                {% for item in items %}
+
+                <tr>
+                    <td><p>{{ item.reagent_name }} </p></td>
+                    <td><p>{{ item.package }} </p></td>
+                    <td><p>{{ item.package_unit }} </p> </td>
+                    <td><p>{{ item.reagent_count }}  </p></td>
+                    <td><p>{{ item.vendor_name }} </p></td>
+                    <td><p>{{ item.catalogue_number }} </p></td>
+                    <td><p>{{ item.url_reagent }} </p></td>
+                    <td><p>{{ item.urgency_pretty }} </p> </td>
+                    <td><p>{{ item.aim_pretty }} </p></td>
+                    <td><p>{{ item.reagent_comments }}  </p></td>
+                    <td><p>{{ moment(item.order_published).format('LL') }} </p> </td>
+                    <td><input type='hidden' value='0' name='selfdestruct' value="{{ item.id }}">
+                         <input type='checkbox' value='1' name='selfdestruct' value="{{ item.id }}" >
+                            <p></p> </td>
+                </tr>
+                {% endfor %}
+        </tbody>
+</table>

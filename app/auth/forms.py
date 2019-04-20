@@ -33,3 +33,6 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
             raise ValidationError('Данный email уже используется, введите другой')
+
+class EditProfileForm(FlaskForm):
+    pass

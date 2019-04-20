@@ -15,7 +15,7 @@ def item_add():
                               package_unit=form.package_unit.data, vendor_name=form.vendor_name.data,
                               catalogue_number=form.catalogue_number.data, url_reagent=form.url_reagent.data,
                               urgency=form.urgency.data, reagent_comments=form.reagent_comments.data,
-                              reagent_aim=form.reagent_aim.data)
+                              reagent_aim=form.reagent_aim.data, reagent_count=form.reagent_count.data)
         db.session.add(reagent)
         db.session.commit()
         flash('Реактив добавлен в Заказ')

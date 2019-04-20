@@ -5,11 +5,11 @@ from app.order.constants import STATUS
 class ItemInOrder(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     order_published = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     reagent_name = db.Column(db.String, index=True, nullable=False)
     package = db.Column(db.String, index=True)
     package_unit = db.Column(db.String, index=True)
-    reagent_count = db.Column(db.String)
+    reagent_count = db.Column(db.Integer)
     vendor_name = db.Column(db.String, index=True, nullable=False)
     catalogue_number = db.Column(db.String, index=True)
     url_reagent = db.Column(db.String, nullable=True)
