@@ -1,11 +1,11 @@
-import flask_login
+
 from flask import flash, redirect, render_template, request, url_for
-from flask_login import current_user, login_user, logout_user, login_required, LoginManager
+from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 
 from app import app, db
 from app.auth.forms import LoginForm, RegistrationForm
-from app.auth.models import User
+from app.auth.models import User, Role, UserRoles
 from app.order.constants import AIM, URGENCY
 from app.order.models import ItemInOrder
 
@@ -58,9 +58,11 @@ def registration():
     return render_template('registration.html', title='Регистрация', form=form)
 
 
+@app.route('/user')
 @app.route('/user/')
 @login_required
 def user():
+
     items = ItemInOrder.query.filter_by(user_id=current_user.id).all()
     for item in items:
         item.aim_pretty = format_const(item.reagent_aim, AIM)
@@ -70,8 +72,12 @@ def user():
 
 
 
-
 def format_const(key, constants_list):
     for value in constants_list:
         if key in value:
             return value[1]
+
+
+
+
+
