@@ -1,12 +1,5 @@
 # User role
-ADMIN = 0
-STAFF = 1
-USER = 2
-ROLE = {
-    ADMIN: 'admin',
-    STAFF: 'staff',
-    USER: 'user',
-}
+ADMIN = 'Admin'
 
 # user status
 INACTIVE = 0

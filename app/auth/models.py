@@ -1,9 +1,10 @@
 from datetime import date
 
-from app import db, login
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-from app.auth import constants as USER
+
+from app import db, login
+from app.auth.constants import ADMIN
 
 
 class User(db.Model, UserMixin):
@@ -42,6 +43,9 @@ class Role(db.Model):
 
     def __repr__(self):
         return '{}'.format(self.name)
+
+    def is_admin(self):
+        return self.name == ADMIN
 
 
 class UserRoles(db.Model):
