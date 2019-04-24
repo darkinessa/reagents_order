@@ -17,6 +17,7 @@
             <th scope="col">Производитель</th>
             <th scope="col">Заказчик</th>
             <th scope="col">Время заказа</th>
+            <th scope="col">Статус заказа</th>
         </tr>
     </thead>
 
@@ -30,6 +31,7 @@
                 <td><p>{{ item.vendor_name }} </p></td>
                 <td><p>{{ item.author }}  </p></td>
                 <td><p>{{ moment(item.order_published).format('LL') }} </p> </td>
+                <td><p>{{ item.item_status[0] }}  </p></td>
             </tr>
             {% endfor %}
     </tbody>

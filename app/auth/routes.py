@@ -5,16 +5,16 @@ from werkzeug.urls import url_parse
 
 from app import app, db
 from app.auth.forms import LoginForm, RegistrationForm
-from app.auth.models import User, Role, UserRoles
+from app.auth.models import User
 from app.order.constants import AIM, URGENCY
-from app.order.models import ItemInOrder
+from app.order.models import ItemInOrder, Status
 
 
 @app.route('/')
 @app.route('/index')
 # @login_required
 def index():
-    return render_template('index.html', title='Home', items=ItemInOrder.query.all())
+        return render_template('index.html', title='Home', items=ItemInOrder.query.all())
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -63,13 +63,23 @@ def registration():
 @login_required
 def user():
 
-    items = ItemInOrder.query.filter_by(user_id=current_user.id).all()
-    for item in items:
+    status = Status.query.get(1)
+    items=[]
+
+    print(status, current_user.id, status.id)
+    items1 = ItemInOrder.query.filter_by(user_id=current_user.id).all()
+    print(items1)
+    for item in items1:
+        if item.item_status == Status.query.filter_by(name='Черновик').all():
+            x = item
+            items.append(x)
+
         item.aim_pretty = format_const(item.reagent_aim, AIM)
         item.urgency_pretty = format_const(item.urgency, URGENCY)
 
-    return render_template('user.html', user=current_user, items=items)
+        print(item.item_status, item.id)
 
+    return render_template('user.html', user=current_user, items=items, status=status)
 
 
 def format_const(key, constants_list):
