@@ -1,6 +1,8 @@
-<table class="table table-striped" xmlns="http://www.w3.org/1999/html">
+
+<table class="table table-striped">
         <thead class="thead-dark">
             <tr>
+                <th scope="col">Выбрать</th>
                 <th scope="col">Название реактива</th>
                 <th scope="col">Фасовка</th>
                 <th scope="col">Единица измерения</th>
@@ -11,9 +13,7 @@
                 <th scope="col">Срочность</th>
                 <th scope="col">Цель заказа</th>
                 <th scope="col">Комментарий</th>
-                <th scope="col">Статусь</th>
                 <th scope="col">Время заказа</th>
-                <th scope="col">Выбрать</th>
                 <th scope="col">Удалить</th>
 
             </tr>
@@ -23,6 +23,9 @@
                 {% for item in items %}
 
                 <tr>
+                    <td><input type='hidden' value='0' name='selfdestruct' value="{{ item.id }}">
+                        <input type='checkbox' value='1' name='selfdestruct' value="{{ item.id }}" >
+                    </td>
                     <td><p>{{ item.reagent_name }} </p></td>
                     <td><p>{{ item.package }} </p></td>
                     <td><p>{{ item.package_unit }} </p> </td>
@@ -33,22 +36,12 @@
                     <td><p>{{ item.urgency_pretty }} </p> </td>
                     <td><p>{{ item.aim_pretty }} </p></td>
                     <td><p>{{ item.reagent_comments }}  </p></td>
-                    <td><p>{{ item.item_status[0] }}  </p></td>
                     <td><p>{{ moment(item.order_published).format('LL') }} </p> </td>
-                    <td><p>
-                        <div class="form-check">
-                        <label class="form-check-label">
-
-                            <input type='hidden' value='' name='Check' >
-                            <input type='checkbox' name='Check1' value="{{ item.id }}" ></label></div>
-                    </p>
-                    </td>
-
                     <td>
-                              <!-- Button trigger modal -->
+                                                    <!-- Button trigger modal -->
                         <a data-toggle="modal" href="#ModalCenter{{item.id}}">
                             <p class="text-danger"><span class="glyphicon glyphicon-trash"></span></p></a>
-                        </td>
+
           <!-- Modal -->
           <div class="modal fade" id="ModalCenter{{item.id}}">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -63,7 +56,8 @@
                   <h3>{{item.reagent_name}}</h3>
                 </div>
                 <div class="modal-footer">
-                     <form action="{{url_for('del_draft_item', id=item.id)}}" method="post"><input type="submit" value="Удалить" class="btn btn-danger btn-block">
+                     <form action="{{url_for('del_draft_item', id=item.id)}}" method="post">
+                         <input type="submit" value="Удалить" class="btn btn-danger btn-block">
                      </form> <div><br></div>
                     <button type="button" class="btn btn-success btn-block" data-dismiss="modal">Отменить удаление</button>
 
@@ -72,13 +66,9 @@
                 </div>
               </div>
             </div>
-          </div>
-                    </td>
+                     </td>
 
                 </tr>
                 {% endfor %}
         </tbody>
 </table>
-
-        <input type="submit" name="_send" value="Выбрать для отправки поставщику">
-        <input type="submit" name="_remove" value="Удалить">
