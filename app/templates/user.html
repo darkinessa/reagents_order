@@ -5,7 +5,10 @@
 {% block app_content %}
 <h1>Мои заказы</h1>
 
-{% include '_table_reagents.html' %}
+<form action="/checked" name="checked" method="post">
+{% include 'table_reagents_.html' %}
+    <input type="submit" name="_send" value="Отправить заказ" onclick="return confirm('После отправки заказа, вы не сможете вносить измения. Отправить заказ менеджеру?');">
+    <input type="submit" name="_del" value="Удалить" onclick="return confirm('Вы действительно хотите удалить Реагент из заказа?');">
 
 
 {% endblock %}

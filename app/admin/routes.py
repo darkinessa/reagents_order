@@ -7,7 +7,7 @@ from functools import wraps
 
 from app import app
 from app.order.constants import AIM, URGENCY
-from app.order.models import ItemInOrder
+from app.order.models import ItemInOrder, Status
 
 
 def admin_required(func):
@@ -36,11 +36,17 @@ def format_const(key, constants_list):
 @login_required
 @admin_required
 def admin():
-    items = ItemInOrder.query.all()
-    for item in items:
+    items1 = ItemInOrder.query.all()
+    items = []
+    for item in items1:
         item.aim_pretty = format_const(item.reagent_aim, AIM)
         item.urgency_pretty = format_const(item.urgency, URGENCY)
 
-    return render_template('admin.html', admin=admin, items=items)
+        if item.item_status == Status.query.filter_by(id='2').all():
+            x = item
+            items.append(x)
 
+        print(item.item_status, item.id)
+
+    return render_template('admin.html', admin=admin, items=items)
 

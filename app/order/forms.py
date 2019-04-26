@@ -27,3 +27,6 @@ class ReagentOrderForm(FlaskForm):
     reagent_comments = TextAreaField('Комментарий к реактиву')
 
     submit = SubmitField('Добавить реактив в Заказ', render_kw={"class": "form-check-label"})
+
+
+

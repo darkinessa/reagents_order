@@ -66,11 +66,11 @@ def user():
     status = Status.query.get(1)
     items=[]
 
-    print(status, current_user.id, status.id)
+#    print(status, current_user.id, status.id)
     items1 = ItemInOrder.query.filter_by(user_id=current_user.id).all()
-    print(items1)
+#    print(items1)
     for item in items1:
-        if item.item_status == Status.query.filter_by(name='Черновик').all():
+        if item.item_status == Status.query.filter_by(id='1').all():
             x = item
             items.append(x)
 
@@ -80,6 +80,10 @@ def user():
         print(item.item_status, item.id)
 
     return render_template('user.html', user=current_user, items=items, status=status)
+
+
+
+
 
 
 def format_const(key, constants_list):
