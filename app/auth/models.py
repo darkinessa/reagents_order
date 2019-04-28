@@ -11,7 +11,7 @@ class User(db.Model, UserMixin):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
-    email_str = db.Column('email', db.String(128), index=True, unique=True)
+    email = db.Column('email', db.String(128), index=True, unique=True)
     email_confirmed_at = date.today()
     name = db.Column(db.String(192), index=True)
     phone_number = db.Column(db.String(64))

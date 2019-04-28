@@ -1,14 +1,8 @@
-
-
 from app import app, db
 from flask import redirect, render_template, url_for, flash, request
-
-from app.auth.models import User
 from app.order.models import ItemInOrder, Status
 from app.order.forms import ReagentOrderForm
-from app.auth.forms import LoginForm
 from flask_login import current_user, login_required
-
 
 
 @app.route('/item', methods=['GET', 'POST'])
@@ -35,14 +29,13 @@ def item_add():
 
 @app.route('/delete_item/<int:id>', methods=['POST'])
 @login_required
-def del_draft_item(id):
+def delete_item(id):
 
     item = ItemInOrder.query.get(id)
 
-    if item.item_status != Status.query.filter_by(name='Черновик').all():
+    if item.item_status != Status.query.filter_by(id='1').all():
         flash('Вы не можете удалить Реагент, который отправлен на обработку менеджеру')
         return redirect(url_for('user'))
-
 
     if item is None:
         flash('Реагент не найден')
@@ -62,73 +55,27 @@ def del_draft_item(id):
 @app.route('/checked', methods=['GET', 'POST'])
 @login_required
 def checked():
-    print(request)
-    print(request.form)
+
     form_checks = request.form.getlist('checks')
-    print(form_checks)
+    statuses = Status.query.all()
+#    print([(s.id, s.name, s.action, s.flashes) for s in statuses])
+    for item in statuses:
 
-    action = '_send'
-    action_1 = '_del'
-    action_2 = '_sus'
-    action_3 = '_dec'
-    action_4 = '_hand'
+        action = item.action
+        action_id = item.id
+        action_flash = item.flashes
 
-    if action in request.form:
-        for item_check in form_checks:
-            check_id = int(item_check)
-            item = ItemInOrder.query.get(check_id)
-            print(item, item.item_status)
+        if action in request.form:
+            for item_check in form_checks:
+                check_id = int(item_check)
+                reagent = ItemInOrder.query.get(check_id)
+                reagent.item_status = Status.query.filter_by(id=str(action_id)).all()
+                db.session.commit()
+                flash(action_flash)
 
-            item.item_status = Status.query.filter_by(id='2').all()
-            db.session.commit()
-            flash('Заказ отправлен на обработку менеджеру.')
+    if current_user.roles[0].is_admin():
+        return redirect(url_for('admin'))
 
-    if action_1 in request.form:
-        print('222')
-        for item_check in form_checks:
-            check_id = int(item_check)
-            item = ItemInOrder.query.get(check_id)
-            print(item, item.item_status)
-            del_draft_item(id=check_id)
+    else:
 
-    if action_4 in request.form:
-        for item_check in form_checks:
-            check_id = int(item_check)
-            item = ItemInOrder.query.get(check_id)
-            print(item, item.item_status)
-
-            item.item_status = Status.query.filter_by(id='3').all()
-            db.session.commit()
-            flash('Заказ принят')
-
-    if action_2 in request.form:
-        for item_check in form_checks:
-            check_id = int(item_check)
-            item = ItemInOrder.query.get(check_id)
-            print(item, item.item_status)
-
-            item.item_status = Status.query.filter_by(id='8').all()
-            db.session.commit()
-            flash('Отложен')
-
-    if action_3 in request.form:
-        for item_check in form_checks:
-            check_id = int(item_check)
-            item = ItemInOrder.query.get(check_id)
-            print(item, item.item_status)
-
-            item.item_status = Status.query.filter_by(id='7').all()
-            db.session.commit()
-            flash('Отложен')
-
-
-
-
-
-    for item_check in form_checks:
-        check_id = int(item_check)
-        item = ItemInOrder.query.get(check_id)
-        print(item)
-
-
-    return redirect(url_for('user'))
+        return redirect(url_for('user'))
