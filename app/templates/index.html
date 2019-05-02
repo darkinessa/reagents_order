@@ -31,7 +31,7 @@
                 <td><p>{{ item.vendor_name }} </p></td>
                 <td><p>{{ item.author }}  </p></td>
                 <td><p>{{ moment(item.order_published).format('LL') }} </p> </td>
-                <td><p>{{ item.item_status[0] }}  </p></td>
+                <td><p>{{ item.item_status }}  </p></td>
             </tr>
             {% endfor %}
     </tbody>

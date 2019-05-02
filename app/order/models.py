@@ -17,7 +17,9 @@ class ItemInOrder(db.Model):
     urgency = db.Column(db.String, index=True)
     reagent_aim = db.Column(db.String, index=True)
     reagent_comments = db.Column(db.String)
-    item_status = db.relationship('Status', secondary='item_statuses')
+    item_status = db.relationship('Status')
+    item_status_id = db.Column(db.Integer, db.ForeignKey('status.id'))
+
 
     def __repr__(self):
         return '<ItemInOrder {}>'.format(self.id)
@@ -32,15 +34,3 @@ class Status(db.Model):
 
     def __repr__(self):
         return '{}'.format(self.name)
-
-
-class ItemStatuses(db.Model):
-    __tablename__ = 'item_statuses'
-    id = db.Column(db.Integer(), primary_key=True)
-    item_id = db.Column(db.Integer(), db.ForeignKey('item_in_order.id', ondelete='CASCADE'))
-    status_id = db.Column(db.Integer(), db.ForeignKey('status.id', ondelete='CASCADE'))
-
-    def __repr__(self):
-        return '{}'.format(self.status_id)
-
-

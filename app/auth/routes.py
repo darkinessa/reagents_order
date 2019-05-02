@@ -6,7 +6,7 @@ from werkzeug.urls import url_parse
 from app import app, db
 from app.auth.forms import LoginForm, RegistrationForm
 from app.auth.models import User
-from app.order.constants import AIM, URGENCY
+from app.order.constants import AIM, URGENCY, STATUS
 from app.order.models import ItemInOrder, Status
 
 
@@ -63,25 +63,14 @@ def registration():
 @login_required
 def user():
 
-    status = Status.query.get(1)
-    items=[]
+    items = ItemInOrder.query.filter_by(user_id=current_user.id).filter_by(item_status_id='1').all()
 
-#    print(status, current_user.id, status.id)
-    items1 = ItemInOrder.query.filter_by(user_id=current_user.id).all()
-#    print(items1)
-    for item in items1:
-        if item.item_status == Status.query.filter_by(id='1').all():
-            x = item
-            items.append(x)
+    for item in items:
 
         item.aim_pretty = format_const(item.reagent_aim, AIM)
         item.urgency_pretty = format_const(item.urgency, URGENCY)
 
-        print(item.item_status, item.id)
-
-    return render_template('user.html', user=current_user, items=items, status=status)
-
-
+    return render_template('user.html', user=current_user, items=items)
 
 
 

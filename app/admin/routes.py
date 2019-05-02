@@ -26,6 +26,7 @@ def is_admin(func):
 
     return True
 
+
 def format_const(key, constants_list):
     for value in constants_list:
         if key in value:
@@ -36,17 +37,10 @@ def format_const(key, constants_list):
 @login_required
 @admin_required
 def admin():
-    items1 = ItemInOrder.query.all()
-    items = []
-    for item in items1:
+    items = ItemInOrder.query.all()
+    for item in items:
         item.aim_pretty = format_const(item.reagent_aim, AIM)
         item.urgency_pretty = format_const(item.urgency, URGENCY)
-
-        if item.item_status == Status.query.filter_by(id='2').all():
-            x = item
-            items.append(x)
-
-        print(item.item_status, item.id)
 
     return render_template('admin.html', admin=admin, items=items)
 

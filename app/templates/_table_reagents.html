@@ -14,6 +14,7 @@
                 <th scope="col">Цель заказа</th>
                 <th scope="col">Комментарий</th>
                 <th scope="col">Время заказа</th>
+                 <th scope="col">Статус заказа</th>
                 <th scope="col">Выбрать</th>
 
             </tr>
@@ -35,6 +36,7 @@
                     <td><p>{{ item.aim_pretty }} </p></td>
                     <td><p>{{ item.reagent_comments }}  </p></td>
                     <td><p>{{ moment(item.order_published).format('LL') }} </p> </td>
+                    <td><p>{{ item.item_status }}  </p></td>
 
                     <td>
                         <div class="form-check">
