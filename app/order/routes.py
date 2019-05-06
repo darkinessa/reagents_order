@@ -1,5 +1,8 @@
 from app import app, db
 from flask import redirect, render_template, url_for, flash, request
+
+from app.admin.routes import format_const
+from app.order.constants import URGENCY, AIM
 from app.order.models import ItemInOrder, Status
 from app.order.forms import ReagentOrderForm
 from flask_login import current_user, login_required
@@ -109,3 +112,22 @@ def checked():
     else:
 
         return redirect(url_for('user'))
+
+
+@app.route('/full_item/<int:id>/', methods=['GET', 'POST'])
+@login_required
+def full_item(id):
+
+    print("asdad")
+
+    form = request.args
+
+    for i in request.form.items():
+        print(i)
+
+    item = ItemInOrder.query.get(id)
+    print(item)
+    item.aim_pretty = format_const(item.reagent_aim, AIM)
+    item.urgency_pretty = format_const(item.urgency, URGENCY)
+
+    return render_template('full_item.html', title='Полное описание', item=item)

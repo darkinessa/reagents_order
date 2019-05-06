@@ -16,6 +16,8 @@
                 <th scope="col">Время заказа</th>
                  <th scope="col">Статус заказа</th>
                 <th scope="col">Выбрать</th>
+                <th scope="col">Действия</th>
+
 
             </tr>
         </thead>
@@ -44,6 +46,7 @@
                             <input type="checkbox" name="checks" value="{{ item.id }}">
 
                             <br></label></div>
+                        <td> <a href="{{ url_for('full_item', id=item.id) }}">Подробнее</a></p>></td>
 
 
                     </td>

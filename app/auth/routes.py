@@ -6,7 +6,7 @@ from werkzeug.urls import url_parse
 from app import app, db
 from app.auth.forms import LoginForm, RegistrationForm
 from app.auth.models import User
-from app.order.constants import AIM, URGENCY, STATUS
+from app.order.constants import AIM, URGENCY
 from app.order.models import ItemInOrder, Status
 
 

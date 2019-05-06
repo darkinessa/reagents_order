@@ -6,8 +6,9 @@ from werkzeug.urls import url_parse
 from functools import wraps
 
 from app import app
+from app.auth.models import User
 from app.order.constants import AIM, URGENCY
-from app.order.models import ItemInOrder, Status
+from app.order.models import ItemInOrder
 
 
 def admin_required(func):
@@ -38,6 +39,9 @@ def format_const(key, constants_list):
 @admin_required
 def admin():
     items = ItemInOrder.query.all()
+    # users = User.query.all()
+    # print(users, len(users))
+
     for item in items:
         item.aim_pretty = format_const(item.reagent_aim, AIM)
         item.urgency_pretty = format_const(item.urgency, URGENCY)

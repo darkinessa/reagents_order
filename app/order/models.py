@@ -1,6 +1,6 @@
 from app import db
 from datetime import datetime
-from app.order.constants import STATUS
+
 
 
 class ItemInOrder(db.Model):
