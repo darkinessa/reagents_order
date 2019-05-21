@@ -39,7 +39,7 @@ def format_const(key, constants_list):
 @admin_required
 def admin():
     items = ItemInOrder.query.all()
-    # users = User.query.all()
+    users = User.query
     # print(users, len(users))
 
     for item in items:

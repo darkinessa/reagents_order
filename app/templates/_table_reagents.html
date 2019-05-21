@@ -2,22 +2,22 @@
 <table class="table table-striped">
         <thead class="thead-dark">
             <tr>
+                <th scope="col"> <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" name="checks" value="" disabled>
+                        </label></div></th>
+                <th scope="col">Название</th>
 
-                <th scope="col">Название реактива</th>
+                <th scope="col">Кол&nbsp;-&nbsp;во</th>
                 <th scope="col">Фасовка</th>
-                <th scope="col">Единица измерения</th>
-                <th scope="col">Количество</th>
                 <th scope="col">Производитель</th>
-                <th scope="col">Артикул</th>
-                <th scope="col">Ссылка</th>
                 <th scope="col">Срочность</th>
                 <th scope="col">Цель заказа</th>
                 <th scope="col">Комментарий</th>
-                <th scope="col">Время заказа</th>
-                 <th scope="col">Статус заказа</th>
-                <th scope="col">Выбрать</th>
-                <th scope="col">Действия</th>
+                <th scope="col">Дата</th>
+                <th scope="col">Статуса</th>
 
+                <th scope="col">Действия</th>
 
             </tr>
         </thead>
@@ -27,32 +27,28 @@
 
                 <tr>
 
-                    <td><p>{{ item.reagent_name }} </p></td>
-                    <td><p>{{ item.package }} </p></td>
-                    <td><p>{{ item.package_unit }} </p> </td>
+                    <td>
+                        <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" name="checks" value="{{ item.id }}">
+                        </label></div>
+                    </td>
+                    <td><p><a href="{{ url_for('full_item', id=item.id) }}">{{ item.reagent_name }}</a> </p></td>
+
+
                     <td><p>{{ item.reagent_count }}  </p></td>
+                    <td><p>{{ item.package }} </p></td>
                     <td><p>{{ item.vendor_name }} </p></td>
-                    <td><p>{{ item.catalogue_number }} </p></td>
-                    <td><p>{{ item.url_reagent }} </p></td>
                     <td><p>{{ item.urgency_pretty }} </p> </td>
                     <td><p>{{ item.aim_pretty }} </p></td>
                     <td><p>{{ item.reagent_comments }}  </p></td>
                     <td><p>{{ moment(item.order_published).format('LL') }} </p> </td>
                     <td><p>{{ item.item_status }}  </p></td>
 
-                    <td>
-                        <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="checkbox" name="checks" value="{{ item.id }}">
-
-                            <br></label></div>
-                        <td> <a href="{{ url_for('full_item', id=item.id) }}">Подробнее</a></p>></td>
-
-
-                    </td>
-
+                    <td> <a href="{{ url_for('full_item', id=item.id) }}">Подробнее</a></td>
                 </tr>
-                {% endfor %}
+         {% endfor %}
+
         </tbody>
 </table>
 

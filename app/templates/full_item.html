@@ -2,15 +2,22 @@
 
 
 {% block app_content %}
-<h4><small>Реагент:&emsp;</small>{{ item.reagent_name }}</h4>
+<h4><small>Заказ:&emsp;</small>{{ item.reagent_name }}</h4>
 <div><br></div>
 
 <div class="container">
     <!--<fieldset disabled>-->
-{% include '_item_form.html' %}
+{% include 'edit_item.html' %}
     <!--</fieldset>-->
 </div>
 
+{% block scripts %}
+    {{ super() }}
+
+    {% include 'edit_item_js.html' %}
+
+
+{% endblock %}
 
 {% endblock %}
 

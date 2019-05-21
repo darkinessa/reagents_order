@@ -2,5 +2,5 @@ env/
 *.PYC
 junk/
 __pycache__/
-idea/
+.idea/
 temp/

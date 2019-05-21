@@ -5,6 +5,15 @@
     {% else %}Сервис заказа реагентов{% endif %}
 {% endblock %}
 
+
+{% block scripts %}
+    {{ super() }}
+    {{ moment.include_moment() }}
+
+
+{% endblock %}
+
+
 {% block navbar %}
      <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
         <div class="container">
@@ -67,9 +76,4 @@
 
 
 
-
-{% block scripts %}
-    {{ super() }}
-    {{ moment.include_moment() }}
-{% endblock %}
 

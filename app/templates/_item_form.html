@@ -2,33 +2,32 @@
 
 <form action="" name="full_item" method="post" class="form-horizontal">
 
-          <div class="row">
+    <div class="row">
+        <div class="form-group">
 
-    <div class="form-group">
-    <div class="col-xs-2" >
-        <label class="control-label col-xs-2">ID:</label>
-        <p class="bg-info"><input name="userinput" type="text" class="form-control input-lg" value="{{ item.id }}" disabled ></p>
-    </div>
-
-        <div class="col-xs-2" style="padding:0">
-             <label class="control-label col-xs-9">№ заказа:</label>
-<p class="bg-info"><input type="text" class="form-control input-lg" value="Добавить в бд" disabled></p>
+        <div class="col-xs-2" >
+            <label class="control-label col-xs-2">ID:</label>
+            <p class="bg-info"><input name="id" type="text" class="form-control input-lg" value="{{ item.id }}" disabled ></p>
         </div>
 
-
-     <div class="col-xs-3" style="padding:2">
-         <label class="control-label col-xs-3">Дата:</label>
-         <p class="bg-info"><input name="userinput" type="text" class="form-control input-lg" value="{{ item.order_published }}" disabled></p>
-
-     </div>
-
-      <div class="col-xs-5" >
-          <label class="control-label col-xs-2">Заказчик:</label>
-          <p class="bg-info"><input name="autor" type="text" class="form-control input-lg" valuer="{{ item.author }}" value="{{ item.author }}" disabled></p>
-      </div>
+         <div class="col-xs-2" style="padding:0">
+            <label class="control-label col-xs-9">№ заказа:</label>
+            <p class="bg-info"><input type="text" class="form-control input-lg" name="order_id" value="Добавить в бд" disabled></p>
+         </div>
 
 
-          </div></div>
+         <div class="col-xs-3" style="padding:2">
+             <label class="control-label col-xs-3">Дата:</label>
+             <p class="bg-info"><input name="order_published" type="text" class="form-control input-lg" value="{{ item.order_published }}" disabled></p>
+         </div>
+
+          <div class="col-xs-5" >
+              <label class="control-label col-xs-2">Заказчик:</label>
+              <p class="bg-info"><input name="autor" type="text" class="form-control input-lg" valuer="{{ item.author }}" value="{{ item.author }}" disabled></p>
+          </div>
+
+        </div>
+    </div>
 
  <div class="row">
     <div class="form-group">
@@ -40,63 +39,69 @@
         <div class="form-group">
 
             <div class="col-xs-9">
+
                 <div class="">
                     <label class="control-label col-xs-3">Наименование товара:</label>
                     <p class="bg-info"><input name="reagent_name" type="text" class="form-control input-lg " value="{{ item.reagent_name }}"></p>
                 </div>
+
                 <div class="col-xs-5" style="padding:0">
                     <label class="control-label col-xs-2">Производитель:</label>
-                    <p class="bg-info"><input type="text" class="form-control input-lg" value="{{ item.vendor_name }}"></p>
+                    <p class="bg-info"><input type="text" class="form-control input-lg" name="vendor_name" value="{{ item.vendor_name }}"></p>
                 </div>
 
                 <div class="col-xs-3" style="padding:3">
                     <label class="control-label col-xs-2">Артикул:</label>
-                    <p class="bg-info"><input type="text" class="form-control input-lg" value="{{ item.catalogue_number}}"></p>
+                    <p class="bg-info"><input type="text" class="form-control input-lg" name="catalogue_number" value="{{ item.catalogue_number}}"></p>
                 </div>
-                                <div class="col-xs-4" style="padding:0">
-             <label class="control-label col-xs-6">ОКПД 2:</label>
-<p class="bg-info"><input type="text" class="form-control input-lg" value="Добавить поле в бд"></p>
-        </div>
-              <div class="col-xs-12" style="padding:0">
-             <label class="control-label col-xs-1">Ссылка:</label>
-             <p class="bg-info"><input type="text" class="form-control" value="{{ item.url_reagent }}"></p>
-        </div>
+
+                <div class="col-xs-4" style="padding:0">
+                    <label class="control-label col-xs-6">ОКПД 2:</label>
+                    <p class="bg-info"><input type="text" class="form-control input-lg" name="okpd" value="Добавить поле в бд"></p>
+                </div>
+
+                <div class="col-xs-12" style="padding:0">
+                    <label class="control-label col-xs-1">Ссылка:</label>
+                    <p class="bg-info"><input type="text" class="form-control" name="url_reagent" value="{{ item.url_reagent }}"></p>
+                </div>
+
                 <div class="col-xs-3" style="padding:0">
-            <label class="control-label col-xs-3">Срочность:</label>
-            <p class="bg-info"><input type="text" class="form-control input-lg" value="{{ item.urgency_pretty }}"></p>
-        </div>
+                    <label class="control-label col-xs-3">Срочность:</label>
+                    <p class="bg-info"><input type="text" class="form-control input-lg" name="urgency" value="{{ item.urgency_pretty }}"></p>
+                </div>
 
-        <div class="col-xs-6">
-            <label class="control-label col-xs-3">Цель:</label>
-            <p class="bg-info"><input type="text" class="form-control input-lg" value="{{ item.aim_pretty }}"></p>
-        </div>
+                <div class="col-xs-6">
+                    <label class="control-label col-xs-3">Цель:</label>
+                    <p class="bg-info"><input type="text" class="form-control input-lg" name="reagent_aim" value="{{ item.aim_pretty }}"></p>
+                </div>
 
-    <div class="col-xs-3" style="padding:0">
-        <label class="control-label col-xs-3">Статус:</label>
-        <p class="bg-info"><input name="userinput" type="text" class="form-control input-lg" value="{{ item.item_status }}"></p>
-    </div>
-
-
+                <div class="col-xs-3" style="padding:0">
+                    <label class="control-label col-xs-3">Статус:</label>
+                    <p class="bg-info"><input name="userinput" type="text" class="form-control input-lg" name="item_status" value="{{ item.item_status }}"></p>
+                </div>
 
             </div>
-            <div class="col-xs-3">
-                <div class="">
-                    <label class="control-label col-xs-3">Количество:</label>
-                    <p class="bg-info"><input type="text" class="form-control input-lg" value="{{ item.reagent_count }}"></p>
-                </div>
+     <div class="col-xs-3">
+        <div class="">
+            <label class="control-label col-xs-3">Количество:</label>
+            <p class="bg-info"><input type="text" class="form-control input-lg" name="reagent_count" value="{{ item.reagent_count }}"></p>
+        </div>
 
-                <div class="">
-                    <label class="control-label col-xs-8">Единица измерения:</label>
-                    <p class="bg-info"><input type="text" class="form-control input-lg" value="{{ item.package_unit }}"></p>
-                </div>
-                <div class="">
-                     <label class="control-label col-xs-2">Фасовка:</label>
-        <p class="bg-info"><input type="text" class="form-control input-lg" value="{{ item.package }}"></p>
-                </div>
-                        <div class="">
-                     <label class="control-label col-xs-2">Замена:</label>
-        <p class="bg-info"><input type="text" class="form-control input-lg" value="Добавить поле в бд"></p>
-                </div>
+         <div class="">
+             <label class="control-label col-xs-8">Единица измерения:</label>
+             <p class="bg-info"><input type="text" class="form-control input-lg" name="package_unit"  value="{{ item.package_unit }}"></p>
+         </div>
+
+         <div class="">
+             <label class="control-label col-xs-2">Фасовка:</label>
+             <p class="bg-info"><input type="text" class="form-control input-lg" name="package" value="{{ item.package }}"></p>
+         </div>
+
+         <div class="">
+             <label class="control-label col-xs-2">Замена:</label>
+             <p class="bg-info"><input type="text" class="form-control input-lg" name="replacement" value="Добавить поле в бд"></p>
+         </div>
+
             </div>
         </div>
     </div>
@@ -106,10 +111,13 @@
     <div class="form-group">
         <div class="col-xs-12">
              <label class="control-label col-xs-1">Комментарии:</label>
-             <p class="bg-info"><input type="text" class="form-control" value="{{ reagent_comments }}"></p>
+             <p class="bg-info"><input type="text" class="form-control" name="reagent_comments" value="{{ item.reagent_comments }}"></p>
         </div>
     </div>
  </div>
-    <input type="submit" name='' value="Редактировать" onclick="return confirm('test');">
+
+    <input type="submit" name='copy' value="Копировать" onclick="return confirm('test');"   >
+
+    <input type="submit" name='edit' value="Редактировать" onclick="return confirm('test');"   >
 </form>
 
