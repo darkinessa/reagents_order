@@ -14,7 +14,7 @@ from app.order.models import ItemInOrder, Status
 @app.route('/index')
 # @login_required
 def index():
-        return render_template('index.html', title='Home', items=ItemInOrder.query.all())
+    return render_template('index.html', title='Home', items=ItemInOrder.query.all())
 
 
 @app.route('/login', methods=['GET', 'POST'])

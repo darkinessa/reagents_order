@@ -3,6 +3,11 @@
 {% set active_page = "admin" %}
 
 {% block app_content %}
+
+ {% if current_user | super_admin %}
+<a href="start_settings">Управление настройками сайта</a>
+
+{% endif %}
 <h1>Новые заказы</h1>
 <form action="/checked" name="checked" method="post">
 {% include '_table_reagents.html' %}
