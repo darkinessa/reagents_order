@@ -1,6 +1,7 @@
 from datetime import date
 
 from flask_login import UserMixin
+from sqlalchemy.sql import expression
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import db, login
@@ -19,8 +20,8 @@ class User(db.Model, UserMixin):
     position = db.Column(db.String(128), index=True)
     laboratory = db.Column(db.String(192), index=True)
     password = db.Column('password_hash', db.String(128))
-    is_admin = db.Column(db.Boolean(), default=False)
-    is_active = db.Column(db.Boolean(), default=False)
+    admin = db.Column(db.Boolean, default=False, nullable=False, index=True)
+    active = db.Column(db.Boolean, default=False, nullable=False, index=True)
     item_in_orders = db.relationship('ItemInOrder', backref='author', lazy='dynamic')
 
 
@@ -32,12 +33,6 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return '{}'.format(self.name)
-
-    def is_admin(self):
-        return self.is_admin is True
-
-    def is_active(self):
-        return self.is_active is True
 
 
 @login.user_loader

@@ -36,7 +36,7 @@ def super_admin(func):
 def admin_required(func):
     @wraps(func)
     def wrapped(*args, **kwargs):
-        if not current_user.is_admin:
+        if not current_user.admin:
             return redirect(url_for('index'))
         return func(*args, **kwargs)
 
@@ -45,7 +45,7 @@ def admin_required(func):
 
 @app.template_filter('is_admin')
 def is_admin(func):
-    if not current_user.is_admin:
+    if not current_user.admin:
         return False
     return True
 
@@ -60,6 +60,9 @@ def format_const(key, constants_list):
 @login_required
 @admin_required
 def admin():
+    print(current_user.admin)
+    if not current_user.admin:
+        print('ddddd')
     items = ItemInOrder.query.all()
     users = User.query.all()
     # print(users, len(users))
@@ -67,13 +70,7 @@ def admin():
 
     for item in items:
         item.aim_pretty = format_const(item.reagent_aim, AIM)
-
-        if item.urgency is 0:
-            print('h')
-        else:
-            print('cao')
         item.urgency_pretty = format_const(item.urgency, URGENCY)
-        print(item.urgency_pretty, item.aim_pretty)
 
     return render_template('admin.html', admin=admin, items=items)
 
@@ -85,7 +82,7 @@ def start_settings():
     status_table = Status.query.all()
     form1 = StatusAddForm()
     form2 = StatusDeleteForm()
-    print(status_table)
+    print(status_table, current_user.admin)
 
     if form1.validate_on_submit():
         if not status_table:

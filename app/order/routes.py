@@ -73,7 +73,7 @@ def delete_trash():
                 flash('Реагент не найден')
                 return redirect(url_for('delete_trash'))
 
-            if current_user != reagent.author and not current_user.roles[0].is_admin:
+            if current_user != reagent.author and not current_user.admin:
                 print(current_user, reagent.author)
                 flash('У вас нет прав на удаление этого реагента')
                 return redirect(url_for('delete_trash'))
@@ -107,7 +107,7 @@ def checked():
                 db.session.commit()
                 flash(action_flash)
 
-    if current_user.roles[0].is_admin:
+    if current_user.admin:
         return redirect(url_for('admin'))
 
     else:
