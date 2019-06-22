@@ -12,13 +12,14 @@ from flask_login import current_user, login_required
 @login_required
 def item_add():
     form = ReagentOrderForm()
+    print(form.reagent_aim.data, form.reagent_aim.data)
 
     if form.validate_on_submit():
         reagent = ItemInOrder(author=current_user,
                               reagent_name=form.reagent_name.data, package=form.package.data,
                               package_unit=form.package_unit.data, vendor_name=form.vendor_name.data,
                               catalogue_number=form.catalogue_number.data, url_reagent=form.url_reagent.data,
-                              urgency=form.urgency.data, reagent_comments=form.reagent_comments.data,
+                              urgency=int(form.urgency.data), reagent_comments=form.reagent_comments.data,
                               reagent_aim=form.reagent_aim.data, reagent_count=form.reagent_count.data,
                               item_status_id='1')
         db.session.add(reagent)
@@ -72,7 +73,7 @@ def delete_trash():
                 flash('Реагент не найден')
                 return redirect(url_for('delete_trash'))
 
-            if current_user != reagent.author and not current_user.roles[0].is_admin():
+            if current_user != reagent.author and not current_user.roles[0].is_admin:
                 print(current_user, reagent.author)
                 flash('У вас нет прав на удаление этого реагента')
                 return redirect(url_for('delete_trash'))
@@ -106,7 +107,7 @@ def checked():
                 db.session.commit()
                 flash(action_flash)
 
-    if current_user.roles[0].is_admin():
+    if current_user.roles[0].is_admin:
         return redirect(url_for('admin'))
 
     else:

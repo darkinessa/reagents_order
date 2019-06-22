@@ -20,9 +20,9 @@ class ReagentOrderForm(FlaskForm):
 
     url_reagent = StringField('Ссылка на страницу реактива на сайте производителя')
 
-    urgency = SelectField('Срочность заказа (стратегический означает, что можно заказать в течение полугода-года',
+    urgency = SelectField('Срочность заказа (стратегический означает, что можно заказать в течение полугода-года', coerce=int,
                           choices=URGENCY)
-    reagent_aim = SelectField('Выберите или введите цель заказа реактива для служебной записки', choices=AIM)
+    reagent_aim = SelectField('Выберите или введите цель заказа реактива для служебной записки', coerce=int, choices=AIM)
 
     reagent_comments = TextAreaField('Комментарий к реактиву')
 

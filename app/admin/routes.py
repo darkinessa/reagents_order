@@ -36,7 +36,7 @@ def super_admin(func):
 def admin_required(func):
     @wraps(func)
     def wrapped(*args, **kwargs):
-        if not current_user.roles or not current_user.roles[0].is_admin():
+        if not current_user.is_admin:
             return redirect(url_for('index'))
         return func(*args, **kwargs)
 
@@ -45,7 +45,7 @@ def admin_required(func):
 
 @app.template_filter('is_admin')
 def is_admin(func):
-    if not current_user.roles or not current_user.roles[0].is_admin():
+    if not current_user.is_admin:
         return False
     return True
 
