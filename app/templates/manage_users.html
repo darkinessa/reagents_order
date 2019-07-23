@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% set active_page = "admin" %}
+
+{% block app_content %}
+<h1>Привет суперадмин!</h1>
+<form action="/manage_users" name="checked" method="post">
+    {% macro has_active(field_name) %}
+    {%- if field_name == true %}
+    <div class="btn btn-xs btn-success active">On</div>
+
+    {% else %}
+    <div class="btn btn-xs btn-danger active">Off</div>
+
+    {% endif -%}
+    {%- endmacro %}
+
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" name="checks" value="">
+                    </label></div>
+            </th>
+            <th scope="col">id</th>
+
+            <th scope="col">Логин</th>
+            <th scope="col">Почта</th>
+            <th scope="col">Ф.И.О.</th>
+            <th scope="col">Телефон</th>
+            <th scope="col">Руководитель</th>
+            <th scope="col">Лаборатория</th>
+            <th scope="col">Должность</th>
+            <th scope="col">Админ</th>
+            <th scope="col">Активность</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for user in users %}
+
+        <tr>
+            <td>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" name="checks" value="{{ user.id }}">
+                    </label></div>
+            </td>
+            <td><p>{{ user.id }} </p></td>
+            <td><p>{{ user.username }} </p></td>
+            <td><p>{{ user.email }} </p></td>
+            <td><p>{{ user.name }} </p></td>
+            <td><p>{{ user.phone_number }} </p></td>
+            <td><p>{{ user.supervisor }} </p></td>
+            <td><p>{{ user.laboratory }} </p></td>
+            <td><p>{{ user.position}} </p></td>
+            <td>
+                {{ has_active(user.admin) }}
+
+            </td>
+            <td>
+                {{ has_active(user.active) }}
+
+
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <span class="glyphicon glyphicon-eye-open "></span>
+    <input class="btn btn-success btn-rounded" type="submit" name="_active" value="Активировать"
+           onclick="return confirm('Активировать?');">&nbsp;&nbsp;&nbsp;
+
+    <span class="glyphicon glyphicon-eye-close "></span>
+    <input class="btn btn-danger btn-rounded" type="submit" name="_deactive" value="Деактивировать"
+           onclick="return confirm('Деактивировать пользователя?');">&nbsp;&nbsp;&nbsp;
+
+    <span class="glyphicon glyphicon-thumbs-up">   </span>
+    <input class="btn btn-info btn-rounded" type="submit" name="_admin" value="Сделать администратором"
+           onclick="return confirm('Выдать доспуп в качестве администратора?');">&nbsp;&nbsp;&nbsp;
+
+    <span class="glyphicon glyphicon-thumbs-down ">   </span>
+    <input class="btn btn-danger btn-rounded" type="submit" name="_user" value="Снять администратора"
+           onclick="return confirm('Снять доступ в качестве администратора?');">&nbsp;&nbsp;&nbsp;
+
+    <span class="glyphicon glyphicon-trash "></span>
+    <input class="btn btn-warning btn-rounded" type="submit" name="_del_user" value="Удалить"
+           onclick="return confirm('Деактивировать пользователя?');">
+
+</form>
+{% endblock %}

@@ -127,10 +127,6 @@ def full_item(id):
     date = item.order_published
 
     strg = f'{item.order_published:%d.%m.%Y}'
-    print(strg)
-
-
-
 
     item.aim_pretty = format_const(item.reagent_aim, AIM)
     item.urgency_pretty = format_const(item.urgency, URGENCY)
@@ -166,8 +162,6 @@ def full_item(id):
             item.reagent_count = request.form['reagent_count']
             item.item_status_id = request.form['item_status']
 
-            print(item.item_status_id)
-
             def check_empty_error(check_function, field_name, error_text, field_caption):
                 if check_function(field_name):
                     return render_template('full_item.html', title=field_caption, item=item,
@@ -192,8 +186,6 @@ def full_item(id):
                 error = check_empty_error(check_f, field_name, error_text, field_caption)
                 if error:
                     return error
-
-            print(item.item_status_id, item, item.urgency)
 
             db.session.commit()
             flash('Реагент обновлен')

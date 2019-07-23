@@ -29,12 +29,17 @@
             </div>
             <div class="collapse navbar-collapse" id="#navbar-collapse-menu">
                 <ul class="nav-pills nav nav-justified">
+                    {% if current_user | super_admin %}
+                    <li class="{{ 'active' if active_page == 'start_settings' else '' }}">
+                        <a href="{{ url_for('start_settings') }}"><span class="glyphicon glyphicon-hand-right"></span> </a>
+                    </li>
+                    {% endif %}
                      <li class="{{ 'active' if active_page == 'index' else '' }}">
                           <a href="{{ url_for('index') }}"> Главная</a></li>
-                    {% if current_user.is_anonymous %}
+                    {% if  current_user.is_anonymous %}
                     <li class="{{ 'active' if active_page == 'login' else '' }}"><a href="{{ url_for('login') }}">Войти в личный кабинет</a></li>
                     <li class="{{ 'active' if active_page == 'registration' else '' }}"><a href="{{ url_for('registration') }}">Зарегистрироваться</a></li>
-                    {% else %}
+                    {% endif %}
                     <li class="{{ 'active' if active_page == 'item_add' else '' }}"><a href="{{ url_for('item_add') }}">Заказ реагентов</a></li>
                     {% if current_user | is_admin %}
                     <li class="{{ 'active' if active_page == 'admin' else '' }}"><a href="{{ url_for('admin') }}">Заказы</a></li>
@@ -42,7 +47,7 @@
                     <li class="{{ 'active' if active_page == 'user' else '' }}"><a href="{{ url_for('user', username=current_user.username) }}">Profile</a></li>
                     <li class="{{ 'active' if active_page == 'logout' else '' }}"><a href="{{ url_for('logout') }}">Выход</a></li>
 
-                    {% endif %}
+
 
 
 
