@@ -7,14 +7,11 @@ from app.order.models import Status
 
 
 class StatusAddForm(FlaskForm):
-    fill_table = SubmitField('Заполнить таблицу по умолчанию', render_kw={"class": "btn btn-info"})
-
-
-    def validate_admin(self, email):
-        user = User.query.filter_by(email=email.data).first()
-        if user not in SUPER_ADMIN_EMAILS:
-            raise ValidationError('У вас нет прав доступа вностить изменения в базу данных')
+    fill_table = SubmitField('Заполнить таблицу по умолчанию',
+            render_kw={"onclick": "return confirm('Вы действительно хотите обновить таблицу Статусы в базе данных?');"})
 
 
 class StatusDeleteForm(FlaskForm):
-    delete_table = SubmitField('Очистить базу данных')
+
+    delete_table = SubmitField('Очистить базу данных',
+            render_kw={"onclick": "return confirm('Вы действительно хотите очистить таблицу Статусы в базе данных?');"})
