@@ -25,10 +25,17 @@ def super_admin_required(func):
 
 @app.template_filter('super_admin')
 def super_admin(func):
+
     if not current_user.email or current_user.email not in SUPER_ADMIN_EMAILS:
         return False
     return True
 
+
+@app.template_filter('is_active')
+def is_active(func):
+    if current_user.active is False:
+        return False
+    return True
 
 def admin_required(func):
     @wraps(func)
@@ -54,17 +61,6 @@ def format_const(key, constants_list):
             return value[1]
 
 
-@app.route('/admin')
-@login_required
-@admin_required
-def admin():
-    items = ItemInOrder.query.all()
-
-    for item in items:
-        item.aim_pretty = format_const(item.reagent_aim, AIM)
-        item.urgency_pretty = format_const(item.urgency, URGENCY)
-
-    return render_template('admin.html', admin=admin, items=items)
 
 
 @app.route('/start_settings', methods=['GET', 'POST'])
@@ -173,3 +169,41 @@ def manage_users():
 
         return redirect(url_for('manage_users'))
     return render_template('manage_users.html', users=users)
+
+
+@app.route('/admin')
+@login_required
+@admin_required
+def admin():
+    items = ItemInOrder.query.all()
+
+    for item in items:
+        item.aim_pretty = format_const(item.reagent_aim, AIM)
+        item.urgency_pretty = format_const(item.urgency, URGENCY)
+
+    return render_template('admin.html', admin=admin, items=items)
+
+
+@app.route('/new_orders')
+@login_required
+@admin_required
+def new_orders():
+    items = ItemInOrder.query.filter_by(item_status_id='2').all()
+
+    for item in items:
+        item.aim_pretty = format_const(item.reagent_aim, AIM)
+        item.urgency_pretty = format_const(item.urgency, URGENCY)
+
+    return render_template('new_orders.html', admin=admin, items=items)
+
+@app.route('/other_orders')
+@login_required
+@admin_required
+def other_orders():
+    items = ItemInOrder.query.filter_by(item_status_id='3').all()
+
+    for item in items:
+        item.aim_pretty = format_const(item.reagent_aim, AIM)
+        item.urgency_pretty = format_const(item.urgency, URGENCY)
+
+    return render_template('other_orders.html', admin=admin, items=items)
