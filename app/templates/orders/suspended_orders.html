@@ -13,7 +13,7 @@
     {% include '_table_reagents.html' %}
     <input type="submit" name="_hand" value="Принять заказ"
            onclick="return confirm('После отправки заказа, вы не сможете вносить измения. Отправить заказ менеджеру?');">
-    <input type="submit" name="_dec" value="Отклонить" onclick="return confirm('test');">
-    <input type="submit" name="_sus" value="Отложить" onclick="return confirm('test');">
+    <input type="submit" name="_dec" value="Отклонить" onclick="return confirm('Вы хотите отклонить заказ?');">
+    <input type="submit" name="_del" value="Пометить на удаление" onclick="return confirm('Пометить заказ на удаление?');">
 </form>
 {% endblock %}
