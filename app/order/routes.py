@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from app import app, db
 from flask import redirect, render_template, url_for, flash, request
 
@@ -102,9 +104,11 @@ def checked():
 
         if action in request.form:
             for item_check in form_checks:
+                date=datetime.utcnow()
                 check_id = int(item_check)
                 reagent = ItemInOrder.query.get(check_id)
                 reagent.item_status_id = action_id
+                reagent.date_change = date
                 db.session.commit()
                 flash(action_flash)
 

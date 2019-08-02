@@ -17,17 +17,7 @@
 {% block navbar %}
 <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
     <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#navbar-collapse-menu"
-                    aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
 
-        </div>
         <div class="collapse navbar-collapse" id="#navbar-collapse-menu">
             <ul class="nav-pills nav nav-justified">
 
@@ -41,14 +31,6 @@
                 {% else %}
                 <li class="{{ 'active' if active_page == 'user' else '' }}"><a
                         href="{{ url_for('user', username=current_user.username) }}">Profile</a></li>
-                {% if current_user | super_admin %}
-                <li class="{{ 'active' if active_page == 'start_settings' else '' }}">
-                    <a href="{{ url_for('start_settings') }}"><span class="glyphicon glyphicon-hand-right"></span> </a>
-                </li>
-                <li class="{{ 'active' if active_page == 'manage_users' else '' }}">
-                    <a href="{{ url_for('manage_users') }}"><span class="glyphicon glyphicon-user"></span> </a>
-                </li>
-                {% endif %}
 
 
                 {% if current_user | is_active %}
@@ -67,10 +49,6 @@
                         href="{{ url_for('logout') }}">Выход</a></li>
                 {% endif %}
 
-
-                <li><a href="https://www.tocris.com/resources/molarity-calculator" target="_blank"> Калькулятор <span
-                        class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>
-                </li>
 
             </ul>
         </div>

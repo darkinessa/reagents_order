@@ -9,8 +9,15 @@ from app import app, db
 from app.admin.constants import SUPER_ADMIN_EMAILS, STATUS_ACTIONS
 from app.admin.forms import StatusAddForm, StatusDeleteForm
 from app.auth.models import User
+
 from app.order.constants import AIM, URGENCY
 from app.order.models import ItemInOrder, Status
+
+
+def format_const(key, constants_list):
+    for value in constants_list:
+        if key in value:
+            return value[1]
 
 
 def super_admin_required(func):
@@ -25,17 +32,10 @@ def super_admin_required(func):
 
 @app.template_filter('super_admin')
 def super_admin(func):
-
     if not current_user.email or current_user.email not in SUPER_ADMIN_EMAILS:
         return False
     return True
 
-
-@app.template_filter('is_active')
-def is_active(func):
-    if current_user.active is False:
-        return False
-    return True
 
 def admin_required(func):
     @wraps(func)
@@ -53,14 +53,6 @@ def is_admin(func):
     if not current_user.admin:
         return False
     return True
-
-
-def format_const(key, constants_list):
-    for value in constants_list:
-        if key in value:
-            return value[1]
-
-
 
 
 @app.route('/start_settings', methods=['GET', 'POST'])
@@ -195,6 +187,7 @@ def new_orders():
         item.urgency_pretty = format_const(item.urgency, URGENCY)
 
     return render_template('new_orders.html', admin=admin, items=items)
+
 
 @app.route('/other_orders')
 @login_required

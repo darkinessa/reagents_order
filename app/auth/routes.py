@@ -1,4 +1,3 @@
-
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -8,6 +7,13 @@ from app.auth.forms import LoginForm, RegistrationForm
 from app.auth.models import User
 from app.order.constants import AIM, URGENCY
 from app.order.models import ItemInOrder, Status
+
+
+@app.template_filter('is_active')
+def is_active(func):
+    if current_user.active is False:
+        return False
+    return True
 
 
 @app.route('/')
@@ -62,25 +68,16 @@ def registration():
 @app.route('/user/')
 @login_required
 def user():
-
     items = ItemInOrder.query.filter_by(user_id=current_user.id).filter_by(item_status_id='1').all()
 
     for item in items:
-
         item.aim_pretty = format_const(item.reagent_aim, AIM)
         item.urgency_pretty = format_const(item.urgency, URGENCY)
 
     return render_template('user.html', user=current_user, items=items)
 
 
-
-
 def format_const(key, constants_list):
     for value in constants_list:
         if key in value:
             return value[1]
-
-
-
-
-

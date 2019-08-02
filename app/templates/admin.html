@@ -3,23 +3,7 @@
 {% set active_page = "admin" %}
 
 {% block app_content %}
-
-
-
-<div class="container-fluid">
-  <div class="row" align="center">
-<a href ="{{url_for('manage_users')}}"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span> Управление пользователями </button></a>
-  </br>
-      <a href="{{url_for('new_orders')}}"><button type="button" class="btn btn-default">Новые</button></a>
-      <button type="button" class="btn btn-default">В обработке</button>
-      <button type="button" class="btn btn-default">У поставщика</button>
-      <button type="button" class="btn btn-default">Ожидаются</button>
-            <button type="button" class="btn btn-default">Исполненные</button>
-            <button type="button" class="btn btn-default">Отложенные</button>
-            <button type="button" class="btn btn-default">Отклоненные</button>
-            <button type="button" class="btn btn-default">Удаленные</button>
-  </div>
-</div>
+{% include '_orders_menu.html' %}
 
 
 <form action="/checked" name="checked" method="post">

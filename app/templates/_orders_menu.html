@@ -1,0 +1,28 @@
+<nav class="navbar" style="font-weight:bolder;" role="navigation" xmlns="http://www.w3.org/1999/html">
+
+    <div class="container-fluid">
+        <div class="row" align="center">
+            <div class="collapse navbar-collapse" id="#navbar-collapse-menu">
+                <ul class="nav-pills nav nav-justified">
+
+                    <li class="{{ 'active' if active_page == 'new_orders' else '' }}">
+                        <a href="{{url_for('new_orders')}}">Новые</a></li>
+                    <li class="{{ 'active' if active_page == 'index' else '' }}">
+                        <a href="{{url_for('new_orders')}}">В обработке</a></li>
+                    <li class="{{ 'active' if active_page == 'index' else '' }}">
+                        <a href="{{url_for('new_orders')}}">У поставщика</a></li>
+                    <li class="{{ 'active' if active_page == 'index' else '' }}">
+                        <a href="{{url_for('new_orders')}}">Ожидаются</a></li>
+                    <li class="{{ 'active' if active_page == 'index' else '' }}">
+                        <a href="{{url_for('new_orders')}}">Исполненные</a></li>
+                    <li class="{{ 'active' if active_page == 'index' else '' }}">
+                        <a href="{{url_for('new_orders')}}">Отложенные</a></li>
+                    <li class="{{ 'active' if active_page == 'index' else '' }}">
+                        <a href="{{url_for('new_orders')}}">Отклоненные</a></li>
+                    <li class="{{ 'active' if active_page == 'index' else '' }}">
+                        <a href="{{url_for('new_orders')}}">Удаленные</a></li>
+            </div>
+        </div>
+    </div>
+    </ul>
+</nav>

@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% set active_page = "admin" %}
+{% set active_page = "new_orders" %}
 
 {% block app_content %}
+
+{% include '_orders_menu.html' %}
 
 <h1>Новые заказы</h1>
 
