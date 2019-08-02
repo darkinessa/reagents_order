@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% set active_page = "admin" %}
+
+{% block app_content %}
+
+<div class="container-fluid">
+  <div class="row" align="center">
+      <a href="{{url_for('new_orders')}}"><button type="button" class="btn btn-default">Новые</button></a>
+      <button type="button" class="btn btn-default">В обработке</button>
+      <button type="button" class="btn btn-default">У поставщика</button>
+      <button type="button" class="btn btn-default">Ожидаются</button>
+            <button type="button" class="btn btn-default">Исполненные</button>
+            <button type="button" class="btn btn-default">Отложенные</button>
+            <button type="button" class="btn btn-default">Отклоненные</button>
+            <button type="button" class="btn btn-default">Удаленные</button>
+  </div>
+</div>
+
+
+<form action="/checked" name="checked" method="post">
+{% include '_table_reagents.html' %}
+    <input type="submit" name="_hand" value="Принять заказ" onclick="return confirm('После отправки заказа, вы не сможете вносить измения. Отправить заказ менеджеру?');">
+    <input type="submit" name="_dec" value="Отклонить" onclick="return confirm('test');">
+    <input type="submit" name="_sus" value="Отложить" onclick="return confirm('test');">
+</form>
+{% endblock %}
+
+<form action="/checked" name="checked" method="post">
+{% include '_table_reagents.html' %}
+    <input type="submit" name="_hand" value="Принять заказ" onclick="return confirm('После отправки заказа, вы не сможете вносить измения. Отправить заказ менеджеру?');">
+    <input type="submit" name="_dec" value="Отклонить" onclick="return confirm('test');">
+    <input type="submit" name="_sus" value="Отложить" onclick="return confirm('test');">
+</form>
+{% endblock %}

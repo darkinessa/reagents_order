@@ -1,0 +1,235 @@
+{# используется на странице full_item #}
+
+{% if error %}
+<div class="alert alert-danger" role="alert" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"><p
+        class=error><strong> {{ error
+    }}</strong></p></div>
+{% endif %}
+
+
+<form action="" name="full_item" method="post" class="form-horizontal">
+
+    <div class="row">
+        <div class="form-group">
+
+            <div class="col-xs-2">
+                <label class="control-label col-xs-2">ID:</label>
+                <p class="bg-info"><input name="id" type="text" class="form-control input-lg" value="{{ item.id }}"
+                                          disabled></p>
+            </div>
+
+            <div class="col-xs-2" style="padding:0">
+                <label class="control-label col-xs-9">№ заказа:</label>
+                <p class="bg-info"><input type="text" class="form-control input-lg" name="order_id"
+                                          value="Добавить в бд" disabled></p>
+            </div>
+
+
+            <div class="col-xs-2" style="padding:2">
+                <label class="control-label col-xs-3">Создан:</label>
+                <p class="bg-info"><input name="order_published" type="text" class="form-control input-lg"
+                                          value="{{item.order_published.strftime('%d.%m.%Y')}}" disabled></p>
+            </div>
+
+            <div class="col-xs-2" style="padding:0">
+                <label class="control-label col-xs-3">Изменен:</label>
+                <p class="bg-info"><input name="order_published" type="text" class="form-control input-lg"
+                                          value="{{item.date_change.strftime('%d.%m.%Y')}}" disabled></p>
+            </div>
+
+            <div class="col-xs-4">
+                <label class="control-label col-xs-2">Заказчик:</label>
+                <p class="bg-info"><input name="autor" type="text" class="form-control input-lg"
+                                          valuer="{{ item.author }}" value="{{ item.author }}" disabled></p>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    {% macro has_error(field_name) %}
+    {%- if field_with_error == field_name %} has-error {% endif -%}
+    {%- endmacro %}
+
+    <div class="row">
+        <div class="form-group">
+
+            <div class="col-xs-9">
+
+                <div class="{{ has_error('reagent_name') }} required control-label">
+                    <label class="control-label col-xs-2">Наименование:</label>
+                    <p class="bg-info"><input id="reagent_name" name="reagent_name" type="text"
+                                              class="form-control input-lg" value="{{ item.reagent_name }}"></p>
+
+                </div>
+
+                <div class="col-xs-5" style="padding:0">
+                    <label class="control-label col-xs-2">Производитель:</label>
+                    <p class="bg-info"><input type="text" class="form-control input-lg" name="vendor_name"
+                                              value="{{ item.vendor_name }}"></p>
+                </div>
+
+                <div class="col-xs-3" style="padding:3">
+                    <label class="control-label col-xs-2">Артикул:</label>
+                    <p class="bg-info"><input type="text" class="form-control input-lg" name="catalogue_number"
+                                              value="{{ item.catalogue_number}}"></p>
+                </div>
+
+                <div class="col-xs-4" style="padding:0">
+                    <label class="control-label col-xs-6">ОКПД 2:</label>
+                    <p class="bg-info"><input type="text" class="form-control input-lg" name="okpd"
+                                              value="Добавить поле в бд"></p>
+                </div>
+
+                <div class="col-xs-12" style="padding:0">
+                    <label class="control-label col-xs-2">Ссылка: <a href="{{ item.url_reagent }}" target="_blank"><span
+                            class="glyphicon glyphicon-new-window" aria-hidden="true"></a>
+                    </label>
+                    <p class="bg-info"><input type="text" class="form-control" name="url_reagent"
+                                              value="{{ item.url_reagent }}"></p>
+                </div>
+
+                <div class="col-xs-3" style="padding:0">
+                    <label class="control-label col-xs-3">Срочность:</label>
+                    <p class="bg-info"><select type="text" class="form-control input-lg" name="urgency">
+                        {% for s in select_urgency %}
+                        <option {% if s[0]== item.urgency %} selected {% endif %} value="{{ s[0] }}">{{s[1]}}</option>
+                        {% endfor %}
+                    </p>
+                    </select>
+
+                </div>
+
+                <div class="col-xs-6">
+                    <label class="control-label col-xs-3">Цель:</label>
+                    <p class="bg-info"><select class="form-control input-lg" name="reagent_aim"
+                                               value="{{ item.aim_pretty }}">
+                        {% for s in select_aim %}
+                        <option {% if s[0]== item.reagent_aim %} selected {% endif %} value="{{ s[0] }}">{{s[1]}}
+                        </option>
+                        {% endfor %}
+                    </p>
+                    </select>
+
+                </div>
+
+                <div class="col-xs-3" style="padding:0">
+                    <label class="control-label col-xs-3">Статус:</label>
+                    <p class="bg-info"><select class="form-control input-lg" name="item_status">
+                        {% for s in select_fields %}
+
+                        <option {% if s.id== item.item_status_id %} selected {% endif %} value="{{s.id}}">{{s.name}}
+                        </option>
+
+                        {% endfor %}
+                    </select>
+                    </p>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="{{ has_error('reagent_count') }} ">
+                    <label for="reagent_count" class="control-label col-xs-3">Количество:</label>
+                    <p class="bg-info"><input id="reagent_count" type="number" class="form-control input-lg"
+                                              name="reagent_count" value="{{ item.reagent_count }}"></p>
+
+                </div>
+
+
+                <div class="">
+                    <label class="control-label col-xs-8">Единица измерения:</label>
+                    <p class="bg-info"><input type="text" class="form-control input-lg" name="package_unit"
+                                              value="{{ item.package_unit }}"></p>
+                </div>
+
+                <div class="{{ has_error('package') }} ">
+                    <label class="control-label col-xs-2">Фасовка:</label>
+                    <p class="bg-info"><input id="package" type="text" class="form-control input-lg" name="package"
+                                              value="{{ item.package }}"></p>
+                </div>
+
+                <div class="">
+                    <label class="control-label col-xs-2">Замена:</label>
+                    <p class="bg-info"><input type="text" class="form-control input-lg" name="replacement"
+                                              value="Добавить поле в бд"></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="form-group">
+            <div class="col-xs-12">
+                <label class="control-label col-xs-1">Комментарии:</label>
+                <p class="bg-info"><textarea type="text" class="form-control" name="reagent_comments"
+                                             value="{{ item.reagent_comments }}" rows="3"></textarea></p>
+            </div>
+        </div>
+    </div>
+
+    <input type="submit" name='copy' value="Копировать" onclick="return confirm('test');">
+
+    <input type="submit" name='edit' value="Редактировать" onclick="return confirm('test');">
+</form>
+
+
+<!--<table>-->
+<!--<tbody>-->
+
+<!--<thead class="thead-dark">-->
+<!--<tr>-->
+
+<!--<th scope="col">Название реактива</th>-->
+<!--<th scope="col">Фасовка</th>-->
+<!--<th scope="col">Единица измерения</th>-->
+<!--<th scope="col">Количество</th>-->
+<!--<th scope="col">Производитель</th>-->
+<!--<th scope="col">Артикул</th>-->
+<!--<th scope="col">Ссылка</th>-->
+<!--<th scope="col">Срочность</th>-->
+<!--<th scope="col">Цель заказа</th>-->
+<!--<th scope="col">Комментарий</th>-->
+<!--<th scope="col">Время заказа</th>-->
+<!--<th scope="col">Статус заказа</th>-->
+<!--<th scope="col">Выбрать</th>-->
+
+<!--</tr>-->
+<!--</thead>-->
+
+
+<!--{% for item in items %}-->
+
+<!--<tr>-->
+
+<!--<td><p>{{ item.reagent_name }} </p></td>-->
+<!--<td><p>{{ item.package }} </p></td>-->
+<!--<td><p>{{ item.package_unit }} </p> </td>-->
+<!--<td><p>{{ item.reagent_count }}  </p></td>-->
+<!--<td><p>{{ item.vendor_name }} </p></td>-->
+<!--<td><p>{{ item.catalogue_number }} </p></td>-->
+<!--<td><p>{{ item.url_reagent }} </p></td>-->
+<!--<td><p>{{ item.urgency_pretty }} </p> </td>-->
+<!--<td><p>{{ item.aim_pretty }} </p></td>-->
+<!--<td><p>{{ item.reagent_comments }}  </p></td>-->
+<!--<td><p>{{ moment(item.order_published).format('LL') }} </p> </td>-->
+<!--<td><p>{{ item.item_status }}  </p></td>-->
+
+<!--<td>-->
+<!--<div class="form-check">-->
+<!--<label class="form-check-label">-->
+<!--<input type="checkbox" name="checks" value="{{ item.id }}">-->
+
+<!--<br></label></div>-->
+
+
+<!--</td>-->
+
+<!--</tr>-->
+<!--{% endfor %}-->
+<!--</tbody>-->
+<!--</table>-->
+
+
+

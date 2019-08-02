@@ -1,0 +1,202 @@
+from flask import flash, redirect, render_template, request, url_for, current_app
+from flask_login import login_required, login_manager, current_user
+
+from werkzeug.urls import url_parse
+
+from functools import wraps
+
+from app import app, db
+from app.admin.constants import SUPER_ADMIN_EMAILS, STATUS_ACTIONS
+from app.admin.forms import StatusAddForm, StatusDeleteForm
+from app.auth.models import User
+
+from app.order.constants import AIM, URGENCY
+from app.order.models import ItemInOrder, Status
+
+
+def format_const(key, constants_list):
+    for value in constants_list:
+        if key in value:
+            return value[1]
+
+
+def super_admin_required(func):
+    @wraps(func)
+    def wrapped(*args, **kwargs):
+        if not current_user.email or current_user.email not in SUPER_ADMIN_EMAILS:
+            return redirect(url_for('index'))
+        return func(*args, **kwargs)
+
+    return wrapped
+
+
+@app.template_filter('super_admin')
+def super_admin(func):
+    if not current_user.email or current_user.email not in SUPER_ADMIN_EMAILS:
+        return False
+    return True
+
+
+def admin_required(func):
+    @wraps(func)
+    def wrapped(*args, **kwargs):
+        if not current_user.admin:
+            if not current_user.email or current_user.email not in SUPER_ADMIN_EMAILS:
+                return redirect(url_for('index'))
+        return func(*args, **kwargs)
+
+    return wrapped
+
+
+@app.template_filter('is_admin')
+def is_admin(func):
+    if not current_user.admin:
+        return False
+    return True
+
+
+@app.route('/start_settings', methods=['GET', 'POST'])
+@login_required
+@super_admin_required
+def start_settings():
+    status_table = Status.query.all()
+    users = User.query.limit(3).all()
+    form1 = StatusAddForm()
+    form2 = StatusDeleteForm()
+
+    if form1.validate_on_submit():
+        if not status_table:
+            if current_user.email not in SUPER_ADMIN_EMAILS:
+                flash('У вас нет прав доступа вностить изменения в базу данных')
+                return redirect(url_for('start_settings'))
+
+            else:
+                for status in STATUS_ACTIONS:
+                    add_status = Status(name=status[1], action=status[2], flashes=status[3])
+                    db.session.add(add_status)
+                    db.session.commit()
+                flash('Таблица Статусы в базе данных обновлена')
+                return redirect(url_for('start_settings'))
+
+    if form2.validate_on_submit():
+        if current_user.email not in SUPER_ADMIN_EMAILS:
+            flash('У вас нет прав доступа вностить изменения в базу данных')
+            return redirect(url_for('start_settings'))
+        elif status_table:
+            db.session.query(Status).delete(synchronize_session='evaluate')
+            db.session.commit()
+            flash('Таблица Статусы в базе данных очищена')
+            return redirect(url_for('start_settings'))
+
+    return render_template('start_settings.html', status=status_table, form1=form1, form2=form2, users=users)
+
+
+@app.route('/manage_users', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def manage_users():
+    users = User.query.all()
+
+    form_checks = request.form.getlist('checks')
+
+    if '_active' in request.form:
+        for item_check in form_checks:
+            check_id = int(item_check)
+            user = User.query.get(check_id)
+            user.active = True
+            db.session.commit()
+            flash(f'Пользователь {user.name} активирован')
+        return redirect(url_for('manage_users'))
+
+    if '_deactive' in request.form:
+
+        for item_check in form_checks:
+            check_id = int(item_check)
+            user = User.query.get(check_id)
+            user.active = False
+
+            db.session.commit()
+            flash(f'Пользователь {user.name} деактивирован')
+        return redirect(url_for('manage_users'))
+
+    if '_admin' in request.form:
+        for item_check in form_checks:
+            check_id = int(item_check)
+            user = User.query.get(check_id)
+            user.admin = True
+            db.session.commit()
+            flash(f'Пользователь {user.name} назначен администратором')
+        return redirect(url_for('manage_users'))
+
+    if '_user' in request.form:
+
+        for item_check in form_checks:
+            check_id = int(item_check)
+            user = User.query.get(check_id)
+            user.admin = False
+
+            db.session.commit()
+            flash(f"Администратор {user.name} понижен до пользователя")
+        return redirect(url_for('manage_users'))
+
+    if '_del_user' in request.form:
+        # order = ItemInOrder.query.all()
+
+        for item_check in form_checks:
+            check_id = int(item_check)
+            user = User.query.get(check_id)
+            if not current_user.email or current_user.email not in SUPER_ADMIN_EMAILS:
+                flash('У вас нет доступа на удаление пользователей')
+                return redirect(url_for('manage_users'))
+            if user.active is True:
+                flash('Вы не можете удалить активного пользователя')
+                return redirect(url_for('manage_users'))
+            # for item in order:
+            #     if item.author == user:
+            #         flash('автор')
+            #         return redirect(url_for('manage_users'))
+            db.session.delete(user)
+            db.session.commit()
+            flash(f'Пользователь {user.name} удален')
+
+        return redirect(url_for('manage_users'))
+    return render_template('manage_users.html', users=users)
+
+
+@app.route('/admin')
+@login_required
+@admin_required
+def admin():
+    items = ItemInOrder.query.all()
+
+    for item in items:
+        item.aim_pretty = format_const(item.reagent_aim, AIM)
+        item.urgency_pretty = format_const(item.urgency, URGENCY)
+
+    return render_template('admin.html', admin=admin, items=items)
+
+
+@app.route('/new_orders')
+@login_required
+@admin_required
+def new_orders():
+    items = ItemInOrder.query.filter_by(item_status_id='2').all()
+
+    for item in items:
+        item.aim_pretty = format_const(item.reagent_aim, AIM)
+        item.urgency_pretty = format_const(item.urgency, URGENCY)
+
+    return render_template('new_orders.html', admin=admin, items=items)
+
+
+@app.route('/other_orders')
+@login_required
+@admin_required
+def other_orders():
+    items = ItemInOrder.query.filter_by(item_status_id='3').all()
+
+    for item in items:
+        item.aim_pretty = format_const(item.reagent_aim, AIM)
+        item.urgency_pretty = format_const(item.urgency, URGENCY)
+
+    return render_template('other_orders.html', admin=admin, items=items)

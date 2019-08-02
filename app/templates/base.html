@@ -1,0 +1,79 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block title %}
+{% if title %} {{ title }}
+{% else %}Сервис заказа реагентов{% endif %}
+{% endblock %}
+
+
+{% block scripts %}
+{{ super() }}
+{{ moment.include_moment() }}
+
+
+{% endblock %}
+
+
+{% block navbar %}
+<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <div class="container">
+
+        <div class="collapse navbar-collapse" id="#navbar-collapse-menu">
+            <ul class="nav-pills nav nav-justified">
+
+                <li class="{{ 'active' if active_page == 'index' else '' }}">
+                    <a href="{{ url_for('index') }}"> Главная</a></li>
+                {% if current_user.is_anonymous %}
+                <li class="{{ 'active' if active_page == 'login' else '' }}"><a href="{{ url_for('login') }}">Войти в
+                    личный кабинет</a></li>
+                <li class="{{ 'active' if active_page == 'registration' else '' }}"><a
+                        href="{{ url_for('registration') }}">Зарегистрироваться</a></li>
+                {% else %}
+                <li class="{{ 'active' if active_page == 'user' else '' }}"><a
+                        href="{{ url_for('user', username=current_user.username) }}">Profile</a></li>
+
+
+                {% if current_user | is_active %}
+                <li class="{{ 'active' if active_page == 'item_add' else '' }}"><a href="{{ url_for('item_add') }}">Заказ
+                    реагентов</a></li>
+
+                {% if current_user | is_admin %}
+                <li class="{{ 'active' if active_page == 'admin' else '' }}"><a href="{{ url_for('admin') }}">Заказы</a>
+                </li>
+                {% endif %}
+
+
+                {% endif %}
+
+                <li class="{{ 'active' if active_page == 'logout' else '' }}"><a
+                        href="{{ url_for('logout') }}">Выход</a></li>
+                {% endif %}
+
+
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-info" role="alert">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    {# application content needs to be provided in the app_content block #}
+    {% block app_content %}{% endblock %}
+</div>
+{% include '_footer.html' %}
+{% endblock %}
+
+
+
+
+
+

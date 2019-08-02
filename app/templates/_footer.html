@@ -1,0 +1,33 @@
+
+    <p><br> <br> <br> </p>
+<div class="mastfoot" align="center">
+        <div class="inner">
+
+            <div class="container">
+            <div class="collapse navbar-collapse" id="#navbar-collapse-menu" style="background-color: #e3f2fd;">
+            <ul class="nav-pills nav nav-justified">
+                {% if current_user.is_anonymous %}
+                <li><p>&#xA9;2019</p></li>
+                {% else %}
+
+                <li><a href="https://www.tocris.com/resources/molarity-calculator" target="_blank"> Молярный калькулятор <span
+                        class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>
+                </li>
+
+                {% if current_user | is_admin %}
+                <li class="{{ 'active' if active_page == 'manage_users' else '' }}">
+                    <a href="{{ url_for('manage_users') }}"><span class="glyphicon glyphicon-user"></span> Управление пользователями </a>
+                </li>
+                           {% if current_user | super_admin %}
+                <li class="{{ 'active' if active_page == 'start_settings' else '' }}">
+                    <a href="{{ url_for('start_settings') }}"><span class="glyphicon glyphicon-hand-right"></span> Стартовые настройки</a>
+                </li>
+                {% endif %}
+                {% endif %}
+                {% endif %}
+            </ul></div>
+            </div>
+        </div>
+      </div>
+
+<p><br></p>

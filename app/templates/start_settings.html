@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% set active_page = "start_settings" %}
+
+{% block app_content %}
+<h2>Привет суперадмин!</h2>
+
+<p>
+    Для корректной работы сервиса, необходимо сделать первоначальные настройки сайта:</p>
+<div>
+    <ol>
+        <li>Назначить <strong><a href="{{ url_for('manage_users') }}" target="_blank"><span class="glyphicon glyphicon-wrench"></span> Администратора сайта</a></strong>,
+            который в дальнейшем сможет управлять пользователями и заказами.<br>
+        И активировать себя, что бы иметь доступ к полному функционалу сайта.</li>
+        <br>
+
+
+<li>Заполнить таблицу <b>Статусы</b> в базе данных</li>
+<ul>
+    <li>Значения столбцов <b>ID</b> и <b>Действие(action)</b> завязаны на програмный код и не могут быть
+        изменены или модифицированы,
+        во избежании ошибок в работе сервиса
+    </li>
+    <br>
+    <li>Значения столбца <b>Статус заказа (name)</b>это текст, который отображается в различных таблицах, где
+        отображается статус заказы.
+        В данном столбце изменения текста допустимы.
+    </li>
+    <br>
+    <li>Значения столбца <b>Текст сообщения (Flash)</b> это текст, который отображается при соверщении действий
+        со статусом заказа.
+        В данном столбце изменения текста допустимы.
+    </li>
+    <br>
+    <li>Если что-то пошло не так, можно очистить таблицу со статусами в базе данных, нажав на конопку <b>Очистить
+        базу данных</b>,
+        а затем заново заполнить таблицу по умолчанию, нажав соответсвенную кнопку.
+    </li>
+    <br>
+    <li>В конце старницы приведена аутентичная таблица со статусами,
+        с которой можно свериться при редактировании каких-то полей через веб-интерфейс, либо в файлах исходного
+        кода.
+    </li>
+    <br>
+
+</ul>
+
+</ol>
+</div>
+<p>
+    {% if not status %}
+<div class="row">
+    <div class="col-xs-4">
+        {{ wtf.quick_form(form1, button_map={'fill_table':'primary'}) }}
+    </div>
+</div>
+{% endif %}
+</p>
+
+<div>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+        <tr>
+
+            <th scope="col">ID</th>
+
+            <th scope="col">Статус заказа (name)</th>
+            <th scope="col">Действие (action)</th>
+            <th scope="col">Текст сообщения (flashes)</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for status in status %}
+
+        <tr>
+
+            <td><p>{{ status.id }} </p></td>
+            <td><p>{{ status.name }} </p></td>
+            <td><p>{{ status.action }} </p></td>
+            <td><p>{{ status.flashes }} </p></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% if status %}
+<div class="row">
+    <div class="col-xs-4">
+        {{ wtf.quick_form(form2, button_map={'delete_table':'primary'}) }}
+    </div>
+</div>
+{% endif %}
+
+
+<br><br>
+<table class="table table-bordered">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col"><p class="text-danger">ID</p></th>
+        <th scope="col"><p>Статус заказа</p></th>
+        <th scope="col"><p class="text-danger">Действие</p></th>
+        <th scope="col"><p>Текст сообщения</p></th>
+    </tr>
+    <tr>
+        <td><p class="text-danger">1</p></td>
+        <td>Черновик</td>
+        <td><p class="text-danger">_draft</p></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><p class="text-danger">2</p></td>
+        <td>Новый заказ</td>
+        <td><p class="text-danger">_send</p></td>
+        <td>Заказ отправлен на обработку менеджеру</td>
+    </tr>
+    <tr>
+        <td><p class="text-danger">3</p></td>
+        <td>Обработка</td>
+        <td><p class="text-danger">_hand</p></td>
+        <td>Заказ принят менеджером</td>
+    </tr>
+    <tr>
+        <td><p class="text-danger">4</p></td>
+        <td>Передан поставщику</td>
+        <td><p class="text-danger">_pass</p></td>
+        <td>Заказ передан поставщику</td>
+    </tr>
+    <tr>
+        <td><p class="text-danger">5</p></td>
+        <td>Ожидается поставка</td>
+        <td><p class="text-danger">_wait</p></td>
+        <td>Ожидается поставка</td>
+    </tr>
+    <tr>
+        <td><p class="text-danger">6</p></td>
+        <td>Пришла поставка</td>
+        <td><p class="text-danger">_rec</p></td>
+        <td>Пришла поставка</td>
+    </tr>
+    <tr>
+        <td><p class="text-danger">7</p></td>
+        <td>Отклонено</td>
+        <td><p class="text-danger">_dec</p></td>
+        <td>Заказ отклонен</td>
+    </tr>
+    <tr>
+        <td><p class="text-danger">8</p></td>
+        <td>Отложено</td>
+        <td><p class="text-danger">_sus</p></td>
+        <td>Заказ отложен</td>
+    </tr>
+    <tr>
+        <td><p class="text-danger">9</p></td>
+        <td>На удаление</td>
+        <td><p class="text-danger">_del</p></td>
+        <td>Заказ перемещен в папку удаленные</td>
+    </tr>
+    </thead>
+
+</table>
+
+
+<!--<form action="/checked" name="checked" method="post">-->
+<!--{% include '_table_reagents.html' %}-->
+<!--<input type="submit" name="_hand" value="Принять заказ"-->
+<!--onclick="return confirm('После отправки заказа, вы не сможете вносить измения. Отправить заказ менеджеру?');">-->
+<!--<input type="submit" name="_dec" value="Отклонить" onclick="return confirm('test');">-->
+<!--<input type="submit" name="_sus" value="Отложить" onclick="return confirm('test');">-->
+<!--</form>-->
+{% endblock %}
