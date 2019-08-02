@@ -1,0 +1,19 @@
+<title>Отложенные заказы</title>
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% set active_page = "suspended_orders" %}
+
+{% block app_content %}
+
+{% include '_orders_menu.html' %}
+
+<h1>Отложенные заказы</h1>
+
+<form action="/checked" name="checked" method="post">
+    {% include '_table_reagents.html' %}
+    <input type="submit" name="_hand" value="Принять заказ"
+           onclick="return confirm('После отправки заказа, вы не сможете вносить измения. Отправить заказ менеджеру?');">
+    <input type="submit" name="_dec" value="Отклонить" onclick="return confirm('test');">
+    <input type="submit" name="_sus" value="Отложить" onclick="return confirm('test');">
+</form>
+{% endblock %}

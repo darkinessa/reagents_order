@@ -186,17 +186,96 @@ def new_orders():
         item.aim_pretty = format_const(item.reagent_aim, AIM)
         item.urgency_pretty = format_const(item.urgency, URGENCY)
 
-    return render_template('new_orders.html', admin=admin, items=items)
+    return render_template('orders/new_orders.html', admin=admin, items=items)
 
 
-@app.route('/other_orders')
+@app.route('/handling_orders')
 @login_required
 @admin_required
-def other_orders():
+def handling_orders():
     items = ItemInOrder.query.filter_by(item_status_id='3').all()
 
     for item in items:
         item.aim_pretty = format_const(item.reagent_aim, AIM)
         item.urgency_pretty = format_const(item.urgency, URGENCY)
 
-    return render_template('other_orders.html', admin=admin, items=items)
+    return render_template('orders/handling_orders.html', admin=admin, items=items)
+
+
+@app.route('/pass_orders')
+@login_required
+@admin_required
+def pass_orders():
+    items = ItemInOrder.query.filter_by(item_status_id='4').all()
+
+    for item in items:
+        item.aim_pretty = format_const(item.reagent_aim, AIM)
+        item.urgency_pretty = format_const(item.urgency, URGENCY)
+
+    return render_template('orders/pass_orders.html', admin=admin, items=items)
+
+
+@app.route('/wait_orders')
+@login_required
+@admin_required
+def wait_orders():
+    items = ItemInOrder.query.filter_by(item_status_id='5').all()
+
+    for item in items:
+        item.aim_pretty = format_const(item.reagent_aim, AIM)
+        item.urgency_pretty = format_const(item.urgency, URGENCY)
+
+    return render_template('orders/wait_orders.html', admin=admin, items=items)
+
+
+@app.route('/received_orders')
+@login_required
+@admin_required
+def received_orders():
+    items = ItemInOrder.query.filter_by(item_status_id='6').all()
+
+    for item in items:
+        item.aim_pretty = format_const(item.reagent_aim, AIM)
+        item.urgency_pretty = format_const(item.urgency, URGENCY)
+
+    return render_template('orders/received_orders.html', admin=admin, items=items)
+
+
+@app.route('/declined_orders')
+@login_required
+@admin_required
+def declined_orders():
+    items = ItemInOrder.query.filter_by(item_status_id='7').all()
+
+    for item in items:
+        item.aim_pretty = format_const(item.reagent_aim, AIM)
+        item.urgency_pretty = format_const(item.urgency, URGENCY)
+
+    return render_template('orders/declined_orders.html', admin=admin, items=items)
+
+
+@app.route('/suspended_orders')
+@login_required
+@admin_required
+def suspended_orders():
+    items = ItemInOrder.query.filter_by(item_status_id='8').all()
+
+    for item in items:
+        item.aim_pretty = format_const(item.reagent_aim, AIM)
+        item.urgency_pretty = format_const(item.urgency, URGENCY)
+
+    return render_template('orders/suspended_orders.html', admin=admin, items=items)
+
+
+@app.route('/deleted_orders')
+@login_required
+@admin_required
+def deleted_orders():
+    items = ItemInOrder.query.filter_by(item_status_id='9').all()
+
+    for item in items:
+        item.aim_pretty = format_const(item.reagent_aim, AIM)
+        item.urgency_pretty = format_const(item.urgency, URGENCY)
+
+    return render_template('orders/deleted_orders.html', admin=admin, items=items)
+

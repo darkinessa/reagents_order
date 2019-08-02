@@ -1,9 +1,10 @@
+<title>Управление пользователями</title>
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% set active_page = "manage_users" %}
 
 {% block app_content %}
-<h1>Привет суперадмин!</h1>
+<h1>Управление пользователями</h1>
 <form action="/manage_users" name="checked" method="post">
     {% macro has_active(field_name) %}
     {%- if field_name == true %}

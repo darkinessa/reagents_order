@@ -1,24 +1,24 @@
+
 {% extends "base.html" %}
 
 
 {% block app_content %}
-<h4><small>Заказ:&emsp;</small>{{ item.reagent_name }}</h4>
+<h4>
+    <small>Заказ:&emsp;</small>
+    {{ item.reagent_name }}
+</h4>
 <div><br></div>
 
 <div class="container">
-{% include 'edit_item.html' %}
+    {% include 'edit_item.html' %}
 </div>
 
 {% block scripts %}
-    {{ super() }}
+{{ super() }}
 
-    {% include 'edit_item_js.html' %}
+{% include 'edit_item_js.html' %}
 
 
 {% endblock %}
 
 {% endblock %}
-
-
-
-

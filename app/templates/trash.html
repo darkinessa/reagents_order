@@ -1,3 +1,4 @@
+<title>Удаленные заказы</title>
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% set active_page = "user" %}
@@ -6,8 +7,9 @@
 <h1>Удаленные позиции:</h1>
 
 <form action="/delete_trash" name="checked" method="post">
-{% include 'table_reagents_.html' %}
-    <input type="submit" name="delete" value="Удалить" onclick="return confirm('Запись будет удалена из базы, без возможности восстановления. Удалить?');">
+    {% include 'table_reagents_.html' %}
+    <input type="submit" name="delete" value="Удалить"
+           onclick="return confirm('Запись будет удалена из базы, без возможности восстановления. Удалить?');">
 
 </form>
 {% endblock %}

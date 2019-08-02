@@ -7,22 +7,23 @@
 
                     <li class="{{ 'active' if active_page == 'new_orders' else '' }}">
                         <a href="{{url_for('new_orders')}}">Новые</a></li>
-                    <li class="{{ 'active' if active_page == 'index' else '' }}">
-                        <a href="{{url_for('new_orders')}}">В обработке</a></li>
-                    <li class="{{ 'active' if active_page == 'index' else '' }}">
-                        <a href="{{url_for('new_orders')}}">У поставщика</a></li>
-                    <li class="{{ 'active' if active_page == 'index' else '' }}">
-                        <a href="{{url_for('new_orders')}}">Ожидаются</a></li>
-                    <li class="{{ 'active' if active_page == 'index' else '' }}">
-                        <a href="{{url_for('new_orders')}}">Исполненные</a></li>
-                    <li class="{{ 'active' if active_page == 'index' else '' }}">
-                        <a href="{{url_for('new_orders')}}">Отложенные</a></li>
-                    <li class="{{ 'active' if active_page == 'index' else '' }}">
-                        <a href="{{url_for('new_orders')}}">Отклоненные</a></li>
-                    <li class="{{ 'active' if active_page == 'index' else '' }}">
-                        <a href="{{url_for('new_orders')}}">Удаленные</a></li>
+                    <li class="{{ 'active' if active_page == 'handling_orders' else '' }}">
+                        <a href="{{url_for('handling_orders')}}">В обработке</a></li>
+                    <li class="{{ 'active' if active_page == 'pass_orders' else '' }}">
+                        <a href="{{url_for('pass_orders')}}">У поставщика</a></li>
+                    <li class="{{ 'active' if active_page == 'wait_orders' else '' }}">
+                        <a href="{{url_for('wait_orders')}}">Ожидаются</a></li>
+                    <li class="{{ 'active' if active_page == 'received_orders' else '' }}">
+                        <a href="{{url_for('received_orders')}}">Исполненные</a></li>
+                    <li class="{{ 'active' if active_page == 'suspended_orders' else '' }}">
+                        <a href="{{url_for('suspended_orders')}}">Отложенные</a></li>
+                    <li class="{{ 'active' if active_page == 'declined_orders' else '' }}">
+                        <a href="{{url_for('declined_orders')}}">Отклоненные</a></li>
+                    <li class="{{ 'active' if active_page == 'deleted_orders' else '' }}">
+                        <a href="{{url_for('deleted_orders')}}">Удаленные</a></li>
+                     </ul>
             </div>
         </div>
     </div>
-    </ul>
+
 </nav>
