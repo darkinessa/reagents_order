@@ -2,7 +2,7 @@ from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 
-from app import app, db
+from app import app
 from app.auth.forms import LoginForm, RegistrationForm
 from app.auth.models import User
 from app.order.constants import AIM, URGENCY

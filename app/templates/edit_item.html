@@ -168,67 +168,7 @@
         </div>
     </div>
 
-    <input type="submit" name='copy' value="Копировать" onclick="return confirm('test');">
+    <input type="submit" name='copy' value="Копировать" onclick="return confirm('Скопировать реагент?');">
 
-    <input type="submit" name='edit' value="Редактировать" onclick="return confirm('test');">
+    <input type="submit" name='edit' value="Сохранить изменения" onclick="return confirm('Вы действительно хотите сохранить изменения?');">
 </form>
-
-
-<!--<table>-->
-<!--<tbody>-->
-
-<!--<thead class="thead-dark">-->
-<!--<tr>-->
-
-<!--<th scope="col">Название реактива</th>-->
-<!--<th scope="col">Фасовка</th>-->
-<!--<th scope="col">Единица измерения</th>-->
-<!--<th scope="col">Количество</th>-->
-<!--<th scope="col">Производитель</th>-->
-<!--<th scope="col">Артикул</th>-->
-<!--<th scope="col">Ссылка</th>-->
-<!--<th scope="col">Срочность</th>-->
-<!--<th scope="col">Цель заказа</th>-->
-<!--<th scope="col">Комментарий</th>-->
-<!--<th scope="col">Время заказа</th>-->
-<!--<th scope="col">Статус заказа</th>-->
-<!--<th scope="col">Выбрать</th>-->
-
-<!--</tr>-->
-<!--</thead>-->
-
-
-<!--{% for item in items %}-->
-
-<!--<tr>-->
-
-<!--<td><p>{{ item.reagent_name }} </p></td>-->
-<!--<td><p>{{ item.package }} </p></td>-->
-<!--<td><p>{{ item.package_unit }} </p> </td>-->
-<!--<td><p>{{ item.reagent_count }}  </p></td>-->
-<!--<td><p>{{ item.vendor_name }} </p></td>-->
-<!--<td><p>{{ item.catalogue_number }} </p></td>-->
-<!--<td><p>{{ item.url_reagent }} </p></td>-->
-<!--<td><p>{{ item.urgency_pretty }} </p> </td>-->
-<!--<td><p>{{ item.aim_pretty }} </p></td>-->
-<!--<td><p>{{ item.reagent_comments }}  </p></td>-->
-<!--<td><p>{{ moment(item.order_published).format('LL') }} </p> </td>-->
-<!--<td><p>{{ item.item_status }}  </p></td>-->
-
-<!--<td>-->
-<!--<div class="form-check">-->
-<!--<label class="form-check-label">-->
-<!--<input type="checkbox" name="checks" value="{{ item.id }}">-->
-
-<!--<br></label></div>-->
-
-
-<!--</td>-->
-
-<!--</tr>-->
-<!--{% endfor %}-->
-<!--</tbody>-->
-<!--</table>-->
-
-
-

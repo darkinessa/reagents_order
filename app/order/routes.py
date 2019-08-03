@@ -166,6 +166,7 @@ def full_item(id):
             item.reagent_aim = request.form['reagent_aim']
             item.reagent_count = request.form['reagent_count']
             item.item_status_id = request.form['item_status']
+            item.date_change = datetime.utcnow()
 
             def check_empty_error(check_function, field_name, error_text, field_caption):
                 if check_function(field_name):
