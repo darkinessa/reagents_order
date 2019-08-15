@@ -3,16 +3,16 @@ from datetime import datetime
 from app import app, db
 from flask import redirect, render_template, url_for, flash, request
 
-from app.admin.routes import format_const
-from app.order.constants import URGENCY, AIM
+from app.auth.decorators import active_user_required
+from app.order.constants import URGENCY, AIM, format_const
 from app.order.models import ItemInOrder, Status
 from app.order.forms import ReagentOrderForm
 from flask_login import current_user, login_required
 
 
-
 @app.route('/item', methods=['GET', 'POST'])
 @login_required
+@active_user_required
 def item_add():
     form = ReagentOrderForm()
     print(form.reagent_aim.data, form.reagent_aim.data)
@@ -22,7 +22,7 @@ def item_add():
                               reagent_name=form.reagent_name.data, package=form.package.data,
                               package_unit=form.package_unit.data, vendor_name=form.vendor_name.data,
                               catalogue_number=form.catalogue_number.data, url_reagent=form.url_reagent.data,
-                              urgency=int(form.urgency.data), reagent_comments=form.reagent_comments.data,
+                              urgency=int(form.urgency.data), author_comments=form.author_comments.data,
                               reagent_aim=form.reagent_aim.data, reagent_count=form.reagent_count.data,
                               item_status_id='1')
         db.session.add(reagent)
@@ -104,7 +104,7 @@ def checked():
 
         if action in request.form:
             for item_check in form_checks:
-                date=datetime.utcnow()
+                date = datetime.utcnow()
                 check_id = int(item_check)
                 reagent = ItemInOrder.query.get(check_id)
                 reagent.item_status_id = action_id
@@ -145,7 +145,7 @@ def full_item(id):
                                   reagent_name=item.reagent_name, package=item.package,
                                   package_unit=item.package_unit, vendor_name=item.vendor_name,
                                   catalogue_number=item.catalogue_number, url_reagent=item.url_reagent,
-                                  urgency=item.urgency, reagent_comments=item.reagent_comments,
+                                  urgency=item.urgency, author_comments=item.author_comments,
                                   reagent_aim=item.reagent_aim, reagent_count=item.reagent_count,
                                   item_status_id='1')
             db.session.add(reagent)

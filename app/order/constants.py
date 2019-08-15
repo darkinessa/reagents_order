@@ -1,9 +1,14 @@
+def format_const(key, constants_list):
+    for value in constants_list:
+        if key in value:
+            return value[1]
+
+
 # Срочность заказа
 
 URGENCY = [(0, 'срочный'),
            (1, 'стратегический'),
            ]
-
 
 # цель заказа
 
@@ -15,7 +20,7 @@ AIM = [
     (4, 'другое, пояснить в комментарии к заказу')
 ]
 
-#замена
+# замена
 
 REPLACE = [('0', 'Возможна'),
            ('1', 'Невозможна'),

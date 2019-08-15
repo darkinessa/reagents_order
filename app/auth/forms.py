@@ -17,7 +17,9 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('* Введите пароль', validators=[DataRequired()])
     password2 = PasswordField(
         '* Повторите введеный пароль', validators=[DataRequired(), EqualTo('password')])
-    name = StringField('* Ведите имя и фамилию', validators=[DataRequired()])
+
+    surname = StringField('* Ведите фамилию', validators=[DataRequired()])
+    name = StringField('* Ведите имя', validators=[DataRequired()])
     phone_number = StringField('* Введите свой контакнтый телефон', validators=[DataRequired()])
     position = StringField('Должность')
     laboratory = StringField('Лаборатория')

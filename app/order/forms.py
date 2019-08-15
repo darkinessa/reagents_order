@@ -24,6 +24,6 @@ class ReagentOrderForm(FlaskForm):
                           choices=URGENCY)
     reagent_aim = SelectField('Выберите или введите цель заказа реактива для служебной записки', coerce=int, choices=AIM)
 
-    reagent_comments = TextAreaField('Комментарий к реактиву')
+    author_comments = TextAreaField('Комментарий к реактиву')
 
     submit = SubmitField('Добавить реактив в Заказ', render_kw={"class": "form-check-label"})

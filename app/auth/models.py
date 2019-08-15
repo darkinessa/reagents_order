@@ -1,11 +1,11 @@
-from datetime import date
+from datetime import date, datetime
 
 from flask_login import UserMixin
 from sqlalchemy.sql import expression
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import db, login
-from app.auth.constants import ADMIN
+
 
 
 class User(db.Model, UserMixin):
@@ -14,6 +14,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column('email', db.String(128), index=True, unique=True)
     email_confirmed_at = date.today()
+    surname = db.Column(db.String(192), index=True)
     name = db.Column(db.String(192), index=True)
     phone_number = db.Column(db.String(64))
     supervisor = db.Column(db.String(192), index=True)
@@ -21,7 +22,8 @@ class User(db.Model, UserMixin):
     laboratory = db.Column(db.String(192), index=True)
     password = db.Column('password_hash', db.String(128))
     admin = db.Column(db.Boolean, default=False, nullable=False, index=True)
-    active = db.Column(db.Boolean, default=False, nullable=False, index=True)
+    role = db.Column(db.Integer, default=1, nullable=False, index=True)
+    registration_date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     item_in_orders = db.relationship('ItemInOrder', backref='author', lazy='dynamic')
 
 

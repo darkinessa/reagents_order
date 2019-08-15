@@ -1,58 +1,13 @@
-from flask import flash, redirect, render_template, request, url_for, current_app
-from flask_login import login_required, login_manager, current_user
-
-from werkzeug.urls import url_parse
-
-from functools import wraps
+from flask import flash, redirect, render_template, request, url_for
+from flask_login import login_required, current_user
 
 from app import app, db
 from app.admin.constants import SUPER_ADMIN_EMAILS, STATUS_ACTIONS
+from app.admin.decorators import super_admin_required, admin_required
 from app.admin.forms import StatusAddForm, StatusDeleteForm
 from app.auth.models import User
-
-from app.order.constants import AIM, URGENCY
+from app.order.constants import AIM, URGENCY, format_const
 from app.order.models import ItemInOrder, Status
-
-
-def format_const(key, constants_list):
-    for value in constants_list:
-        if key in value:
-            return value[1]
-
-
-def super_admin_required(func):
-    @wraps(func)
-    def wrapped(*args, **kwargs):
-        if not current_user.email or current_user.email not in SUPER_ADMIN_EMAILS:
-            return redirect(url_for('index'))
-        return func(*args, **kwargs)
-
-    return wrapped
-
-
-@app.template_filter('super_admin')
-def super_admin(func):
-    if not current_user.email or current_user.email not in SUPER_ADMIN_EMAILS:
-        return False
-    return True
-
-
-def admin_required(func):
-    @wraps(func)
-    def wrapped(*args, **kwargs):
-        if not current_user.admin:
-            if not current_user.email or current_user.email not in SUPER_ADMIN_EMAILS:
-                return redirect(url_for('index'))
-        return func(*args, **kwargs)
-
-    return wrapped
-
-
-@app.template_filter('is_admin')
-def is_admin(func):
-    if not current_user.admin:
-        return False
-    return True
 
 
 @app.route('/start_settings', methods=['GET', 'POST'])
@@ -63,6 +18,7 @@ def start_settings():
     users = User.query.limit(3).all()
     form1 = StatusAddForm()
     form2 = StatusDeleteForm()
+    print(current_user.admin)
 
     if form1.validate_on_submit():
         if not status_table:
@@ -278,4 +234,3 @@ def deleted_orders():
         item.urgency_pretty = format_const(item.urgency, URGENCY)
 
     return render_template('orders/deleted_orders.html', admin=admin, items=items)
-
