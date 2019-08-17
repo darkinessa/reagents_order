@@ -7,11 +7,17 @@
 <h1>Управление пользователями</h1>
 <form action="/manage_users" name="checked" method="post">
     {% macro has_active(field_name) %}
-    {%- if field_name == true %}
+    {%- if field_name == 1 %}
+    <div class="btn btn-xs btn-info active">New</div>
+    {% endif -%}
+    {%- if field_name == 2 %}
     <div class="btn btn-xs btn-success active">On</div>
-
-    {% else %}
+    {% endif -%}
+    {%- if field_name == 3 %}
     <div class="btn btn-xs btn-danger active">Off</div>
+    {% endif -%}
+    {%- if field_name == 0 %}
+    <div class="btn btn-xs btn-default active">Banned</div>
 
     {% endif -%}
     {%- endmacro %}
@@ -58,11 +64,16 @@
             <td><p>{{ user.laboratory }} </p></td>
             <td><p>{{ user.position}} </p></td>
             <td>
-                {{ has_active(user.admin) }}
+                {% if user.admin == True %}
+                <div class="btn btn-xs btn-info active">On</div>
+                {% else %}
+                <div class="btn btn-xs btn-danger active">Off</div>
+                {% endif %}
+
 
             </td>
             <td>
-                {{ has_active(user.active) }}
+                {{ has_active(user.role) }}
 
 
             </td>
@@ -70,26 +81,31 @@
         {% endfor %}
         </tbody>
     </table>
-
+<div align="center" >
     <span class="glyphicon glyphicon-eye-open "></span>
-    <input class="btn btn-success btn-rounded" type="submit" name="_active" value="Активировать"
-           onclick="return confirm('Активировать?');">&nbsp;&nbsp;&nbsp;
+    <input class="btn btn-default btn-rounded" type="submit" name="_active" value="Активировать"
+           onclick="return confirm('Активировать?');">&nbsp;&nbsp;&nbsp;&nbsp;
 
-    <span class="glyphicon glyphicon-eye-close "></span>
-    <input class="btn btn-danger btn-rounded" type="submit" name="_deactive" value="Деактивировать"
+    <span class="glyphicon glyphicon-eye-close ">   </span>
+    <input class="btn btn-default btn-rounded" type="submit" name="_deactive" value="Деактивировать"
+           onclick="return confirm('Деактивировать пользователя?');">&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+    <span class="glyphicon glyphicon-trash ">   </span>
+    <input class="btn btn-default btn-rounded" type="submit" name="_del_user" value="Удалить"
+           onclick="return confirm('Деактивировать пользователя?');">&nbsp;&nbsp;&nbsp;
+
+    <span class="glyphicon glyphicon-minus-sign ">   </span>
+    <input class="btn btn-default btn-rounded" type="submit" name="_ban_user" value="Забанить"
            onclick="return confirm('Деактивировать пользователя?');">&nbsp;&nbsp;&nbsp;
 
     <span class="glyphicon glyphicon-thumbs-up">   </span>
-    <input class="btn btn-info btn-rounded" type="submit" name="_admin" value="Сделать администратором"
-           onclick="return confirm('Выдать доспуп в качестве администратора?');">&nbsp;&nbsp;&nbsp;
+    <input class="btn btn-default btn-rounded" type="submit" name="_admin" value="Назначить администратором"
+           onclick="return confirm('Выдать доспуп в качестве администратора?');">&nbsp;&nbsp;&nbsp;&nbsp;
 
     <span class="glyphicon glyphicon-thumbs-down ">   </span>
-    <input class="btn btn-danger btn-rounded" type="submit" name="_user" value="Снять администратора"
+    <input class="btn btn-default btn-rounded" type="submit" name="_user" value="Снять администратора"
            onclick="return confirm('Снять доступ в качестве администратора?');">&nbsp;&nbsp;&nbsp;
-
-    <span class="glyphicon glyphicon-trash "></span>
-    <input class="btn btn-warning btn-rounded" type="submit" name="_del_user" value="Удалить"
-           onclick="return confirm('Деактивировать пользователя?');">
-
+    </div>
 </form>
 {% endblock %}

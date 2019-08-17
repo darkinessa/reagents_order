@@ -36,6 +36,7 @@
                 {% if current_user | is_active %}
                 <li class="{{ 'active' if active_page == 'item_add' else '' }}"><a href="{{ url_for('item_add') }}">Заказ
                     реагентов</a></li>
+                {% endif %}
 
                 {% if current_user | is_admin %}
                 <li class="{{ 'active' if active_page == 'admin' else '' }}"><a href="{{ url_for('admin') }}">Заказы</a>
@@ -43,7 +44,7 @@
                 {% endif %}
 
 
-                {% endif %}
+
 
                 <li class="{{ 'active' if active_page == 'logout' else '' }}"><a
                         href="{{ url_for('logout') }}">Выход</a></li>

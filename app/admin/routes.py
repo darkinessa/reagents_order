@@ -59,7 +59,7 @@ def manage_users():
         for item_check in form_checks:
             check_id = int(item_check)
             user = User.query.get(check_id)
-            user.active = True
+            user.role = '2'
             db.session.commit()
             flash(f'Пользователь {user.name} активирован')
         return redirect(url_for('manage_users'))
@@ -69,7 +69,7 @@ def manage_users():
         for item_check in form_checks:
             check_id = int(item_check)
             user = User.query.get(check_id)
-            user.active = False
+            user.role = '3'
 
             db.session.commit()
             flash(f'Пользователь {user.name} деактивирован')
@@ -79,6 +79,10 @@ def manage_users():
         for item_check in form_checks:
             check_id = int(item_check)
             user = User.query.get(check_id)
+            if user.role != 2:
+                flash(
+                    'Вы не можете назначить Администратором неактивного пользователя, сначала активируйте его учетгую запись')
+                return redirect(url_for('manage_users'))
             user.admin = True
             db.session.commit()
             flash(f'Пользователь {user.name} назначен администратором')
@@ -93,6 +97,17 @@ def manage_users():
 
             db.session.commit()
             flash(f"Администратор {user.name} понижен до пользователя")
+        return redirect(url_for('manage_users'))
+
+    if '_ban_user' in request.form:
+
+        for item_check in form_checks:
+            check_id = int(item_check)
+            user = User.query.get(check_id)
+            user.role = False
+
+            db.session.commit()
+            flash(f"Пользователь {user.name} забанен")
         return redirect(url_for('manage_users'))
 
     if '_del_user' in request.form:
