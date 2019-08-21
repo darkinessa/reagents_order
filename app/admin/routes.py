@@ -51,7 +51,7 @@ def start_settings():
 @login_required
 @admin_required
 def manage_users():
-    users = User.query.all()
+    users = User.query.order_by(User.registration_date.desc()).all()
 
     form_checks = request.form.getlist('checks')
 
@@ -59,6 +59,15 @@ def manage_users():
         for item_check in form_checks:
             check_id = int(item_check)
             user = User.query.get(check_id)
+            user.role = '2'
+            db.session.commit()
+            flash(f'Пользователь {user.name} активирован')
+        return redirect(url_for('manage_users'))
+
+    if '_active_new' in request.form:
+
+        users = User.query.filter_by(role='1').all()
+        for user in users:
             user.role = '2'
             db.session.commit()
             flash(f'Пользователь {user.name} активирован')

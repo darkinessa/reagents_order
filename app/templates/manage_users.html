@@ -21,27 +21,30 @@
 
     {% endif -%}
     {%- endmacro %}
-
+    <div align="right"><input class="btn btn-info btn-rounded" type="submit" name="_active_new" value="Активировать всех новых пользователей"
+           onclick="return confirm('Вы действительно хотите Активировать всех Новых пользователей?');"></div>
+    <p></p>
     <table class="table table-bordered">
         <thead class="thead-dark">
         <tr>
-            <th scope="col">
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" name="checks" value="">
-                    </label></div>
-            </th>
-            <th scope="col">id</th>
 
+            <th scope="col">id</th>
+<th scope="col">Ф.И.О.</th>
             <th scope="col">Логин</th>
             <th scope="col">Почта</th>
-            <th scope="col">Ф.И.О.</th>
+
             <th scope="col">Телефон</th>
             <th scope="col">Руководитель</th>
             <th scope="col">Лаборатория</th>
             <th scope="col">Должность</th>
             <th scope="col">Админ</th>
             <th scope="col">Активность</th>
+                        <th scope="col">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" name="checks" value="">
+                    </label></div>
+            </th>
         </tr>
         </thead>
 
@@ -49,16 +52,12 @@
         {% for user in users %}
 
         <tr>
-            <td>
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" name="checks" value="{{ user.id }}">
-                    </label></div>
-            </td>
+
             <td><p>{{ user.id }} </p></td>
+            <td><p> {{user.surname}} {{ user.name }}</p></td>
             <td><p>{{ user.username }} </p></td>
-            <td><p>{{ user.email }} </p></td>
-            <td><p>{{ user.name }} </p></td>
+            <td><p><a href="mailto:{{ user.email }} "> {{ user.email }} </a></p></td>
+
             <td><p>{{ user.phone_number }} </p></td>
             <td><p>{{ user.supervisor }} </p></td>
             <td><p>{{ user.laboratory }} </p></td>
@@ -67,15 +66,22 @@
                 {% if user.admin == True %}
                 <div class="btn btn-xs btn-info active">On</div>
                 {% else %}
-                <div class="btn btn-xs btn-danger active">Off</div>
+                <div class="btn btn-xs btn-default active">Off</div>
                 {% endif %}
 
 
             </td>
+
             <td>
                 {{ has_active(user.role) }}
 
 
+            </td>
+                        <td>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" name="checks" value="{{ user.id }}">
+                    </label></div>
             </td>
         </tr>
         {% endfor %}
