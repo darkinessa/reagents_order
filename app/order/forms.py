@@ -7,6 +7,7 @@ from app.order.constants import URGENCY, AIM
 class ReagentOrderForm(FlaskForm):
 
     reagent_name = TextAreaField('* Название реактива', validators=[DataRequired()])
+    reagent_description = TextAreaField('Описание или техническое задание')
 
     package = StringField('* Фасовка, например: 500 грамм, 10 шт/уп, 100 мкг и т.п.', validators=[DataRequired()])
     package_unit = StringField('Единица измерения, например: шт, уп, набор и т.п.', validators=[DataRequired()])
@@ -15,6 +16,8 @@ class ReagentOrderForm(FlaskForm):
                                  validators=[DataRequired(message="Дай"), NumberRange(min=1, message='Минимальное количество 1')])
 
     vendor_name = StringField('* Название производителя', validators=[DataRequired()])
+
+    replacement = BooleanField('Возможна замена')
 
     catalogue_number = StringField('Каталожный номер или артикул')
 

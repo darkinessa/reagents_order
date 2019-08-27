@@ -19,7 +19,7 @@ def item_add():
 
     if form.validate_on_submit():
         reagent = ItemInOrder(author=current_user,
-                              reagent_name=form.reagent_name.data, package=form.package.data,
+                              reagent_name=form.reagent_name.data,reagent_description=form.reagent_description.data, package=form.package.data,
                               package_unit=form.package_unit.data, vendor_name=form.vendor_name.data,
                               catalogue_number=form.catalogue_number.data, url_reagent=form.url_reagent.data,
                               urgency=int(form.urgency.data), author_comments=form.author_comments.data,
@@ -142,7 +142,7 @@ def full_item(id):
             item = item
 
             reagent = ItemInOrder(author=current_user,
-                                  reagent_name=item.reagent_name, package=item.package,
+                                  reagent_name=item.reagent_name, reagent_description=item.reagent_description, package=item.package,
                                   package_unit=item.package_unit, vendor_name=item.vendor_name,
                                   catalogue_number=item.catalogue_number, url_reagent=item.url_reagent,
                                   urgency=item.urgency, author_comments=item.author_comments,
@@ -156,6 +156,7 @@ def full_item(id):
             error = None
 
             item.reagent_name = request.form['reagent_name']
+            item.reagent_description = request.form['reagent_description']
             item.package = request.form['package']
             item.package_unit = request.form['package_unit']
             item.vendor_name = request.form['vendor_name']
@@ -206,7 +207,7 @@ def full_item(id):
 def copy_item(id):
     item = ItemInOrder.query.get(id)
     reagent = ItemInOrder(author=current_user,
-                          reagent_name=item.reagent_name, package=item.package,
+                          reagent_name=item.reagent_name, reagent_description=item.reagent_description, package=item.package,
                           package_unit=item.package_unit, vendor_name=item.vendor_name,
                           catalogue_number=item.catalogue_number, url_reagent=item.url_reagent,
                           urgency=item.urgency, reagent_comments=item.reagent_comments,
