@@ -19,8 +19,7 @@ class ItemInOrder(db.Model):
     url_reagent = db.Column(db.String(256), nullable=True)
     urgency = db.Column(db.Integer, index=True)
     reagent_aim = db.Column(db.Integer, index=True)
-    author_comments = db.Column(db.Text)
-    manager_comments = db.Column(db.Text)
+    reagent_comments = db.Column(db.Text)
     item_status = db.relationship('Status')
     item_status_id = db.Column(db.Integer, db.ForeignKey('status.id'))
     reagent_in_order = db.relationship('Order')
@@ -36,6 +35,7 @@ class Status(db.Model):
     name = db.Column(db.String(56), index=True)
     action = db.Column(db.String(14), unique=True, index=True)
     flashes = db.Column(db.String(128), index=True)
+    status = db.Column(db.Boolean)
 
     def __repr__(self):
         return '{}'.format(self.name)
@@ -46,6 +46,7 @@ class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     number = db.Column(db.String(42), unique=True, index=True)
     date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    comment = db.Column(db.String(128))
 
     def __repr__(self):
         return '{}'.format(self.number)

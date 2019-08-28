@@ -1,12 +1,13 @@
 from datetime import datetime
 
 from app import app, db
-from flask import redirect, render_template, url_for, flash, request
+from flask import redirect, render_template, url_for, flash, request, session
 
+from app.admin.decorators import admin_required
 from app.auth.decorators import active_user_required
 from app.order.constants import URGENCY, AIM, format_const
-from app.order.models import ItemInOrder, Status
-from app.order.forms import ReagentOrderForm
+from app.order.models import ItemInOrder, Status, Order
+from app.order.forms import ReagentOrderForm, CreateOrderForm
 from flask_login import current_user, login_required
 
 
@@ -19,10 +20,11 @@ def item_add():
 
     if form.validate_on_submit():
         reagent = ItemInOrder(author=current_user,
-                              reagent_name=form.reagent_name.data,reagent_description=form.reagent_description.data, package=form.package.data,
+                              reagent_name=form.reagent_name.data, reagent_description=form.reagent_description.data,
+                              package=form.package.data,
                               package_unit=form.package_unit.data, vendor_name=form.vendor_name.data,
                               catalogue_number=form.catalogue_number.data, url_reagent=form.url_reagent.data,
-                              urgency=int(form.urgency.data), author_comments=form.author_comments.data,
+                              urgency=int(form.urgency.data), reagent_comments=form.reagent_comments.data,
                               reagent_aim=form.reagent_aim.data, reagent_count=form.reagent_count.data,
                               item_status_id='1')
         db.session.add(reagent)
@@ -111,6 +113,8 @@ def checked():
                 reagent.date_change = date
                 db.session.commit()
                 flash(action_flash)
+        elif '_num' in request.form:
+            return redirect(url_for('create_order', form_checks=form_checks))
 
     if current_user.admin:
         return redirect(url_for('admin'))
@@ -142,10 +146,11 @@ def full_item(id):
             item = item
 
             reagent = ItemInOrder(author=current_user,
-                                  reagent_name=item.reagent_name, reagent_description=item.reagent_description, package=item.package,
+                                  reagent_name=item.reagent_name, reagent_description=item.reagent_description,
+                                  package=item.package,
                                   package_unit=item.package_unit, vendor_name=item.vendor_name,
                                   catalogue_number=item.catalogue_number, url_reagent=item.url_reagent,
-                                  urgency=item.urgency, author_comments=item.author_comments,
+                                  urgency=item.urgency, reagent_comments=item.reagent_comments,
                                   reagent_aim=item.reagent_aim, reagent_count=item.reagent_count,
                                   item_status_id='1')
             db.session.add(reagent)
@@ -207,7 +212,8 @@ def full_item(id):
 def copy_item(id):
     item = ItemInOrder.query.get(id)
     reagent = ItemInOrder(author=current_user,
-                          reagent_name=item.reagent_name, reagent_description=item.reagent_description, package=item.package,
+                          reagent_name=item.reagent_name, reagent_description=item.reagent_description,
+                          package=item.package,
                           package_unit=item.package_unit, vendor_name=item.vendor_name,
                           catalogue_number=item.catalogue_number, url_reagent=item.url_reagent,
                           urgency=item.urgency, reagent_comments=item.reagent_comments,
@@ -218,3 +224,34 @@ def copy_item(id):
     flash('Реактив скопирован')
 
     return redirect(url_for('user'))
+
+
+@app.route('/create_order', methods=['GET', 'POST'])
+@admin_required
+def create_order(form_checks=None):
+    form = CreateOrderForm()
+    numbers_list = Order.query.filter_by(number=form.number.data).first()
+    form_checks = request.args.getlist('form_checks')
+    order_id = 0
+    if form.validate_on_submit():
+        if numbers_list:
+            flash("Такой номер заказа уже существует, введите другой номер")
+            return redirect(url_for('create_order'))
+        order = Order(number=form.number.data, comment=form.comment.data)
+        db.session.add(order)
+        db.session.commit()
+        x = order.id
+        order_id = x
+
+        flash('Заказ создан')
+        for item_check in form_checks:
+            check_id = int(item_check)
+            reagent = ItemInOrder.query.get(check_id)
+            reagent.reagent_in_order_id = order_id
+            db.session.commit()
+            flash(f'Реагент { reagent.reagent_name } добавлен в заказ № {order.number}')
+
+
+        return redirect(url_for('handling_orders'))
+
+    return render_template('orders/create_order.html', form=form)

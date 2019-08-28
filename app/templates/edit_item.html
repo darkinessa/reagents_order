@@ -27,7 +27,7 @@
             <div class="col-xs-2" style="padding:0">
                 <label class="control-label col-xs-9">№ заказа:</label>
                 <p class="bg-info"><input type="text" class="form-control input-lg" name="order_id"
-                                          value="{{ item.reagent_in_order }}" disabled></p>
+                                          value="{{ item.reagent_in_order_id }}" disabled></p>
             </div>
 
 
@@ -177,7 +177,7 @@
 
                 <label class="control-label col-xs-1">Комментарии:</label>
                 <p class="bg-info"><textarea type="text" class="form-control" name="reagent_comments"
-                                             value="{{ item.reagent_comments }}" rows="3"></textarea></p>
+                                             rows="3">{{ item.reagent_comments }}</textarea></p>
 
 
             </div>

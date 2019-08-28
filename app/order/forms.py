@@ -5,7 +5,6 @@ from app.order.constants import URGENCY, AIM
 
 
 class ReagentOrderForm(FlaskForm):
-
     reagent_name = TextAreaField('* Название реактива', validators=[DataRequired()])
     reagent_description = TextAreaField('Описание или техническое задание')
 
@@ -13,7 +12,8 @@ class ReagentOrderForm(FlaskForm):
     package_unit = StringField('Единица измерения, например: шт, уп, набор и т.п.', validators=[DataRequired()])
 
     reagent_count = IntegerField('* Количество',
-                                 validators=[DataRequired(message="Дай"), NumberRange(min=1, message='Минимальное количество 1')])
+                                 validators=[DataRequired(message="количество должно быть целым числом"),
+                                             NumberRange(min=1, message='Минимальное количество 1')])
 
     vendor_name = StringField('* Название производителя', validators=[DataRequired()])
 
@@ -23,10 +23,18 @@ class ReagentOrderForm(FlaskForm):
 
     url_reagent = StringField('Ссылка на страницу реактива на сайте производителя')
 
-    urgency = SelectField('Срочность заказа (стратегический означает, что можно заказать в течение полугода-года', coerce=int,
+    urgency = SelectField('Срочность заказа (стратегический означает, что можно заказать в течение полугода-года',
+                          coerce=int,
                           choices=URGENCY)
-    reagent_aim = SelectField('Выберите или введите цель заказа реактива для служебной записки', coerce=int, choices=AIM)
+    reagent_aim = SelectField('Выберите или введите цель заказа реактива для служебной записки', coerce=int,
+                              choices=AIM)
 
-    author_comments = TextAreaField('Комментарий к реактиву')
+    reagent_comments = TextAreaField('Комментарий к реактиву')
 
     submit = SubmitField('Добавить реактив в Заказ', render_kw={"class": "form-check-label"})
+
+
+class CreateOrderForm(FlaskForm):
+    number = StringField('Номер заказа', validators=[DataRequired()])
+    comment = TextAreaField('Комметарий')
+    submit = SubmitField('Создать')

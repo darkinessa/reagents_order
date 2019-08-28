@@ -28,7 +28,7 @@ def start_settings():
 
             else:
                 for status in STATUS_ACTIONS:
-                    add_status = Status(name=status[1], action=status[2], flashes=status[3])
+                    add_status = Status(name=status[1], action=status[2], flashes=status[3], status=status[4])
                     db.session.add(add_status)
                     db.session.commit()
                 flash('Таблица Статусы в базе данных обновлена')

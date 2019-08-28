@@ -1,0 +1,18 @@
+<title>Новые заказы</title>
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% set active_page = "create_orders" %}
+
+{% block app_content %}
+
+{% include '_orders_menu.html' %}
+
+<h1>Создать заказ</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        {{ wtf.quick_form(form) }}
+    </div>
+</div>
+
+{% endblock %}
