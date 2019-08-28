@@ -244,14 +244,15 @@ def create_order(form_checks=None):
         order_id = x
 
         flash('Заказ создан')
-        for item_check in form_checks:
-            check_id = int(item_check)
-            reagent = ItemInOrder.query.get(check_id)
-            reagent.reagent_in_order_id = order_id
-            db.session.commit()
-            flash(f'Реагент { reagent.reagent_name } добавлен в заказ № {order.number}')
+        if form_checks:
+            for item_check in form_checks:
+                check_id = int(item_check)
+                reagent = ItemInOrder.query.get(check_id)
+                reagent.reagent_in_order_id = order_id
+                db.session.commit()
+                flash(f'Реагент { reagent.reagent_name } добавлен в заказ № {order.number}')
+                return redirect(url_for('handling_orders'))
 
-
-        return redirect(url_for('handling_orders'))
+        return redirect(url_for('create_order'))
 
     return render_template('orders/create_order.html', form=form)
