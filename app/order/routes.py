@@ -232,12 +232,12 @@ def create_order(form_checks=None):
     form = CreateOrderForm()
     numbers_list = Order.query.filter_by(number=form.number.data).first()
     form_checks = request.args.getlist('form_checks')
-    order_id = 0
+
     if form.validate_on_submit():
         if numbers_list:
             flash("Такой номер заказа уже существует, введите другой номер")
             return redirect(url_for('create_order'))
-        order = Order(number=form.number.data, comment=form.comment.data)
+        order = Order(number=form.number.data, comment=form.comment.data, order_status_id='4')
         db.session.add(order)
         db.session.commit()
         x = order.id
@@ -249,10 +249,12 @@ def create_order(form_checks=None):
                 check_id = int(item_check)
                 reagent = ItemInOrder.query.get(check_id)
                 reagent.reagent_in_order_id = order_id
+                reagent.item_status_id = '4'
                 db.session.commit()
                 flash(f'Реагент { reagent.reagent_name } добавлен в заказ № {order.number}')
-                return redirect(url_for('handling_orders'))
+            return redirect(url_for('handling_orders'))
 
         return redirect(url_for('create_order'))
+
 
     return render_template('orders/create_order.html', form=form)

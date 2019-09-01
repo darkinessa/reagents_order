@@ -1,0 +1,20 @@
+<title>На удаление</title>
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% set active_page = "created_orders" %}
+
+{% block app_content %}
+
+{% include '_orders_menu.html' %}
+
+<h1>Сформированные заказы</h1>
+
+<form action="/checked" name="checked" method="post">
+    {% include '_table_orders.html' %}
+    <input type="submit" name="_pass" value="Отправить поставщику"
+           onclick="return confirm('Переместить в папку У Поставщика?');">
+    <input type="submit" name="_dec" value="Отклонить" onclick="return confirm('test');">
+    <input type="submit" name="_sus" value="Отложить" onclick="return confirm('test');">
+</form>
+
+{% endblock %}

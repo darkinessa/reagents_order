@@ -47,6 +47,8 @@ class Order(db.Model):
     number = db.Column(db.String(42), unique=True, index=True)
     date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     comment = db.Column(db.String(128))
+    order_status = db.relationship('Status')
+    order_status_id = db.Column(db.Integer, db.ForeignKey('status.id'))
 
     def __repr__(self):
         return '{}'.format(self.number)

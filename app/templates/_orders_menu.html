@@ -9,8 +9,11 @@
                         <a href="{{url_for('new_orders')}}">Новые</a></li>
                     <li class="{{ 'active' if active_page == 'handling_orders' else '' }}">
                         <a href="{{url_for('handling_orders')}}">В обработке</a></li>
+                    <li class="{{ 'active' if active_page == 'created_orders' else '' }}">
+                        <a href="{{url_for('created_orders')}}">Заказы</a></li>
                     <li class="{{ 'active' if active_page == 'pass_orders' else '' }}">
                         <a href="{{url_for('pass_orders')}}">У поставщика</a></li>
+
                     <li class="{{ 'active' if active_page == 'wait_orders' else '' }}">
                         <a href="{{url_for('wait_orders')}}">Ожидаются</a></li>
                     <li class="{{ 'active' if active_page == 'received_orders' else '' }}">
@@ -21,7 +24,7 @@
                         <a href="{{url_for('declined_orders')}}">Отклоненные</a></li>
                     <li class="{{ 'active' if active_page == 'deleted_orders' else '' }}">
                         <a href="{{url_for('deleted_orders')}}">Удаленные</a></li>
-                     </ul>
+                </ul>
             </div>
         </div>
     </div>

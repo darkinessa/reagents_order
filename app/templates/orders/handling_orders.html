@@ -12,8 +12,7 @@
 <form action="/checked" name="checked" method="post">
     {% include '_table_reagents.html' %}
     <input type="submit" name="_num" value="Присвоить номер заказу" onclick="return confirm('Пронумеровать заказ?');">
-    <input type="submit" name="_pass" value="Отправить поставщику"
-           onclick="return confirm('Переместить в папку У Поставщика?');">
+
     <input type="submit" name="_dec" value="Отклонить" onclick="return confirm('Вы действительно хотите отклонить заказ?');">
     <input type="submit" name="_sus" value="Отложить" onclick="return confirm('Переместить в папку Отложенные?');">
 

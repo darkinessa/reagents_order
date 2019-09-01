@@ -7,7 +7,7 @@ from app.admin.decorators import super_admin_required, admin_required
 from app.admin.forms import StatusAddForm, StatusDeleteForm
 from app.auth.models import User
 from app.order.constants import AIM, URGENCY, format_const
-from app.order.models import ItemInOrder, Status
+from app.order.models import ItemInOrder, Status, Order
 
 
 @app.route('/start_settings', methods=['GET', 'POST'])
@@ -186,7 +186,7 @@ def handling_orders():
 @login_required
 @admin_required
 def pass_orders():
-    items = ItemInOrder.query.filter_by(item_status_id='4').all()
+    items = ItemInOrder.query.filter_by(item_status_id='5').all()
 
     for item in items:
         item.aim_pretty = format_const(item.reagent_aim, AIM)
@@ -199,7 +199,7 @@ def pass_orders():
 @login_required
 @admin_required
 def wait_orders():
-    items = ItemInOrder.query.filter_by(item_status_id='5').all()
+    items = ItemInOrder.query.filter_by(item_status_id='6').all()
 
     for item in items:
         item.aim_pretty = format_const(item.reagent_aim, AIM)
@@ -212,7 +212,7 @@ def wait_orders():
 @login_required
 @admin_required
 def received_orders():
-    items = ItemInOrder.query.filter_by(item_status_id='6').all()
+    items = ItemInOrder.query.filter_by(item_status_id='7').all()
 
     for item in items:
         item.aim_pretty = format_const(item.reagent_aim, AIM)
@@ -225,7 +225,7 @@ def received_orders():
 @login_required
 @admin_required
 def declined_orders():
-    items = ItemInOrder.query.filter_by(item_status_id='7').all()
+    items = ItemInOrder.query.filter_by(item_status_id='8').all()
 
     for item in items:
         item.aim_pretty = format_const(item.reagent_aim, AIM)
@@ -238,7 +238,7 @@ def declined_orders():
 @login_required
 @admin_required
 def suspended_orders():
-    items = ItemInOrder.query.filter_by(item_status_id='8').all()
+    items = ItemInOrder.query.filter_by(item_status_id='9').all()
 
     for item in items:
         item.aim_pretty = format_const(item.reagent_aim, AIM)
@@ -251,10 +251,37 @@ def suspended_orders():
 @login_required
 @admin_required
 def deleted_orders():
-    items = ItemInOrder.query.filter_by(item_status_id='9').all()
+    items = ItemInOrder.query.filter_by(item_status_id='10').all()
 
     for item in items:
         item.aim_pretty = format_const(item.reagent_aim, AIM)
         item.urgency_pretty = format_const(item.urgency, URGENCY)
 
     return render_template('orders/deleted_orders.html', admin=admin, items=items)
+
+
+@app.route('/created_orders')
+@login_required
+@admin_required
+def created_orders():
+
+    # html -> view -> bl -> dl
+    # html - form(action = ...)
+        # view - @get created_orders
+            # bl - orders_manager.get_orders_list
+                # dl - get all orders -> Order.query.all()
+            # bl - Order += OrderDTO.items_count = ItemInOrder.query.filter_by(reagent_in_order_id=id).count() !empty
+        # view - OrderDTO + user_manager.user_info
+    # html - OrderViewModel
+
+    orders = Order.query.all()
+    for order in orders:
+        id = order.id
+        order.items_count = ItemInOrder.query.filter_by(reagent_in_order_id=id).count()
+
+
+    # for item in items:
+    #     item.aim_pretty = format_const(item.reagent_aim, AIM)
+    #     item.urgency_pretty = format_const(item.urgency, URGENCY)
+
+    return render_template('orders/created_orders.html', admin=admin, orders=orders)
