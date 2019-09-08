@@ -260,10 +260,10 @@ def deleted_orders():
     return render_template('orders/deleted_orders.html', admin=admin, items=items)
 
 
-@app.route('/created_orders')
+@app.route('/formed_orders')
 @login_required
 @admin_required
-def created_orders():
+def formed_orders():
 
     # html -> view -> bl -> dl
     # html - form(action = ...)
@@ -284,4 +284,10 @@ def created_orders():
     #     item.aim_pretty = format_const(item.reagent_aim, AIM)
     #     item.urgency_pretty = format_const(item.urgency, URGENCY)
 
-    return render_template('orders/created_orders.html', admin=admin, orders=orders)
+    return render_template('orders/formed_orders.html', admin=admin, orders=orders)
+
+#
+# @app.route('/delete_order', methods=['GET', 'POST'])
+# @admin_required
+# def delete_order():
+#     pass

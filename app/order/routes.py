@@ -96,6 +96,7 @@ def delete_trash():
 def checked():
     form_checks = request.form.getlist('checks')
     print(form_checks)
+    print(request.form)
     statuses = Status.query.all()
     print([(s.id, s.name, s.action, s.flashes) for s in statuses])
     for item in statuses:
@@ -103,6 +104,7 @@ def checked():
         action = item.action
         action_id = item.id
         action_flash = item.flashes
+        print(action)
 
         if action in request.form:
             for item_check in form_checks:
@@ -256,5 +258,39 @@ def create_order(form_checks=None):
 
         return redirect(url_for('create_order'))
 
-
     return render_template('orders/create_order.html', form=form)
+
+
+@app.route('/checked_orders', methods=['GET', 'POST'])
+@admin_required
+def checked_orders():
+    form_checks = request.form.getlist('checks')
+    statuses = Status.query.all()
+
+    for s in statuses:
+        action = s.action
+        action_id = s.id
+        action_flash = s.flashes
+
+        if action in request.form:
+
+            for order_check in form_checks:
+                date = datetime.utcnow()
+                check_id = int(order_check)
+                order = Order.query.get(check_id)
+                reagents_list = ItemInOrder.query.filter_by(reagent_in_order_id=check_id).all()
+                order.order_status_id = action_id
+
+                if reagents_list:
+                    for reagent in reagents_list:
+                        reagent.item_status_id = action_id
+                        reagent.date_change = date
+
+                if not reagents_list:
+                    if '_del' in request.form:
+                        db.session.delete(order)
+
+            db.session.commit()
+            flash(action_flash)
+
+    return redirect(url_for('admin', form_checks=form_checks))

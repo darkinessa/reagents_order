@@ -9,8 +9,8 @@
                         <a href="{{url_for('new_orders')}}">Новые</a></li>
                     <li class="{{ 'active' if active_page == 'handling_orders' else '' }}">
                         <a href="{{url_for('handling_orders')}}">В обработке</a></li>
-                    <li class="{{ 'active' if active_page == 'created_orders' else '' }}">
-                        <a href="{{url_for('created_orders')}}">Заказы</a></li>
+                    <li class="{{ 'active' if active_page == 'formed_orders' else '' }}">
+                        <a href="{{url_for('formed_orders')}}">Заказы</a></li>
                     <li class="{{ 'active' if active_page == 'pass_orders' else '' }}">
                         <a href="{{url_for('pass_orders')}}">У поставщика</a></li>
 
