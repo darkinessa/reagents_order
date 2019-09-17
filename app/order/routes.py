@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from werkzeug.urls import url_parse
+
 from app import app, db
 from flask import redirect, render_template, url_for, flash, request, session
 
@@ -93,18 +95,15 @@ def delete_trash():
 
 @app.route('/checked', methods=['GET', 'POST'])
 @login_required
-def checked():
+def checked(order_id=None):
     form_checks = request.form.getlist('checks')
-    print(form_checks)
-    print(request.form)
     statuses = Status.query.all()
-    print([(s.id, s.name, s.action, s.flashes) for s in statuses])
+    # print([(s.id, s.name, s.action, s.flashes) for s in statuses])
     for item in statuses:
 
         action = item.action
         action_id = item.id
         action_flash = item.flashes
-        print(action)
 
         if action in request.form:
             for item_check in form_checks:
@@ -117,6 +116,21 @@ def checked():
                 flash(action_flash)
         elif '_num' in request.form:
             return redirect(url_for('create_order', form_checks=form_checks))
+
+        elif '_append' in request.form:
+            id = request.form.get('order_id')
+            order = Order.query.filter_by(id=id).first()
+
+            for check in form_checks:
+                check_id = int(check)
+                reagent = ItemInOrder.query.get(check_id)
+                reagent.reagent_in_order_id = id
+
+                reagent.item_status_id = '4'
+                db.session.commit()
+                flash(f'Реагент { reagent.reagent_name } добавлен в заказ № {order.number}')
+
+            return redirect(url_for('formed_orders', form_checks=form_checks))
 
     if current_user.admin:
         return redirect(url_for('admin'))
@@ -264,8 +278,23 @@ def create_order(form_checks=None):
 @app.route('/checked_orders', methods=['GET', 'POST'])
 @admin_required
 def checked_orders():
-    form_checks = request.form.getlist('checks')
+    form_checks_order = request.form.getlist('checks')
     statuses = Status.query.all()
+    items = ItemInOrder.query.filter_by(item_status_id='3').all()
+
+    if '_add' in request.form:
+        if items:
+            if len(form_checks_order) == 1:
+                order_id = int(form_checks_order[0])
+                order = Order.query.get(order_id)
+                return redirect(url_for('append_item', order_id=order_id))
+
+
+            else:
+                flash('Выберите только 1 заказ к которому необходимо добавить позиции')
+        else:
+            flash('Не найдены заявки которые можно добавить к заказу')
+
 
     for s in statuses:
         action = s.action
@@ -274,7 +303,7 @@ def checked_orders():
 
         if action in request.form:
 
-            for order_check in form_checks:
+            for order_check in form_checks_order:
                 date = datetime.utcnow()
                 check_id = int(order_check)
                 order = Order.query.get(check_id)
@@ -287,10 +316,25 @@ def checked_orders():
                         reagent.date_change = date
 
                 if not reagents_list:
+                    print('hi there')
                     if '_del' in request.form:
                         db.session.delete(order)
 
-            db.session.commit()
-            flash(action_flash)
+                db.session.commit()
+                flash(action_flash)
 
-    return redirect(url_for('admin', form_checks=form_checks))
+                next_page = request.args.get('next')
+                if not next_page or url_parse(next_page).netloc != '':
+                    next_page = url_for('formed_orders')
+                return redirect(next_page)
+
+    return redirect(url_for('admin'))
+
+
+@app.route('/append_item', methods=['GET', 'POST'])
+@admin_required
+def append_item():
+    items = ItemInOrder.query.filter_by(item_status_id='3').all()
+    order_id = request.args.get('order_id') or request.form.get('order')
+
+    return render_template('orders/append_item.html', items=items, id=order_id)

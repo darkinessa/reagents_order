@@ -1,16 +1,16 @@
 <title>Отклоненные заявки</title>
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% set active_page = "declined_orders" %}
+{% set active_page = "declined_items" %}
 
 {% block app_content %}
 
-{% include '_orders_menu.html' %}
+{% include '_items_menu.html' %}
 
 <h1>Отклоненные заявки</h1>
 
 <form action="/checked" name="checked" method="post">
-    {% include '_table_orders.html' %}
+    {% include '_table_reagents.html' %}
     <input type="submit" name="_hand" value="Принять заказ"
            onclick="return confirm('Переместить в папку Обработка?');">
     <input type="submit" name="_del" value="удалить" onclick="return confirm('Удалить заявку?');">

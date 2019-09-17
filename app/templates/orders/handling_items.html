@@ -1,16 +1,16 @@
 <title>Заказы в обработке</title>
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% set active_page = "handling_orders" %}
+{% set active_page = "handling_items" %}
 
 {% block app_content %}
 
-{% include '_orders_menu.html' %}
+{% include '_items_menu.html' %}
 
 <h1>Заказы в обработке</h1>
 
 <form action="/checked" name="checked" method="post">
-    {% include '_table_reagents.html' %}
+    {% include '_table_orders.html' %}
     <input type="submit" name="_num" value="Присвоить номер заказу" onclick="return confirm('Пронумеровать заказ?');">
 
     <input type="submit" name="_dec" value="Отклонить" onclick="return confirm('Вы действительно хотите отклонить заказ?');">

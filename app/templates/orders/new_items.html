@@ -1,13 +1,13 @@
-<title>Новые заказы</title>
+<title>Новые заявки</title>
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% set active_page = "new_orders" %}
+{% set active_page = "new_items" %}
 
 {% block app_content %}
 
-{% include '_orders_menu.html' %}
+{% include '_items_menu.html' %}
 
-<h1>Новые заказы</h1>
+<h1>Новые заявки</h1>
 
 <form action="/checked" name="checked" method="post">
     {% include '_table_reagents.html' %}

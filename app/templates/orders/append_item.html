@@ -1,0 +1,18 @@
+<title>Добавить к заказу</title>
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% set active_page = "handling_orders" %}
+
+{% block app_content %}
+
+{% include '_orders_menu.html' %}
+
+<h1>Добавить к заказу</h1>
+
+<form action="/checked" name="checked" method="post">
+    {% include '_table_reagents.html' %}
+    <input type="hidden" name="order_id" value="{{ id }}">
+    <input type="submit" name="_append" value="добавить к заказу" onclick="return confirm('Добавить?');">
+
+</form>
+{% endblock %}

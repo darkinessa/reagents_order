@@ -10,10 +10,10 @@
 <h1>Ожидается поставка</h1>
 
 <form action="/checked" name="checked" method="post">
-    {% include '_table_reagents.html' %}
+    {% include '_table_orders.html' %}
     <input type="submit" name="_rec" value="Пришла поставка"
            onclick="return confirm('Переместить в папку Исполненные заказы?');">
-    <input type="submit" name="_dec" value="Отклонить" onclick="return confirm('Вы действительно хотите отклонить заявку?');">
+    <input type="submit" name="_dec" value="Отклонить" onclick="return confirm('Вы действительно хотите отклонить заказ?');">
     <input type="submit" name="_sus" value="Отложить" onclick="return confirm('Переместить в папку Отложенные?');">
 </form>
 {% endblock %}

@@ -37,6 +37,7 @@ class Status(db.Model):
     flashes = db.Column(db.String(128), index=True)
     status = db.Column(db.Boolean)
 
+
     def __repr__(self):
         return '{}'.format(self.name)
 
@@ -49,6 +50,7 @@ class Order(db.Model):
     comment = db.Column(db.String(128))
     order_status = db.relationship('Status')
     order_status_id = db.Column(db.Integer, db.ForeignKey('status.id'))
+
 
     def __repr__(self):
         return '{}'.format(self.number)

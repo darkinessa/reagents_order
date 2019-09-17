@@ -1,0 +1,25 @@
+<nav class="navbar" style="font-weight:bolder;" role="navigation" xmlns="http://www.w3.org/1999/html">
+
+    <div class="container-fluid">
+        <div class="row" align="center">
+            <div class="collapse navbar-collapse" id="#navbar-collapse-menu">
+                <ul class="nav-pills nav nav-justified">
+
+                    <li class="{{ 'active' if active_page == 'new_items' else '' }}">
+                        <a href="{{url_for('new_items')}}">Новые заявки</a></li>
+                    <li class="{{ 'active' if active_page == 'handling_items' else '' }}">
+                        <a href="{{url_for('handling_items')}}">Заявки в обработке</a></li>
+                    <li class="{{ 'active' if active_page == 'suspended_items' else '' }}">
+                        <a href="{{url_for('suspended_items')}}">Отложенные</a></li>
+                    <li class="{{ 'active' if active_page == 'declined_items' else '' }}">
+                        <a href="{{url_for('declined_items')}}">Отклоненные</a></li>
+                    <li class="{{ 'active' if active_page == 'deleted_items' else '' }}">
+                        <a href="{{url_for('deleted_items')}}">Удаленные</a></li>
+                                        <li class="{{ 'active' if active_page == 'all_items' else '' }}">
+                        <a href="{{url_for('all_items')}}">Все заявки</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</nav>

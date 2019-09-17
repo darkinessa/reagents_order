@@ -10,11 +10,9 @@
 <h1>Пришла поставка</h1>
 
 <form action="/checked" name="checked" method="post">
-    {% include '_table_reagents.html' %}
-    <input type="submit" name="_hand" value="Принять заказ"
-           onclick="return confirm('После отправки заказа, вы не сможете вносить измения. Отправить заказ менеджеру?');">
-    <input type="submit" name="_dec" value="Отклонить" onclick="return confirm('test');">
-    <input type="submit" name="_sus" value="Отложить" onclick="return confirm('test');">
+    {% include '_table_orders.html' %}
+    <input type="submit" name="_del" value="Удалить" onclick="return confirm('Вы действительно хотите удалить заказ?');">
+
 </form>
 {% endblock %}
 

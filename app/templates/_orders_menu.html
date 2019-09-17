@@ -5,12 +5,8 @@
             <div class="collapse navbar-collapse" id="#navbar-collapse-menu">
                 <ul class="nav-pills nav nav-justified">
 
-                    <li class="{{ 'active' if active_page == 'new_orders' else '' }}">
-                        <a href="{{url_for('new_orders')}}">Новые</a></li>
-                    <li class="{{ 'active' if active_page == 'handling_orders' else '' }}">
-                        <a href="{{url_for('handling_orders')}}">В обработке</a></li>
                     <li class="{{ 'active' if active_page == 'formed_orders' else '' }}">
-                        <a href="{{url_for('formed_orders')}}">Заказы</a></li>
+                        <a href="{{url_for('formed_orders')}}">Сформированные</a></li>
                     <li class="{{ 'active' if active_page == 'pass_orders' else '' }}">
                         <a href="{{url_for('pass_orders')}}">У поставщика</a></li>
 
@@ -24,6 +20,8 @@
                         <a href="{{url_for('declined_orders')}}">Отклоненные</a></li>
                     <li class="{{ 'active' if active_page == 'deleted_orders' else '' }}">
                         <a href="{{url_for('deleted_orders')}}">Удаленные</a></li>
+                                        <li class="{{ 'active' if active_page == 'all_orders' else '' }}">
+                        <a href="{{url_for('all_orders')}}">Все</a></li>
                 </ul>
             </div>
         </div>

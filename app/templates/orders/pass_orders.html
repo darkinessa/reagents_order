@@ -7,10 +7,10 @@
 
 {% include '_orders_menu.html' %}
 
-<h1>Заказы в обработке</h1>
+<h1>Заказы переданные поставщику</h1>
 
 <form action="/checked" name="checked" method="post">
-    {% include '_table_reagents.html' %}
+    {% include '_table_orders.html' %}
     <input type="submit" name="_wait" value="Ожидается поставка"
            onclick="return confirm('Переместить в папку Ожидается поставка?');">
     <input type="submit" name="_dec" value="Отклонить" onclick="return confirm('Вы действительно хотите отклонить заявку?');">

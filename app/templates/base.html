@@ -41,6 +41,8 @@
                 {% if current_user | is_admin %}
                 <li class="{{ 'active' if active_page == 'admin' else '' }}"><a href="{{ url_for('admin') }}">Заказы</a>
                 </li>
+                 <li class="{{ 'active' if active_page == 'new_items' else '' }}"><a href="{{ url_for('new_items') }}">Заявки</a>
+                </li>
                 {% endif %}
 
 
