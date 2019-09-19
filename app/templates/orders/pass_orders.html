@@ -9,7 +9,7 @@
 
 <h1>Заказы переданные поставщику</h1>
 
-<form action="/checked" name="checked" method="post">
+<form action="/checked_orders" name="checked_orders" method="post">
     {% include '_table_orders.html' %}
     <input type="submit" name="_wait" value="Ожидается поставка"
            onclick="return confirm('Переместить в папку Ожидается поставка?');">

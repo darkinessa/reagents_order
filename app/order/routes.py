@@ -133,7 +133,7 @@ def checked(order_id=None):
             return redirect(url_for('formed_orders', form_checks=form_checks))
 
     if current_user.admin:
-        return redirect(url_for('admin'))
+        return redirect(url_for('new_items'))
 
     else:
 
@@ -268,7 +268,7 @@ def create_order(form_checks=None):
                 reagent.item_status_id = '4'
                 db.session.commit()
                 flash(f'Реагент { reagent.reagent_name } добавлен в заказ № {order.number}')
-            return redirect(url_for('handling_orders'))
+            return redirect(url_for('handling_items'))
 
         return redirect(url_for('create_order'))
 
@@ -320,13 +320,9 @@ def checked_orders():
                     if '_del' in request.form:
                         db.session.delete(order)
 
-                db.session.commit()
-                flash(action_flash)
+            db.session.commit()
+            flash(action_flash)
 
-                next_page = request.args.get('next')
-                if not next_page or url_parse(next_page).netloc != '':
-                    next_page = url_for('formed_orders')
-                return redirect(next_page)
 
     return redirect(url_for('admin'))
 
@@ -337,4 +333,4 @@ def append_item():
     items = ItemInOrder.query.filter_by(item_status_id='3').all()
     order_id = request.args.get('order_id') or request.form.get('order')
 
-    return render_template('orders/append_item.html', items=items, id=order_id)
+    return render_template('items/append_item.html', items=items, id=order_id)

@@ -9,11 +9,10 @@
 
 <h1>Заказы помеченные на удаление</h1>
 
-<form action="/checked" name="checked" method="post">
+<form action="/checked_orders" name="checked_orders" method="post">
     {% include '_table_orders.html' %}
     <input type="submit" name="_hand" value="Принять заказ"
            onclick="return confirm('Переместить в папку Обработка?');">
-    <input type="submit" name="_dec" value="Отклонить" onclick="return confirm('test');">
     <input type="submit" name="delete" value="Удалить" onclick="return confirm('test');">
 </form>
 {% endblock %}

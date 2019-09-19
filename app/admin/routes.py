@@ -163,7 +163,7 @@ def all_items():
     for item in items:
         item.aim_pretty = format_const(item.reagent_aim, AIM)
         item.urgency_pretty = format_const(item.urgency, URGENCY)
-    return render_template('/orders/all_items.html', admin=admin, items=items)
+    return render_template('/items/all_items.html', admin=admin, items=items)
 
 
 @app.route('/new_items')
@@ -176,19 +176,22 @@ def new_items():
         item.aim_pretty = format_const(item.reagent_aim, AIM)
         item.urgency_pretty = format_const(item.urgency, URGENCY)
 
-    return render_template('orders/new_items.html', admin=admin, items=items)
+    return render_template('items/new_items.html', admin=admin, items=items)
+
 
 @app.route('/handling_items')
 @login_required
 @admin_required
 def handling_items():
-    items = ItemInOrder.query.filter_by(item_status_id='3').order_by(ItemInOrder.order_published.desc()).all()
+    items = ItemInOrder.query.filter_by(item_status_id='3').order_by(ItemInOrder.vendor_name).all()
+    if items:
+        print('hi items')
 
     for item in items:
         item.aim_pretty = format_const(item.reagent_aim, AIM)
         item.urgency_pretty = format_const(item.urgency, URGENCY)
 
-    return render_template('orders/handling_items.html', admin=admin, items=items)
+    return render_template('items/handling_items.html', admin=admin, items=items)
 
 
 @app.route('/declined_items')
@@ -201,7 +204,7 @@ def declined_items():
         item.aim_pretty = format_const(item.reagent_aim, AIM)
         item.urgency_pretty = format_const(item.urgency, URGENCY)
 
-    return render_template('orders/declined_items.html', admin=admin, items=items)
+    return render_template('items/declined_items.html', admin=admin, items=items)
 
 
 @app.route('/suspended_items')
@@ -214,7 +217,7 @@ def suspended_items():
         item.aim_pretty = format_const(item.reagent_aim, AIM)
         item.urgency_pretty = format_const(item.urgency, URGENCY)
 
-    return render_template('orders/suspended_items.html', admin=admin, items=items)
+    return render_template('items/suspended_items.html', admin=admin, items=items)
 
 
 @app.route('/deleted_items')
@@ -227,7 +230,7 @@ def deleted_items():
         item.aim_pretty = format_const(item.reagent_aim, AIM)
         item.urgency_pretty = format_const(item.urgency, URGENCY)
 
-    return render_template('orders/deleted_items.html', admin=admin, items=items)
+    return render_template('items/deleted_items.html', admin=admin, items=items)
 
 
 @app.route('/formed_orders')
@@ -251,7 +254,6 @@ def formed_orders():
         order.items_count = ItemInOrder.query.filter_by(reagent_in_order_id=id).count()
 
     return render_template('orders/formed_orders.html', admin=admin, orders=orders)
-
 
 
 @app.route('/pass_orders')
@@ -336,8 +338,6 @@ def all_orders():
         order.items_count = ItemInOrder.query.filter_by(reagent_in_order_id=id).count()
 
     return render_template('orders/all_orders.html', admin=admin, orders=orders)
-
-
 
 #
 # @app.route('/delete_order', methods=['GET', 'POST'])

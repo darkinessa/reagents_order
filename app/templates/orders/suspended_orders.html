@@ -9,11 +9,11 @@
 
 <h1>Отложенные заказы</h1>
 
-<form action="/checked" name="checked" method="post">
-    {% include '_table_reagents.html' %}
+<form action="/checked_orders" name="checked_orders" method="post">
+    {% include '_table_orders.html' %}
     <input type="submit" name="_hand" value="Принять заказ"
            onclick="return confirm('Принять заказ на обработку??');">
     <input type="submit" name="_dec" value="Отклонить" onclick="return confirm('Вы хотите отклонить заказ?');">
-    <input type="submit" name="_del" value="Пометить на удаление" onclick="return confirm('Пометить заказ на удаление?');">
+    <input type="submit" name="_del" value="Удалить" onclick="return confirm('Пометить заказ на удаление?');">
 </form>
 {% endblock %}
