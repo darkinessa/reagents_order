@@ -13,6 +13,7 @@
     {% include '_table_reagents_all.html' %}
     <input type="hidden" name="order_id" value="{{ id }}">
     <input type="submit" name="_append" value="добавить к заказу" onclick="return confirm('Добавить?');">
+    <input type="hidden" name="url" value="{{ url }}" >
 
 </form>
 {% endblock %}

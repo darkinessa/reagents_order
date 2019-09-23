@@ -12,6 +12,7 @@
 <form action="/checked_orders name="checked_orders" method="post">
     {% include '_table_orders.html' %}
     <input type="submit" name="_del" value="Удалить" onclick="return confirm('Вы действительно хотите удалить заказ?');">
+<input type="hidden" name="url" value="{{ url }}" >
 
 </form>
 {% endblock %}

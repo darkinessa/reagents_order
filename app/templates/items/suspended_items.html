@@ -15,5 +15,6 @@
            onclick="return confirm('Принять заявку в обработку?');">
     <input type="submit" name="_dec" value="Отклонить" onclick="return confirm('Вы хотите отклонить заявку?');">
     <input type="submit" name="_del" value="Пометить на удаление" onclick="return confirm('Пометить заявку на удаление?');">
+    <input type="hidden" name="url" value="{{ url }}" >
 </form>
 {% endblock %}

@@ -95,8 +95,10 @@ def delete_trash():
 
 @app.route('/checked', methods=['GET', 'POST'])
 @login_required
-def checked(order_id=None):
+def checked(order_id=None, url=None):
     form_checks = request.form.getlist('checks')
+    url = request.args.get('url') or request.form.get('url')
+    print(url)
     statuses = Status.query.all()
     # print([(s.id, s.name, s.action, s.flashes) for s in statuses])
     for item in statuses:
@@ -133,10 +135,9 @@ def checked(order_id=None):
             return redirect(url_for('formed_orders', form_checks=form_checks))
 
     if current_user.admin:
-        return redirect(url_for('new_items'))
+        return redirect(url_for(str(url)))
 
     else:
-
         return redirect(url_for('user'))
 
 
@@ -277,10 +278,12 @@ def create_order(form_checks=None):
 
 @app.route('/checked_orders', methods=['GET', 'POST'])
 @admin_required
-def checked_orders():
+def checked_orders(url=None):
     form_checks_order = request.form.getlist('checks')
     statuses = Status.query.all()
     items = ItemInOrder.query.filter_by(item_status_id='3').all()
+
+    url = request.form.get('url')
 
     if '_add' in request.form:
         if items:
@@ -294,7 +297,6 @@ def checked_orders():
                 flash('Выберите только 1 заказ к которому необходимо добавить позиции')
         else:
             flash('Не найдены заявки которые можно добавить к заказу')
-
 
     for s in statuses:
         action = s.action
@@ -316,15 +318,13 @@ def checked_orders():
                         reagent.date_change = date
 
                 if not reagents_list:
-                    print('hi there')
                     if '_del' in request.form:
                         db.session.delete(order)
 
             db.session.commit()
             flash(action_flash)
 
-
-    return redirect(url_for('admin'))
+    return redirect(url_for(str(url)))
 
 
 @app.route('/append_item', methods=['GET', 'POST'])

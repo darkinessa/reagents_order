@@ -15,5 +15,6 @@
            onclick="return confirm('Переместить в папку Исполненные заказы?');">
     <input type="submit" name="_dec" value="Отклонить" onclick="return confirm('Вы действительно хотите отклонить заказ?');">
     <input type="submit" name="_sus" value="Отложить" onclick="return confirm('Переместить в папку Отложенные?');">
+    <input type="hidden" name="url" value="{{ url }}" >
 </form>
 {% endblock %}

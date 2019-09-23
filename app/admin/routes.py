@@ -160,10 +160,11 @@ def admin():
 @admin_required
 def all_items():
     items = ItemInOrder.query.order_by(ItemInOrder.order_published.desc()).all()
+    url = request.endpoint
     for item in items:
         item.aim_pretty = format_const(item.reagent_aim, AIM)
         item.urgency_pretty = format_const(item.urgency, URGENCY)
-    return render_template('/items/all_items.html', admin=admin, items=items)
+    return render_template('/items/all_items.html', admin=admin, items=items, url=url)
 
 
 @app.route('/new_items')
@@ -171,12 +172,13 @@ def all_items():
 @admin_required
 def new_items():
     items = ItemInOrder.query.filter_by(item_status_id='2').order_by(ItemInOrder.order_published.desc()).all()
+    url = request.endpoint
 
     for item in items:
         item.aim_pretty = format_const(item.reagent_aim, AIM)
         item.urgency_pretty = format_const(item.urgency, URGENCY)
 
-    return render_template('items/new_items.html', admin=admin, items=items)
+    return render_template('items/new_items.html', admin=admin, items=items, url=url)
 
 
 @app.route('/handling_items')
@@ -184,14 +186,13 @@ def new_items():
 @admin_required
 def handling_items():
     items = ItemInOrder.query.filter_by(item_status_id='3').order_by(ItemInOrder.vendor_name).all()
-    if items:
-        print('hi items')
+    url = request.endpoint
 
     for item in items:
         item.aim_pretty = format_const(item.reagent_aim, AIM)
         item.urgency_pretty = format_const(item.urgency, URGENCY)
 
-    return render_template('items/handling_items.html', admin=admin, items=items)
+    return render_template('items/handling_items.html', admin=admin, items=items, url=url)
 
 
 @app.route('/declined_items')
@@ -199,12 +200,13 @@ def handling_items():
 @admin_required
 def declined_items():
     items = ItemInOrder.query.filter_by(item_status_id='8').all()
+    url = request.endpoint
 
     for item in items:
         item.aim_pretty = format_const(item.reagent_aim, AIM)
         item.urgency_pretty = format_const(item.urgency, URGENCY)
 
-    return render_template('items/declined_items.html', admin=admin, items=items)
+    return render_template('items/declined_items.html', admin=admin, items=items, url=url)
 
 
 @app.route('/suspended_items')
@@ -212,12 +214,13 @@ def declined_items():
 @admin_required
 def suspended_items():
     items = ItemInOrder.query.filter_by(item_status_id='9').all()
+    url = request.endpoint
 
     for item in items:
         item.aim_pretty = format_const(item.reagent_aim, AIM)
         item.urgency_pretty = format_const(item.urgency, URGENCY)
 
-    return render_template('items/suspended_items.html', admin=admin, items=items)
+    return render_template('items/suspended_items.html', admin=admin, items=items, url=url)
 
 
 @app.route('/deleted_items')
@@ -225,12 +228,13 @@ def suspended_items():
 @admin_required
 def deleted_items():
     items = ItemInOrder.query.filter_by(item_status_id='10').all()
+    url = request.endpoint
 
     for item in items:
         item.aim_pretty = format_const(item.reagent_aim, AIM)
         item.urgency_pretty = format_const(item.urgency, URGENCY)
 
-    return render_template('items/deleted_items.html', admin=admin, items=items)
+    return render_template('items/deleted_items.html', admin=admin, items=items, url=url)
 
 
 @app.route('/formed_orders')
@@ -248,12 +252,13 @@ def formed_orders():
 
     # orders = Order.query.filter_by(order_status_id='4')
     orders = Order.query.filter_by(order_status_id='4').all()
+    url = request.endpoint
 
     for order in orders:
         id = order.id
         order.items_count = ItemInOrder.query.filter_by(reagent_in_order_id=id).count()
 
-    return render_template('orders/formed_orders.html', admin=admin, orders=orders)
+    return render_template('orders/formed_orders.html', admin=admin, orders=orders, url=url)
 
 
 @app.route('/pass_orders')
@@ -261,11 +266,12 @@ def formed_orders():
 @admin_required
 def pass_orders():
     orders = Order.query.filter_by(order_status_id='5').all()
+    url = request.endpoint
     for order in orders:
         id = order.id
         order.items_count = ItemInOrder.query.filter_by(reagent_in_order_id=id).count()
 
-    return render_template('orders/pass_orders.html', admin=admin, orders=orders)
+    return render_template('orders/pass_orders.html', admin=admin, orders=orders, url=url)
 
 
 @app.route('/wait_orders')
@@ -273,11 +279,12 @@ def pass_orders():
 @admin_required
 def wait_orders():
     orders = Order.query.filter_by(order_status_id='6').all()
+    url = request.endpoint
     for order in orders:
         id = order.id
         order.items_count = ItemInOrder.query.filter_by(reagent_in_order_id=id).count()
 
-    return render_template('orders/wait_orders.html', admin=admin, orders=orders)
+    return render_template('orders/wait_orders.html', admin=admin, orders=orders, url=url)
 
 
 @app.route('/received_orders')
@@ -285,11 +292,12 @@ def wait_orders():
 @admin_required
 def received_orders():
     orders = Order.query.filter_by(order_status_id='7').all()
+    url = request.endpoint
     for order in orders:
         id = order.id
         order.items_count = ItemInOrder.query.filter_by(reagent_in_order_id=id).count()
 
-    return render_template('orders/received_orders.html', admin=admin, orders=orders)
+    return render_template('orders/received_orders.html', admin=admin, orders=orders, url=url)
 
 
 @app.route('/declined_orders')
@@ -297,11 +305,12 @@ def received_orders():
 @admin_required
 def declined_orders():
     orders = Order.query.filter_by(order_status_id='8').all()
+    url = request.endpoint
     for order in orders:
         id = order.id
         order.items_count = ItemInOrder.query.filter_by(reagent_in_order_id=id).count()
 
-    return render_template('orders/declined_orders.html', admin=admin, orders=orders)
+    return render_template('orders/declined_orders.html', admin=admin, orders=orders, url=url)
 
 
 @app.route('/suspended_orders')
@@ -309,11 +318,12 @@ def declined_orders():
 @admin_required
 def suspended_orders():
     orders = Order.query.filter_by(order_status_id='9').all()
+    url = request.endpoint
     for order in orders:
         id = order.id
         order.items_count = ItemInOrder.query.filter_by(reagent_in_order_id=id).count()
 
-    return render_template('orders/suspended_orders.html', admin=admin, orders=orders)
+    return render_template('orders/suspended_orders.html', admin=admin, orders=orders, url=url)
 
 
 @app.route('/deleted_orders')
@@ -321,11 +331,12 @@ def suspended_orders():
 @admin_required
 def deleted_orders():
     orders = Order.query.filter_by(order_status_id='10').all()
+    url = request.endpoint
     for order in orders:
         id = order.id
         order.items_count = ItemInOrder.query.filter_by(reagent_in_order_id=id).count()
 
-    return render_template('orders/deleted_orders.html', admin=admin, orders=orders)
+    return render_template('orders/deleted_orders.html', admin=admin, orders=orders, url=url)
 
 
 @app.route('/all_orders')
@@ -333,11 +344,12 @@ def deleted_orders():
 @admin_required
 def all_orders():
     orders = Order.query.all()
+    url = request.endpoint
     for order in orders:
         id = order.id
         order.items_count = ItemInOrder.query.filter_by(reagent_in_order_id=id).count()
 
-    return render_template('orders/all_orders.html', admin=admin, orders=orders)
+    return render_template('orders/all_orders.html', admin=admin, orders=orders, url=url)
 
 #
 # @app.route('/delete_order', methods=['GET', 'POST'])
