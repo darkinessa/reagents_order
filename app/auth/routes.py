@@ -74,9 +74,11 @@ def registration():
 @login_required
 def user():
     items = ItemInOrder.query.filter_by(user_id=current_user.id).filter_by(item_status_id='1').all()
+    url = request.endpoint
+    print(url)
 
     for item in items:
         item.aim_pretty = format_const(item.reagent_aim, AIM)
         item.urgency_pretty = format_const(item.urgency, URGENCY)
 
-    return render_template('user.html', user=current_user, items=items)
+    return render_template('user.html', user=current_user, items=items, url=url)

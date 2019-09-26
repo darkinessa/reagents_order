@@ -156,6 +156,17 @@ def admin():
     return render_template('admin.html', admin=admin, items=items)
 
 
+@app.route('/my_items')
+@login_required
+def my_items():
+    items = ItemInOrder.query.filter_by(user_id=current_user.id).filter_by(item_status_id='1').all()
+    url = request.endpoint
+    for item in items:
+        item.aim_pretty = format_const(item.reagent_aim, AIM)
+        item.urgency_pretty = format_const(item.urgency, URGENCY)
+    return render_template('/items/my_items.html', user=current_user, items=items, url=url)
+
+
 @app.route('/all_items')
 @admin_required
 def all_items():

@@ -36,10 +36,11 @@
                 {% if current_user | is_active %}
                 <li class="{{ 'active' if active_page == 'item_add' else '' }}"><a href="{{ url_for('item_add') }}">Заказ
                     реагентов</a></li>
+                                <li class="{{ 'active' if active_page == 'my_items' else '' }}"><a href="{{ url_for('my_items') }}">Мои заказы</a></li>
                 {% endif %}
 
                 {% if current_user | is_admin %}
-                <li class="{{ 'active' if active_page == 'admin' else '' }}"><a href="{{ url_for('admin') }}">Заказы</a>
+                <li class="{{ 'active' if active_page == 'formed_orders' else '' }}"><a href="{{ url_for('formed_orders') }}">Заказы</a>
                 </li>
                  <li class="{{ 'active' if active_page == 'new_items' else '' }}"><a href="{{ url_for('new_items') }}">Заявки</a>
                 </li>

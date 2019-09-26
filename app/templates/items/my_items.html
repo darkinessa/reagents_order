@@ -1,0 +1,22 @@
+<title>Мои заказы</title>
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% set active_page = "my_items" %}
+
+{% block app_content %}
+
+
+
+<a href="/delete_trash">перейти в корзину</a>
+<h1>Мои заказы</h1>
+
+<form action="/checked" name="checked" method="post">
+    {% include '_table_reagents.html' %}
+    <input type="submit" name="_send" value="Отправить заказ"
+           onclick="return confirm('После отправки заказа, вы не сможете вносить измения. Отправить заказ менеджеру?');">
+    <input type="submit" name="_del" value="Удалить"
+           onclick="return confirm('Вы действительно хотите удалить Реагент из заказа?');">
+    <input type="hidden" name="url" value="{{ url }}" >
+
+
+    {% endblock %}

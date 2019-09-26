@@ -32,7 +32,7 @@
                     <input type="checkbox" name="checks" value="{{ order.id }}">
                 </label></div>
         </td>
-        <td><p><a href="{{ url_for('formed_orders', id=order.id) }}">{{ order.id }}</a></p></td>
+        <td><p><a href="{{ url_for('full_order', id=order.id) }}">{{ order.id }}</a></p></td>
 
 
         <td><p>{{ order.number }} </p></td>

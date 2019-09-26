@@ -1,0 +1,23 @@
+<title>Заказ {{ order.number }} </title>
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% set active_page = "all_items" %}
+
+{% block app_content %}
+
+{% include '_orders_menu.html' %}
+
+<h1>Заказ {{ order.number }}</h1>
+{# {% include '_table_reagents_all.html' %}
+    #}
+
+<form action="/full_order/" name="full_order" method="post">{% include '_table_reagents_all.html' %}
+    <input type="text" name="oid" value="{{ order_id }}">
+   <input type="button" onclick="window.location.href='/append_item?id={{ order_id }}'" value="Добавить к заказу"/>
+        <input type="submit" name="_delete_item" value="Удалить из заказа" onclick="return confirm('Вы действительно хотите удалить заявку?');">
+
+<!--<a href="/append_item?id={{ order_id }}"></a>-->
+
+
+</form>
+{% endblock %}

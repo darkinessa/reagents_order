@@ -20,7 +20,6 @@
         <th scope="col">Дата</th>
         <th scope="col">Статус</th>
 
-        <th scope="col">Действия</th>
 
     </tr>
     </thead>
@@ -48,7 +47,7 @@
         <td><p>{{ moment(item.order_published).format('LL') }} </p></td>
         <td><p>{{ item.item_status }} </p></td>
 
-        <td><a href="{{ url_for('full_item', id=item.id) }}">Подробнее</a></td>
+
     </tr>
     {% endfor %}
 

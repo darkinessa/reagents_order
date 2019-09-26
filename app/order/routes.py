@@ -249,6 +249,9 @@ def create_order(form_checks=None):
     form = CreateOrderForm()
     numbers_list = Order.query.filter_by(number=form.number.data).first()
     form_checks = request.args.getlist('form_checks')
+    order = 0
+    # order = Order.query.order_by(Order.id.desc()).first()
+    print(order)
 
     if form.validate_on_submit():
         if numbers_list:
@@ -273,12 +276,12 @@ def create_order(form_checks=None):
 
         return redirect(url_for('create_order'))
 
-    return render_template('orders/create_order.html', form=form)
+    return render_template('orders/create_order.html', form=form, order=order)
 
 
 @app.route('/checked_orders', methods=['GET', 'POST'])
 @admin_required
-def checked_orders(url=None):
+def checked_orders(url=None, order_id=None):
     form_checks_order = request.form.getlist('checks')
     statuses = Status.query.all()
     items = ItemInOrder.query.filter_by(item_status_id='3').all()
@@ -286,15 +289,21 @@ def checked_orders(url=None):
     url = request.form.get('url')
 
     if '_add' in request.form:
+        order_id = request.form.get('order_id')
+        print(order_id)
+
         if items:
             if len(form_checks_order) == 1:
                 order_id = int(form_checks_order[0])
+                print(order_id)
+
                 order = Order.query.get(order_id)
                 return redirect(url_for('append_item', order_id=order_id))
 
-
             else:
                 flash('Выберите только 1 заказ к которому необходимо добавить позиции')
+        if not url:
+            url = 'all_orders'
         else:
             flash('Не найдены заявки которые можно добавить к заказу')
 
@@ -331,6 +340,48 @@ def checked_orders(url=None):
 @admin_required
 def append_item():
     items = ItemInOrder.query.filter_by(item_status_id='3').all()
-    order_id = request.args.get('order_id') or request.form.get('order')
+
+    order_id = request.args.get('order_id') or request.form.get('order') or request.args.get('id')
+    print(order_id)
+    order = Order.query.filter_by(id=order_id)
+    if not items:
+        flash('Нет заявок в статусе Обработка. К заказу можно добавить только заявки в статусе Обработка.')
+        return redirect(url_for('full_order', id=order_id))
 
     return render_template('items/append_item.html', items=items, id=order_id)
+
+
+@app.route('/delete_item', methods=['GET', 'POST'])
+@admin_required
+def delete_item():
+    order_id = request.args.get('order_id') or request.form.get('order') or request.args.get('id')
+    print(order_id)
+    items = ItemInOrder.query.filter_by(reagent_in_order_id=order_id).all()
+    order = Order.query.filter_by(id=order_id)
+
+    return render_template('items/append_item.html', items=items, id=order_id)
+
+
+@app.route('/full_order/', methods=['GET', 'POST'], defaults={'id': -1})
+@app.route('/full_order/<int:id>', methods=['GET', 'POST'])
+@admin_required
+def full_order(id):
+    order = Order.query.get(id)
+    items = ItemInOrder.query.filter_by(reagent_in_order_id=id).all()
+    print(id, request.form)
+
+    if '_delete_item' in request.form:
+        id = request.form.get('oid')
+        order = Order.query.get(id)
+        checks = request.form.getlist('checks')
+        print('delete', order, id, checks)
+        for item_check in checks:
+            check_id = int(item_check)
+            item = ItemInOrder.query.get(check_id)
+            item.reagent_in_order = None
+            item.item_status_id = '3'
+            db.session.commit()
+            flash(f'Заявка { item.reagent_name } удалена из заказа № {order.number}')
+        return redirect(url_for('full_order', id=id))
+
+    return render_template('/orders/full_order.html', order=order, items=items, order_id=id)

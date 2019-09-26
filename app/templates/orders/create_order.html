@@ -8,6 +8,12 @@
 {% include '_orders_menu.html' %}
 
 <h1>Создать заказ</h1>
+{% if order %}
+<p>
+Предыдущий заказ: <br>
+    <strong>{{ order }}</strong> (id: {{ order.id }})</p>
+{% endif %}
+
 
 <div class="row">
     <div class="col-md-4">
