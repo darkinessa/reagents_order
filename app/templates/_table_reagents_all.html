@@ -40,7 +40,12 @@
         <td><p>{{ item.urgency_pretty }} </p></td>
         <td><p>{{ moment(item.order_published).format('LL') }} </p></td>
         <td><p>{{ item.item_status }} </p></td>
-        <td><p>{{ item.reagent_in_order }} </p></td>
+        <td><p>
+
+            {% if item.reagent_in_order %} {{ item.reagent_in_order }}
+            {% endif %}
+
+        </p></td>
         <td><p>{{ item.author }} </p></td>
 
     </tr>

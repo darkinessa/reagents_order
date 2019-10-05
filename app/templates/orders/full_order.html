@@ -15,6 +15,7 @@
     <input type="text" name="oid" value="{{ order_id }}">
    <input type="button" onclick="window.location.href='/append_item?id={{ order_id }}'" value="Добавить к заказу"/>
         <input type="submit" name="_delete_item" value="Удалить из заказа" onclick="return confirm('Вы действительно хотите удалить заявку?');">
+    <input type="button" onclick="window.location.href='/download_order?id={{ order_id }}'" value="скачать"/>
 
 <!--<a href="/append_item?id={{ order_id }}"></a>-->
 

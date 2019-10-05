@@ -3,7 +3,7 @@ from datetime import datetime
 from werkzeug.urls import url_parse
 
 from app import app, db
-from flask import redirect, render_template, url_for, flash, request, session
+from flask import redirect, render_template, url_for, flash, request, send_file
 
 from app.admin.decorators import admin_required
 from app.auth.decorators import active_user_required
@@ -385,3 +385,51 @@ def full_order(id):
         return redirect(url_for('full_order', id=id))
 
     return render_template('/orders/full_order.html', order=order, items=items, order_id=id)
+
+
+@app.route('/report', methods=['GET', 'POST'])
+@admin_required
+def report():
+    checked_fields = request.form.getlist('checks')
+    print(request.form, checked_fields)
+
+    items = ItemInOrder.query.filter_by(reagent_in_order_id='37').all()
+    print(items)
+
+    return render_template('/items/custom_reports.html', checked_fields=checked_fields, items=items)
+
+# @app.route('/download_order/', methods=['GET', 'POST'])
+# @admin_required
+# def download_order():
+#     # id = request.form.get('oid')
+#     # items = ItemInOrder.query.filter_by(reagent_in_order_id=id).all()
+#     return send_file('order.csv',
+#                      attachment_filename='Order.csv',
+#                      as_attachment=True)
+
+
+# {#
+# <table class="table table-striped">
+#     <thead class="thead-dark">
+#     {% for field in checked_fields %}
+#     <th>{{ field }}</th>
+#     {% endfor %}
+#     </thead>
+#
+#     <tbody>
+#     {% for item in items %}
+#     <tr>
+#         {% for field in checked_fields %}
+#         <td>
+#             {{ item.field }}
+#         </td>
+#         {% endfor %}
+#
+#     </tr>
+#     {% endfor %}
+#
+#     </tbody>
+#
+#     </thead>
+#
+# </table> #}

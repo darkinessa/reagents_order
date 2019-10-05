@@ -1,0 +1,102 @@
+<title xmlns="http://www.w3.org/1999/html">Сформировать отчет</title>
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% set active_page = "all_items" %}
+
+{% block app_content %}
+
+{% include '_items_menu.html' %}
+
+
+<h4>Отметьте поля, которые нужно отобразить в отчете:</h4>
+
+<form action="/report" name="report" method="post">
+<p>
+    <label class="checkbox-inline">
+        <input type="checkbox" name="checks" value="reagent_name">Название</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label class="checkbox-inline">
+        <input type="checkbox" name="checks" value="reagent_description">Описание</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    <label class="checkbox-inline">
+        <input type="checkbox" name="checks" value="package">Фасовка
+    </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label class="checkbox-inline">
+        <input type="checkbox" name="checks" value="package_unit">Единица измерения
+    </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label class="checkbox-inline">
+        <input type="checkbox" name="checks" value="reagent_count">Количество
+    </label>
+
+    <br>
+
+    <label class="checkbox-inline">
+        <input type="checkbox" name="checks" value="vendor_name">Производитель
+    </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label class="checkbox-inline">
+        <input type="checkbox" name="checks" value="replacement">Замена
+    </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label class="checkbox-inline">
+        <input type="checkbox" name="checks" value="catalogue_number">Артикул
+    </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label class="checkbox-inline">
+        <input type="checkbox" name="checks" value="url_reagent">Ссылка
+    </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    <label class="checkbox-inline">
+        <input type="checkbox" name="checks" value="urgency">Срочность
+    </label>
+    <br>
+
+    <label class="checkbox-inline">
+        <input type="checkbox" name="checks" value="reagent_aim">Цель
+    </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    <label class="checkbox-inline">
+        <input type="checkbox" name="checks" value="reagent_comments">Комментарии
+    </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    <label class="checkbox-inline">
+        <input type="checkbox" name="checks" value="item_status">Статус
+    </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label class="checkbox-inline">
+        <input type="checkbox" name="checks" value="reagent_in_order">Номер заказа
+    </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label class="checkbox-inline">
+        <input type="checkbox" name="checks" value="user_id">Заказчик</label>
+
+    <br></p>
+<p>
+    <input type="submit" name="_report" value="Сформировать отчет">
+</p>
+
+</form>
+
+
+<table class="table table-striped">
+    <thead class="thead-dark">
+    {% for field in checked_fields %}
+    <th>{{ field }}</th>
+    {% endfor %}
+    </thead>
+
+    <tbody>
+    {% for item in items %}
+    <tr>
+        {% for field in checked_fields %}
+
+        <td>
+            {{ item|attr(field) }}
+        </td>
+        {% endfor %}
+
+
+    </tr>
+    {% endfor %}
+
+    </tbody>
+
+    </thead>
+
+</table>
+{% endblock %}
+
