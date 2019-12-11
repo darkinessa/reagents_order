@@ -367,3 +367,6 @@ def all_orders():
 # @admin_required
 # def delete_order():
 #     pass
+
+
+#AttributeError

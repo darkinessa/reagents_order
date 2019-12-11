@@ -1,0 +1,3 @@
+{% for head in theads -%}{% if loop.first %}{{ head }}{{ ',' if not loop.last else '' }}{% else %}{{ head }}{{ ',' if not loop.last else '' }}{% endif %}{%- endfor %}
+{% for item in items %}{% for field in checked_fields %}{% if loop.first %}"{{ item|attr(field) }}"{{ ',' if not loop.last else '' }}{% else %}"{{ item|attr(field) }}"{{ ',' if not loop.last else '' }}{% endif %}{% endfor %}
+{% endfor %}

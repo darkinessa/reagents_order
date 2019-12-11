@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from six import StringIO, BytesIO
+from werkzeug.datastructures import Headers
 from werkzeug.urls import url_parse
 
 from app import app, db
@@ -7,11 +9,24 @@ from flask import redirect, render_template, url_for, flash, request, send_file
 
 from app.admin.decorators import admin_required
 from app.auth.decorators import active_user_required
-from app.order.constants import URGENCY, AIM, format_const
+from app.order.constants import URGENCY, AIM, format_const, REPORT_CHOICE
 from app.order.models import ItemInOrder, Status, Order
 from app.order.forms import ReagentOrderForm, CreateOrderForm
 from flask_login import current_user, login_required
 
+
+@app.template_filter()
+def urgency_format(key):
+    for value in URGENCY:
+        if key in value:
+            return value[1]
+
+
+@app.template_filter()
+def aim_format(key):
+    for value in AIM:
+        if key in value:
+            return value[1]
 
 @app.route('/item', methods=['GET', 'POST'])
 @login_required
@@ -391,45 +406,53 @@ def full_order(id):
 @admin_required
 def report():
     checked_fields = request.form.getlist('checks')
-    print(request.form, checked_fields)
 
     items = ItemInOrder.query.filter_by(reagent_in_order_id='37').all()
+    theads = []
+    for field in checked_fields:
+        pretty_field = format_const(field, REPORT_CHOICE)
+        theads.append(pretty_field)
+
+    for item in items:
+        for field in checked_fields:
+            if field == 'urgency':
+                item.field = format_const(field, URGENCY)
+                print(item.field)
+
+
+
+
     print(items)
+    if '_report_csv' in request.form:
+        csv_result = render_template('/items/_report.html', checked_fields=checked_fields, items=items, theads=theads)
 
-    return render_template('/items/custom_reports.html', checked_fields=checked_fields, items=items)
+        str_io = StringIO()
+        str_io.write(csv_result)
+        str_io.seek(0)
 
-# @app.route('/download_order/', methods=['GET', 'POST'])
-# @admin_required
-# def download_order():
-#     # id = request.form.get('oid')
-#     # items = ItemInOrder.query.filter_by(reagent_in_order_id=id).all()
-#     return send_file('order.csv',
-#                      attachment_filename='Order.csv',
-#                      as_attachment=True)
+        mem_io = BytesIO(str_io.getvalue().encode('utf-8'))
+        mem_io.write(str_io.getvalue().encode('utf-8'))
+        mem_io.seek(0)
+        str_io.close()
+
+        return send_file(mem_io, mimetype="text/csv", as_attachment=True, attachment_filename="report.csv")
 
 
-# {#
-# <table class="table table-striped">
-#     <thead class="thead-dark">
-#     {% for field in checked_fields %}
-#     <th>{{ field }}</th>
-#     {% endfor %}
-#     </thead>
-#
-#     <tbody>
-#     {% for item in items %}
-#     <tr>
-#         {% for field in checked_fields %}
-#         <td>
-#             {{ item.field }}
-#         </td>
-#         {% endfor %}
-#
-#     </tr>
-#     {% endfor %}
-#
-#     </tbody>
-#
-#     </thead>
-#
-# </table> #}
+    return render_template('/items/custom_reports.html', checked_fields=checked_fields, items=items, theads=theads)
+
+
+
+
+@app.route('/download_order/', methods=['GET', 'POST'])
+@admin_required
+def download_order():
+    # id = request.form.get('oid')
+    # items = ItemInOrder.query.filter_by(reagent_in_order_id=id).all()
+    return send_file('order.csv',
+                     attachment_filename='Order.csv',
+                     as_attachment=True)
+
+
+# 1 сооздать цсв как темплейт
+# 2. отобразить его в браузере
+# 3. контент диспозишн (пересмотреть видео ява скрип)

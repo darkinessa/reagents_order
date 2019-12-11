@@ -62,11 +62,12 @@
         <input type="checkbox" name="checks" value="reagent_in_order">Номер заказа
     </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <label class="checkbox-inline">
-        <input type="checkbox" name="checks" value="user_id">Заказчик</label>
+        <input type="checkbox" name="checks" value="author">Заказчик</label>
 
     <br></p>
 <p>
     <input type="submit" name="_report" value="Сформировать отчет">
+      <input type="submit" name="_report_csv" value="Сформировать отчет csv">
 </p>
 
 </form>
@@ -74,8 +75,8 @@
 
 <table class="table table-striped">
     <thead class="thead-dark">
-    {% for field in checked_fields %}
-    <th>{{ field }}</th>
+    {% for head in theads %}
+    <th>{{ head }} </th>
     {% endfor %}
     </thead>
 
@@ -98,5 +99,30 @@
     </thead>
 
 </table>
+
+
+
+{% for head in theads -%}{% if loop.first %}{{ head }}{{ ',' if not loop.last else '' }}{% else %}{{ head }}{{ ',' if not loop.last else '' }}{% endif %}{%- endfor %}
+
+
+{% for item in items %}
+    {% for field in checked_fields %}
+        {% if loop.first %}
+            {% set f = item|attr(field) %}
+            {% if field == "urgency" %}
+                "{{ f | urgency_format }}"
+            {% elif field == "reagent_aim" %}
+                "{{ f | aim_format }}"
+            {% else %}
+                "{{ f }}"
+            {% endif %}
+
+            {{ ',' if not loop.last else '' }}
+        {% else %}
+            "{{ item|attr(field) }}"{{ ',' if not loop.last else '' }}
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
 {% endblock %}
 
